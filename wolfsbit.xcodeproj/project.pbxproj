@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CF229C612EC64A46005B43C5 /* wolfsbit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CF229C5F2EC64A46005B43C5 /* wolfsbit.xcdatamodeld */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		CF229C252EC64499005B43C5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		CF229C122EC64498005B43C5 /* wolfsbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wolfsbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF229C242EC64499005B43C5 /* wolfsbitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wolfsbitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF229C2E2EC6449A005B43C5 /* wolfsbitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wolfsbitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF229C602EC64A46005B43C5 /* wolfsbit.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = wolfsbit.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +80,7 @@
 		CF229C092EC64498005B43C5 = {
 			isa = PBXGroup;
 			children = (
+				CF229C5F2EC64A46005B43C5 /* wolfsbit.xcdatamodeld */,
 				CF229C142EC64498005B43C5 /* wolfsbit */,
 				CF229C272EC64499005B43C5 /* wolfsbitTests */,
 				CF229C312EC6449A005B43C5 /* wolfsbitUITests */,
@@ -236,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF229C612EC64A46005B43C5 /* wolfsbit.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,6 +407,8 @@
 				DEVELOPMENT_TEAM = WB5CKL86MX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Wolfsbit needs microphone access to record your journal entries using voice input.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Wolfsbit uses speech recognition to transcribe your voice into text for journal entries.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -432,6 +441,8 @@
 				DEVELOPMENT_TEAM = WB5CKL86MX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Wolfsbit needs microphone access to record your journal entries using voice input.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Wolfsbit uses speech recognition to transcribe your voice into text for journal entries.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -578,6 +589,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CF229C5F2EC64A46005B43C5 /* wolfsbit.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CF229C602EC64A46005B43C5 /* wolfsbit.xcdatamodel */,
+			);
+			currentVersion = CF229C602EC64A46005B43C5 /* wolfsbit.xcdatamodel */;
+			path = wolfsbit.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = CF229C0A2EC64498005B43C5 /* Project object */;
 }

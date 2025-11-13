@@ -14,10 +14,19 @@ struct PersistenceController {
     static let preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+        
+        // Create sample journal entries for preview
+        let calendar = Calendar.current
+        for i in 0..<10 {
+            let entry = JournalEntry(context: viewContext)
+            entry.id = UUID()
+            entry.timestamp = calendar.date(byAdding: .day, value: -i, to: Date()) ?? Date()
+            entry.feeling = ["Feeling good", "A bit tired", "Energetic", "Moderate", "Not great"].randomElement()
+            entry.painLevel = Int16.random(in: 2...8)
+            entry.symptoms = ["Headache", "Fatigue", "No symptoms", "Mild discomfort", "Some pain"].randomElement()
+            entry.healthScore = 10.0 - Double(entry.painLevel)
         }
+        
         do {
             try viewContext.save()
         } catch {
