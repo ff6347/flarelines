@@ -8,13 +8,30 @@
 import SwiftUI
 
 struct HelpView: View {
+    @State private var showingOnboarding = false
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 Text("Help & Support")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                
+
+                // Re-run Onboarding button
+                Button(action: {
+                    showingOnboarding = true
+                }) {
+                    Label("Re-run Onboarding", systemImage: "arrow.clockwise")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(12)
+                }
+                .sheet(isPresented: $showingOnboarding) {
+                    OnboardingView(isPresented: $showingOnboarding)
+                }
+
                 HelpSection(
                     title: "Getting Started",
                     icon: "info.circle",
