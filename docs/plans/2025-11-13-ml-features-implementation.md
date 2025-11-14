@@ -15,12 +15,12 @@
 ### Task 1.1: Update JournalEntry Core Data Model
 
 **Files:**
-- Modify: `wolfsbit/ModelsJournalEntry.swift`
+- Modify: `wolfsbit/models/ModelsJournalEntry.swift`
 - Note: Must also update `wolfsbit.xcdatamodeld` in Xcode manually
 
 **Step 1: Add new fields to JournalEntry Swift class**
 
-Update `wolfsbit/ModelsJournalEntry.swift`:
+Update `wolfsbit/models/ModelsJournalEntry.swift`:
 
 ```swift
 //
@@ -97,7 +97,7 @@ Expected: App launches, existing data preserved
 **Step 5: Commit**
 
 ```bash
-git add wolfsbit/ModelsJournalEntry.swift
+git add wolfsbit/models/ModelsJournalEntry.swift
 git commit -m "feat(model): add ML scoring fields to JournalEntry
 
 - Add mlScore, scoreConfidence, activeScore fields
@@ -114,12 +114,12 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 ### Task 1.2: Create DoctorVisit Entity
 
 **Files:**
-- Create: `wolfsbit/ModelsDoctorVisit.swift`
+- Create: `wolfsbit/models/ModelsDoctorVisit.swift`
 - Note: Must also add entity to `wolfsbit.xcdatamodeld` in Xcode
 
 **Step 1: Create DoctorVisit Swift class**
 
-Create `wolfsbit/ModelsDoctorVisit.swift`:
+Create `wolfsbit/models/ModelsDoctorVisit.swift`:
 
 ```swift
 // ABOUTME: Core Data model for tracking doctor visits.
@@ -173,7 +173,7 @@ Expected: Build succeeds
 **Step 4: Commit**
 
 ```bash
-git add wolfsbit/ModelsDoctorVisit.swift
+git add wolfsbit/models/ModelsDoctorVisit.swift
 git commit -m "feat(model): add DoctorVisit entity for tracking visits
 
 - Track doctor visit dates
@@ -189,11 +189,11 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 ### Task 1.3: Update JournalViewModel for New Fields
 
 **Files:**
-- Modify: `wolfsbit/ViewModelsJournalViewModel.swift`
+- Modify: `wolfsbit/views/ViewModelsJournalViewModel.swift`
 
 **Step 1: Update saveEntry to populate new fields**
 
-Modify `wolfsbit/ViewModelsJournalViewModel.swift`:
+Modify `wolfsbit/views/ViewModelsJournalViewModel.swift`:
 
 ```swift
 //
@@ -332,7 +332,7 @@ Expected: Entry displays with chart point
 **Step 3: Commit**
 
 ```bash
-git add wolfsbit/ViewModelsJournalViewModel.swift
+git add wolfsbit/views/ViewModelsJournalViewModel.swift
 git commit -m "feat(viewmodel): update saveEntry for new ML fields
 
 - Initialize mlScore, scoreConfidence, activeScore
@@ -465,11 +465,11 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 ### Task 2.1: Create Core ML Model Manager
 
 **Files:**
-- Create: `wolfsbit/UtilitiesMLModelManager.swift`
+- Create: `wolfsbit/utilities/UtilitiesMLModelManager.swift`
 
 **Step 1: Create model manager stub**
 
-Create `wolfsbit/UtilitiesMLModelManager.swift`:
+Create `wolfsbit/utilities/UtilitiesMLModelManager.swift`:
 
 ```swift
 // ABOUTME: Manages Core ML model lifecycle: loading, inference, confidence handling.
@@ -613,7 +613,7 @@ Expected: Build succeeds
 **Step 3: Commit**
 
 ```bash
-git add wolfsbit/UtilitiesMLModelManager.swift
+git add wolfsbit/utilities/UtilitiesMLModelManager.swift
 git commit -m "feat(ml): create ML model manager infrastructure
 
 - Add ModelInput/Output structures
@@ -630,11 +630,11 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 ### Task 2.2: Integrate ML Manager into JournalViewModel
 
 **Files:**
-- Modify: `wolfsbit/ViewModelsJournalViewModel.swift`
+- Modify: `wolfsbit/views/ViewModelsJournalViewModel.swift`
 
 **Step 1: Add ML scoring to saveEntry**
 
-Update the `saveEntry()` method in `wolfsbit/ViewModelsJournalViewModel.swift`:
+Update the `saveEntry()` method in `wolfsbit/views/ViewModelsJournalViewModel.swift`:
 
 ```swift
 func saveEntry() {
@@ -696,7 +696,7 @@ Expected: Entry saves, chart updates (currently with heuristic score)
 **Step 3: Commit**
 
 ```bash
-git add wolfsbit/ViewModelsJournalViewModel.swift
+git add wolfsbit/views/ViewModelsJournalViewModel.swift
 git commit -m "feat(viewmodel): integrate ML scoring on entry save
 
 - Call MLModelManager.predict() after saving entry
@@ -714,11 +714,11 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 ### Task 3.1: Redesign LogView with Voice-First Layout
 
 **Files:**
-- Modify: `wolfsbit/ViewsLogView.swift`
+- Modify: `wolfsbit/views/ViewsLogView.swift`
 
 **Step 1: Update LogView layout**
 
-Replace the voice input button section in `wolfsbit/ViewsLogView.swift`:
+Replace the voice input button section in `wolfsbit/views/ViewsLogView.swift`:
 
 ```swift
 //
@@ -961,7 +961,7 @@ Expected:
 **Step 3: Commit**
 
 ```bash
-git add wolfsbit/ViewsLogView.swift
+git add wolfsbit/views/ViewsLogView.swift
 git commit -m "feat(ui): redesign LOG view with voice-first layout
 
 - Large prominent microphone button (80pt icon)
@@ -980,11 +980,11 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 ### Task 4.1: Add Visual Indicators for Low Confidence and Flagged Days
 
 **Files:**
-- Modify: `wolfsbit/ViewsDataView.swift`
+- Modify: `wolfsbit/views/ViewsDataView.swift`
 
 **Step 1: Update chart to show indicators**
 
-Modify the Chart section in `wolfsbit/ViewsDataView.swift`:
+Modify the Chart section in `wolfsbit/views/ViewsDataView.swift`:
 
 ```swift
 // Chart (updated with indicators)
@@ -1062,7 +1062,7 @@ HStack(spacing: 16) {
 
 **Step 2: Update JournalEntryCard to show flags**
 
-Add flag toggle to `JournalEntryCard` in `wolfsbit/ViewsDataView.swift`:
+Add flag toggle to `JournalEntryCard` in `wolfsbit/views/ViewsDataView.swift`:
 
 ```swift
 struct JournalEntryCard: View {
@@ -1189,7 +1189,7 @@ Expected:
 **Step 4: Commit**
 
 ```bash
-git add wolfsbit/ViewsDataView.swift
+git add wolfsbit/views/ViewsDataView.swift
 git commit -m "feat(ui): add visual indicators for confidence and flags
 
 - Chart points colored by confidence (blue/orange/red)
@@ -1209,11 +1209,11 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 ### Task 5.1: Create Reminder Manager
 
 **Files:**
-- Create: `wolfsbit/UtilitiesReminderManager.swift`
+- Create: `wolfsbit/utilities/UtilitiesReminderManager.swift`
 
 **Step 1: Create reminder manager**
 
-Create `wolfsbit/UtilitiesReminderManager.swift`:
+Create `wolfsbit/utilities/UtilitiesReminderManager.swift`:
 
 ```swift
 // ABOUTME: Manages dynamic reminder scheduling based on user health state.
@@ -1361,7 +1361,7 @@ Expected: Build succeeds
 **Step 3: Commit**
 
 ```bash
-git add wolfsbit/UtilitiesReminderManager.swift
+git add wolfsbit/utilities/UtilitiesReminderManager.swift
 git commit -m "feat(reminders): create dynamic reminder system
 
 - Detect flare-ups (3+ point drop over 3 days)
@@ -1378,11 +1378,11 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 ### Task 5.2: Add Flare-up Controls to Settings
 
 **Files:**
-- Modify: `wolfsbit/ViewsSettingsView.swift`
+- Modify: `wolfsbit/views/ViewsSettingsView.swift`
 
 **Step 1: Add flare-up section to settings**
 
-Update `wolfsbit/ViewsSettingsView.swift`:
+Update `wolfsbit/views/ViewsSettingsView.swift`:
 
 ```swift
 //
@@ -1578,7 +1578,7 @@ Grant notification permissions when prompted
 **Step 3: Commit**
 
 ```bash
-git add wolfsbit/ViewsSettingsView.swift
+git add wolfsbit/views/ViewsSettingsView.swift
 git commit -m "feat(settings): add flare-up status and reminder controls
 
 - Show current health status (flare-up vs stable)
@@ -1597,11 +1597,11 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 ### Task 6.1: Add Doctor Visit Marking UI
 
 **Files:**
-- Modify: `wolfsbit/ViewsDataView.swift`
+- Modify: `wolfsbit/views/ViewsDataView.swift`
 
 **Step 1: Add doctor visit button to DATA view**
 
-Add above the chart in `wolfsbit/ViewsDataView.swift`:
+Add above the chart in `wolfsbit/views/ViewsDataView.swift`:
 
 ```swift
 var body: some View {
@@ -1683,7 +1683,7 @@ var daysSinceLastVisit: Int {
 
 **Step 2: Create AddDoctorVisitView**
 
-Add to end of `wolfsbit/ViewsDataView.swift`:
+Add to end of `wolfsbit/views/ViewsDataView.swift`:
 
 ```swift
 struct AddDoctorVisitView: View {
@@ -1753,7 +1753,7 @@ Expected:
 **Step 4: Commit**
 
 ```bash
-git add wolfsbit/ViewsDataView.swift
+git add wolfsbit/views/ViewsDataView.swift
 git commit -m "feat(visits): add doctor visit tracking to DATA view
 
 - Show last visit date and days since
@@ -1772,11 +1772,11 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 ### Task 7.1: Create Export Manager
 
 **Files:**
-- Create: `wolfsbit/UtilitiesExportManager.swift`
+- Create: `wolfsbit/utilities/UtilitiesExportManager.swift`
 
 **Step 1: Create export manager stub**
 
-Create `wolfsbit/UtilitiesExportManager.swift`:
+Create `wolfsbit/utilities/UtilitiesExportManager.swift`:
 
 ```swift
 // ABOUTME: Manages data export in multiple formats (PDF, CSV, XLSX).
@@ -1961,7 +1961,7 @@ Expected: Build succeeds
 **Step 3: Commit**
 
 ```bash
-git add wolfsbit/UtilitiesExportManager.swift
+git add wolfsbit/utilities/UtilitiesExportManager.swift
 git commit -m "feat(export): create export manager with CSV/PDF/XLSX
 
 - CSV export with all entry fields
@@ -1978,11 +1978,11 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 ### Task 7.2: Add Export UI to Settings
 
 **Files:**
-- Modify: `wolfsbit/ViewsSettingsView.swift`
+- Modify: `wolfsbit/views/ViewsSettingsView.swift`
 
 **Step 1: Replace export button with sheet**
 
-Update Data section in `wolfsbit/ViewsSettingsView.swift`:
+Update Data section in `wolfsbit/views/ViewsSettingsView.swift`:
 
 ```swift
 Section("Data") {
@@ -2013,7 +2013,7 @@ Add sheet modifier to Form:
 
 **Step 2: Create ExportDataView**
 
-Add to end of `wolfsbit/ViewsSettingsView.swift`:
+Add to end of `wolfsbit/views/ViewsSettingsView.swift`:
 
 ```swift
 struct ExportDataView: View {
@@ -2194,7 +2194,7 @@ Expected:
 **Step 4: Commit**
 
 ```bash
-git add wolfsbit/ViewsSettingsView.swift
+git add wolfsbit/views/ViewsSettingsView.swift
 git commit -m "feat(export): add export UI with time range and format selection
 
 - ExportDataView sheet for export configuration
@@ -2214,11 +2214,11 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 ### Task 8.1: Update DataView to Use activeScore
 
 **Files:**
-- Modify: `wolfsbit/ViewsDataView.swift`
+- Modify: `wolfsbit/views/ViewsDataView.swift`
 
 **Step 1: Verify all chart/display code uses activeScore**
 
-Search for `healthScore` in `ViewsDataView.swift` and replace with `activeScore`:
+Search for `healthScore` in `wolfsbit/views/ViewsDataView.swift` and replace with `activeScore`:
 
 ```swift
 // Already done in Task 4.1, verify:
@@ -2422,20 +2422,20 @@ This implementation added ML integration, voice-first UX, dynamic reminders, doc
 
 ```
 wolfsbit/
-├── Models/
+├── models/
 │   ├── ModelsJournalEntry.swift (updated)
 │   ├── ModelsHealthQuestion.swift
 │   └── ModelsDoctorVisit.swift (new)
-├── ViewModels/
-│   └── ViewModelsJournalViewModel.swift (updated)
-├── Views/
+├── views/
+│   ├── ViewModelsJournalViewModel.swift (updated)
 │   ├── ViewsLogView.swift (updated - voice-first)
 │   ├── ViewsDataView.swift (updated - visualization)
 │   ├── ViewsHelpView.swift
 │   └── ViewsSettingsView.swift (updated - reminders, export)
-├── Utilities/
+├── utilities/
 │   ├── UtilitiesSpeechRecognizer.swift
 │   ├── UtilitiesDesignTokens.swift
+│   ├── UtilitiesSampleDataGenerator.swift
 │   ├── UtilitiesMLModelManager.swift (new)
 │   ├── UtilitiesReminderManager.swift (new)
 │   └── UtilitiesExportManager.swift (new)
