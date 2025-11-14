@@ -55,14 +55,14 @@ The app uses a structured question system:
 - Time range filtering: 7D, 30D, 90D, 180D, 1Y
 - Chart data filtered from Core Data fetch results based on timestamp
 
-## File Naming Convention
-All Swift files use PascalCase with type prefix to avoid folder structure:
-- Models: `ModelsJournalEntry.swift`, `ModelsHealthQuestion.swift`
-- ViewModels: `ViewModelsJournalViewModel.swift`
-- Views: `ViewsLogView.swift`, `ViewsDataView.swift`, etc.
-- Utilities: `UtilitiesSpeechRecognizer.swift`, `UtilitiesDesignTokens.swift`
+## File Organization
+The project uses an organized folder structure with lowercase folder names:
+- **Models**: `wolfsbit/models/` - Contains `ModelsJournalEntry.swift`, `ModelsHealthQuestion.swift`
+- **Views**: `wolfsbit/views/` - Contains `ViewsLogView.swift`, `ViewsDataView.swift`, `ViewsHelpView.swift`, `ViewsSettingsView.swift`
+- **ViewModels**: `wolfsbit/views/` - Contains `ViewModelsJournalViewModel.swift` (located with views for convenience)
+- **Utilities**: `wolfsbit/utilities/` - Contains `UtilitiesSpeechRecognizer.swift`, `UtilitiesDesignTokens.swift`, `UtilitiesSampleDataGenerator.swift`
 
-This is unusual but intentional for this project's flat file structure.
+All Swift files use PascalCase names with type prefixes (Models*, Views*, Utilities*) for clarity and easy identification.
 
 ## Key Technical Decisions
 
@@ -83,13 +83,13 @@ Core Data previews use `PersistenceController.preview` which creates an in-memor
 ## Common Development Tasks
 
 ### Adding New Questions
-Modify `HealthQuestion.defaultQuestions` in `ModelsHealthQuestion.swift`. Update `JournalViewModel.saveEntry()` to handle the new question's answer appropriately.
+Modify `HealthQuestion.defaultQuestions` in `wolfsbit/models/ModelsHealthQuestion.swift`. Update `JournalViewModel.saveEntry()` in `wolfsbit/views/ViewModelsJournalViewModel.swift` to handle the new question's answer appropriately.
 
 ### Changing Colors/Styling
-Edit `UtilitiesDesignTokens.swift` for centralized design tokens. The app uses a monochrome design with black accents.
+Edit `wolfsbit/utilities/UtilitiesDesignTokens.swift` for centralized design tokens. The app uses a monochrome design with black accents.
 
 ### Modifying Chart Display
-Edit `ViewsDataView.swift`. Chart configuration includes:
+Edit `wolfsbit/views/ViewsDataView.swift`. Chart configuration includes:
 - Y-axis scale: `chartYScale(domain: 0...10)`
 - Interpolation: `.interpolationMethod(.catmullRom)` for smooth curves
 - Time filtering via `filteredEntries` computed property
