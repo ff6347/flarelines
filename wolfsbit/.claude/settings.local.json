@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(superpowers:brainstorming)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\ndocs(plans): add comprehensive ML integration design\n\nDetailed design document covering:\n- System architecture (3-layer: input, analysis, output)\n- Core ML model integration strategy\n- Data flow and scoring logic (dual heuristic + ML)\n- Voice-first UX design\n- Dynamic reminder system\n- Export formats (PDF, CSV, XLSX)\n- Privacy and security constraints\n- Development phases (UX testing → ML training → TestFlight → Production)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "SlashCommand(/superpowers:write-plan)",
+      "Skill(superpowers:writing-plans)",
+      "Bash(git commit:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
