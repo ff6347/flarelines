@@ -40,23 +40,27 @@ class SpeechRecognizer: ObservableObject {
         // Cancel any ongoing recognition task
         recognitionTask?.cancel()
         recognitionTask = nil
-        
+
+        // Stop audio engine and remove any existing tap
+        let inputNode = audioEngine.inputNode
+        if audioEngine.isRunning {
+            audioEngine.stop()
+            inputNode.removeTap(onBus: 0)
+        }
+
         // Configure audio session
         let audioSession = AVAudioSession.sharedInstance()
         try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
         try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
-        
+
         // Create recognition request
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-        
+
         guard let recognitionRequest = recognitionRequest else {
             throw RecognizerError.nilRecognitionRequest
         }
-        
+
         recognitionRequest.shouldReportPartialResults = true
-        
-        // Start recording
-        let inputNode = audioEngine.inputNode
         
         recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { [weak self] result, error in
             guard let self = self else { return }
@@ -95,7 +99,10 @@ class SpeechRecognizer: ObservableObject {
     }
     
     func stopRecording() {
-        audioEngine.stop()
+        if audioEngine.isRunning {
+            audioEngine.stop()
+            audioEngine.inputNode.removeTap(onBus: 0)
+        }
         recognitionRequest?.endAudio()
         isRecording = false
     }
