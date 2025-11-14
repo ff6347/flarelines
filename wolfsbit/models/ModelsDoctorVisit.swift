@@ -16,7 +16,7 @@ extension DoctorVisit: Identifiable {
 
     // Convenience method to find most recent visit
     static func fetchMostRecent(context: NSManagedObjectContext) -> DoctorVisit? {
-        let request: NSFetchRequest<DoctorVisit> = DoctorVisit.fetchRequest()
+        let request = NSFetchRequest<DoctorVisit>(entityName: "DoctorVisit")
         request.sortDescriptors = [NSSortDescriptor(keyPath: \DoctorVisit.visitDate, ascending: false)]
         request.fetchLimit = 1
 
