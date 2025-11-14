@@ -69,16 +69,26 @@ class JournalViewModel: ObservableObject {
         entry.timestamp = Date()
         entry.feeling = answers[1]
         entry.symptoms = answers[3]
-        
+
         // Parse pain level from answer 2
         if let painString = answers[2],
            let painValue = extractPainLevel(from: painString) {
             entry.painLevel = Int16(painValue)
         }
-        
-        // Calculate health score based on pain level (inverse relationship)
-        entry.healthScore = calculateHealthScore(painLevel: entry.painLevel)
-        
+
+        // Calculate heuristic score (updated field name)
+        entry.heuristicScore = calculateHeuristicScore(painLevel: entry.painLevel)
+
+        // Initialize ML fields (no model yet)
+        entry.mlScore = 0.0
+        entry.scoreConfidence = 0.0
+        entry.activeScore = entry.heuristicScore  // Use heuristic for now
+        entry.needsReview = false
+
+        // Initialize user flags
+        entry.isFlaggedDay = false
+        entry.notes = nil
+
         do {
             try viewContext.save()
             resetForm()
@@ -98,7 +108,7 @@ class JournalViewModel: ObservableObject {
         return numbers.compactMap { Int($0) }.first
     }
     
-    private func calculateHealthScore(painLevel: Int16) -> Double {
+    private func calculateHeuristicScore(painLevel: Int16) -> Double {
         // Convert pain level (0-10) to health score (0-10)
         // Lower pain = higher health score
         return 10.0 - Double(painLevel)
