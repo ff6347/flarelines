@@ -16,18 +16,18 @@ class SpeechRecognizer: ObservableObject {
     @Published var transcript = ""
     @Published var isRecording = false
     @Published var authorizationStatus: SFSpeechRecognizerAuthorizationStatus = .notDetermined
-    
+
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
-    
+
     init() {
         Task {
             await requestAuthorization()
         }
     }
-    
+
     func requestAuthorization() async {
         authorizationStatus = await withCheckedContinuation { continuation in
             SFSpeechRecognizer.requestAuthorization { status in
@@ -35,10 +35,11 @@ class SpeechRecognizer: ObservableObject {
             }
         }
     }
-    
+
     func startRecording() throws {
-        // Reset any ongoing recording
-        reset()
+        // Cancel any ongoing recognition task
+        recognitionTask?.cancel()
+        recognitionTask = nil
 
         // Configure audio session
         let audioSession = AVAudioSession.sharedInstance()
@@ -46,33 +47,44 @@ class SpeechRecognizer: ObservableObject {
         try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
 
         // Create recognition request
-        let request = SFSpeechAudioBufferRecognitionRequest()
-        request.shouldReportPartialResults = true
-        recognitionRequest = request
+        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
 
-        // Get input node
+        guard let recognitionRequest = recognitionRequest else {
+            throw RecognizerError.nilRecognitionRequest
+        }
+
+        recognitionRequest.shouldReportPartialResults = true
+
+        // Start recording
         let inputNode = audioEngine.inputNode
 
-        // Start recognition task
-        recognitionTask = speechRecognizer?.recognitionTask(with: request) { [weak self] result, error in
+        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { [weak self] result, error in
             guard let self = self else { return }
+
+            var isFinal = false
 
             if let result = result {
                 Task { @MainActor in
                     self.transcript = result.bestTranscription.formattedString
+                    isFinal = result.isFinal
                 }
             }
 
-            if error != nil || result?.isFinal == true {
+            if error != nil || isFinal {
+                self.audioEngine.stop()
+                inputNode.removeTap(onBus: 0)
+
                 Task { @MainActor in
-                    self.reset()
+                    self.recognitionRequest = nil
+                    self.recognitionTask = nil
+                    self.isRecording = false
                 }
             }
         }
 
-        // Install tap with nil format to use the input node's default format
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: nil) { [weak request] buffer, _ in
-            request?.append(buffer)
+        let recordingFormat = inputNode.outputFormat(forBus: 0)
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, _ in
+            recognitionRequest.append(buffer)
         }
 
         audioEngine.prepare()
@@ -83,30 +95,17 @@ class SpeechRecognizer: ObservableObject {
     }
 
     func stopRecording() {
+        // Stop audio engine
+        audioEngine.stop()
+
+        // Remove tap to prevent crash on next recording
+        audioEngine.inputNode.removeTap(onBus: 0)
+
+        // End recognition
         recognitionRequest?.endAudio()
-        reset()
-    }
-
-    private func reset() {
-        // Stop recognition task
-        recognitionTask?.cancel()
-        recognitionTask = nil
-        recognitionRequest = nil
-
-        // Stop audio engine and remove tap
-        if audioEngine.isRunning {
-            audioEngine.stop()
-        }
-
-        // Always try to remove the tap (it's safe to call even if no tap exists)
-        let inputNode = audioEngine.inputNode
-        if inputNode.numberOfInputs > 0 {
-            inputNode.removeTap(onBus: 0)
-        }
-
         isRecording = false
     }
-    
+
     enum RecognizerError: Error {
         case nilRecognitionRequest
         case notAuthorized
