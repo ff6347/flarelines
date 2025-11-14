@@ -14,6 +14,14 @@ struct LogView: View {
     @StateObject private var speechRecognizer = SpeechRecognizer()
     @State private var currentAnswer = ""
     @State private var showingSavedAlert = false
+
+    // Computed property for displaying text with live transcription
+    private var displayText: String {
+        if speechRecognizer.isRecording && !speechRecognizer.transcript.isEmpty {
+            return currentAnswer + (currentAnswer.isEmpty ? "" : " ") + speechRecognizer.transcript
+        }
+        return currentAnswer
+    }
     
     init(context: NSManagedObjectContext) {
         _viewModel = StateObject(wrappedValue: JournalViewModel(context: context))
@@ -54,30 +62,56 @@ struct LogView: View {
                     .background(Color.black)
                     .cornerRadius(8)
                 
-                // Text Input Area
-                TextEditor(text: $currentAnswer)
-                    .frame(height: 200)
-                    .padding(12)
-                    .background(Color(UIColor.systemBackground))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                    )
-                    .overlay(alignment: .topLeading) {
-                        if currentAnswer.isEmpty {
-                            Text(viewModel.currentQuestion.placeholder)
-                                .foregroundColor(.gray)
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 20)
-                                .allowsHitTesting(false)
+                // Text Input Area with live transcription
+                ZStack(alignment: .topLeading) {
+                    // Base text editor (only editable when not recording)
+                    TextEditor(text: $currentAnswer)
+                        .frame(height: 200)
+                        .padding(12)
+                        .background(Color(UIColor.systemBackground))
+                        .opacity(speechRecognizer.isRecording ? 0 : 1)
+                        .onChange(of: currentAnswer) { _, newValue in
+                            viewModel.updateAnswer(newValue)
                         }
+
+                    // Display text with live transcription overlay
+                    if speechRecognizer.isRecording {
+                        VStack(alignment: .leading) {
+                            // Existing text in black
+                            if !currentAnswer.isEmpty {
+                                Text(currentAnswer)
+                                    .foregroundColor(.primary)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+
+                            // Live transcription in gray
+                            if !speechRecognizer.transcript.isEmpty {
+                                Text(speechRecognizer.transcript)
+                                    .foregroundColor(.secondary)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                        }
+                        .font(.body)
+                        .padding(16)
+                        .frame(height: 200, alignment: .topLeading)
                     }
-                    .onChange(of: currentAnswer) { _, newValue in
-                        viewModel.updateAnswer(newValue)
+
+                    // Placeholder
+                    if currentAnswer.isEmpty && !speechRecognizer.isRecording {
+                        Text(viewModel.currentQuestion.placeholder)
+                            .foregroundColor(.gray)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 20)
+                            .allowsHitTesting(false)
                     }
-                    .onAppear {
-                        currentAnswer = viewModel.getCurrentAnswer()
-                    }
+                }
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                )
+                .onAppear {
+                    currentAnswer = viewModel.getCurrentAnswer()
+                }
                 
                 // Voice Input Button
                 Button(action: {
@@ -107,16 +141,8 @@ struct LogView: View {
                     )
                 }
                 .disabled(speechRecognizer.authorizationStatus != .authorized)
-                
-                // Show live transcription while recording
-                if speechRecognizer.isRecording && !speechRecognizer.transcript.isEmpty {
-                    Text("Transcribing: \(speechRecognizer.transcript)")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .padding(.horizontal)
-                }
-                
-                // Navigation Buttons
+
+                // Navigation Buttons (locked while recording)
                 HStack(spacing: 16) {
                     Button(action: {
                         viewModel.previousQuestion()
@@ -129,13 +155,13 @@ struct LogView: View {
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color(UIColor.systemBackground))
-                        .foregroundColor(viewModel.canGoPrevious ? .primary : .gray)
+                        .foregroundColor(viewModel.canGoPrevious && !speechRecognizer.isRecording ? .primary : .gray)
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color.gray.opacity(0.3), lineWidth: 1)
                         )
                     }
-                    .disabled(!viewModel.canGoPrevious)
+                    .disabled(!viewModel.canGoPrevious || speechRecognizer.isRecording)
                     
                     Button(action: {
                         if viewModel.canGoNext {
@@ -154,10 +180,11 @@ struct LogView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.black)
+                        .background(speechRecognizer.isRecording ? Color.gray : Color.black)
                         .foregroundColor(.white)
                         .cornerRadius(8)
                     }
+                    .disabled(speechRecognizer.isRecording)
                 }
             }
             .padding(.horizontal)
