@@ -2,248 +2,369 @@
 
 ## Current State
 
-You have a working iOS prototype with basic journaling functionality, and complete design + implementation plans for ML integration and advanced features.
+You have a working iOS app with journaling functionality, localization support, enhanced UX, and Phase 1 of the ML integration complete.
 
 **What's Done:**
-- ✅ Design brainstorming session completed
-- ✅ Comprehensive design document: `docs/plans/2025-11-13-ml-integration-design.md`
-- ✅ Detailed implementation plan: `docs/plans/2025-11-13-ml-features-implementation.md`
-- ✅ Working prototype with 3-question journaling, voice input, basic charts
+
+### Phase 1: Enhanced Data Model ✅ COMPLETE
+- ✅ Updated JournalEntry with ML scoring fields (heuristicScore, mlScore, activeScore, scoreConfidence, needsReview)
+- ✅ Added user flags (isFlaggedDay, notes)
+- ✅ Created DoctorVisit entity for visit tracking
+- ✅ Updated JournalViewModel to initialize new fields
+- ✅ Updated preview data to show varied ML scenarios
+
+### UX Improvements ✅ COMPLETE
+- ✅ **Localization**: String Catalog setup with English/German support (needs translation)
+- ✅ **Voice Input UX**: Live transcription in text field with color coding, locked navigation while recording
+- ✅ **Entry Editing**: Full edit functionality with automatic score recalculation
+- ✅ **Onboarding**: 5-page first-launch flow with permission requests and Help tab integration
+
+### Bug Fixes ✅ COMPLETE
+- ✅ Fixed voice input crash (AVAudioEngine tap management)
+- ✅ Removed separate transcription label
+- ✅ Prevented wrong-field transcript errors
 
 **What's Next:**
-- Implement the features in the plan (9 phases, ~8-12 hours of work)
-- Each phase has bite-sized tasks with exact code and steps
-
-## How to Resume Implementation
-
-### Option 1: Subagent-Driven Development (Recommended for Quality)
-
-**Best for:** Task-by-task execution with code review between each step
-
-**How to start:**
-1. Open Claude Code in this directory (`/Users/tomato/Documents/apps/wolfsbit/wolfsbit`)
-2. Say: "Use superpowers:subagent-driven-development to implement the plan at docs/plans/2025-11-13-ml-features-implementation.md"
-3. Claude will:
-   - Dispatch a fresh subagent for each task
-   - Review code after each task completes
-   - Catch issues early before moving forward
-   - Keep you in the loop with progress
-
-**Advantages:**
-- Quality gates between tasks (code review after each)
-- Fast iteration with oversight
-- Stay in one session
-- Can pause/resume easily
-
-**Process:**
-```
-Task 1.1 → Subagent implements → Code review → Approve → Task 1.2 → ...
-```
+- Translate UI to German (export String Catalog, translate, import)
+- Continue with Phases 2-9 of ML plan (~6-10 hours remaining)
+- Test with German users
 
 ---
 
-### Option 2: Executing Plans (Batch Mode)
+## What We Did In This Session
 
-**Best for:** Completing full phases with periodic checkpoints
+### 1. Completed Phase 1 (ML Plan)
+**Tasks 1.1-1.4:**
+- Enhanced JournalEntry Core Data model with ML fields
+- Created DoctorVisit entity
+- Updated ViewModel for new field initialization
+- Updated preview data with ML scenarios
+- **Manual step required**: Core Data model updates in Xcode (completed by you)
 
-**How to start:**
-1. Open Claude Code in this directory
-2. Say: "Use superpowers:executing-plans to implement docs/plans/2025-11-13-ml-features-implementation.md"
-3. Claude will:
-   - Execute tasks in batches (e.g., all of Phase 1)
-   - Report back after each batch for review
-   - Continue to next batch on approval
+### 2. Identified & Fixed UX Issues
+**Problems found:**
+- Voice input transcription shown in separate label (cognitive load)
+- Could navigate while recording (transcript in wrong field)
+- No entry editing capability
+- No onboarding for first launch
+- No localization for German test groups
+
+**Solutions designed & implemented:**
+- Brainstormed with `superpowers:brainstorming` skill
+- Created comprehensive design in `docs/plans/2025-11-14-onboarding-localization-editing.md`
+- Implemented all 4 priorities
+
+### 3. Implementation Summary
+
+**Priority 1: Localization Setup**
+- Created `Localizable.xcstrings` String Catalog
+- Added German (de) language
+- All UI strings now extractable/translatable
+- **Action needed**: Export XLIFF, translate to German, import
+
+**Priority 2: Voice Input UX**
+- Live transcription displays directly in text field
+- Existing text (black) + live transcript (gray)
+- Navigation buttons disabled while recording
+- No more wrong-field errors
+
+**Priority 3: Entry Editing**
+- Created `ViewsEditEntryView.swift` modal
+- Edit feeling, pain level, symptoms, notes
+- Read-only score display
+- Auto-recalculates heuristic score on save
+- Placeholder for ML re-scoring (Phase 2)
+
+**Priority 4: Onboarding System**
+- Created `ViewsOnboardingView.swift` with 5 pages:
+  1. Welcome & overview
+  2. Voice permissions
+  3. Notifications (optional)
+  4. ML model download (deferred)
+  5. Ready to start
+- Shows on first launch via `@AppStorage`
+- Re-run capability from Help tab
+- Permission requests integrated
+
+**Commits this session:**
+- Phase 1: 6 commits (model updates, bug fixes)
+- UX improvements: 5 commits (localization, voice UX, editing, onboarding)
+- **Total**: 11 commits, all tested and working
+
+---
+
+## Next Session: Continue ML Implementation
+
+### Immediate Next Steps
+
+**Option A: Translate to German (30-60 mins)**
+1. In Xcode: Product → Export Localizations
+2. Send .xliff file to translator or translate manually
+3. Import translated .xliff back to Xcode
+4. Test app in German (Settings → Language → Deutsch)
+5. Commit: `feat(i18n): add German translations`
+
+**Option B: Continue ML Implementation (Phases 2-9)**
+
+The original ML plan continues with:
+
+### Phase 2: Core ML Integration Infrastructure (1 hour)
+- Create MLModelManager for model loading/inference
+- Add model download capability
+- Integrate scoring into JournalViewModel
+- **Tasks**: 2.1-2.3 in `docs/plans/2025-11-13-ml-features-implementation.md`
+
+### Phase 3: Voice-First UI Enhancements (30 mins)
+- ✅ Already done as part of UX improvements!
+- Skip to Phase 4
+
+### Phase 4: Enhanced Data Visualization (1 hour)
+- Confidence-based coloring on charts
+- "Since last visit" filtering
+- Flagged day markers
+- **Tasks**: 4.1-4.3
+
+### Phase 5: Dynamic Reminder System (1.5 hours)
+- Adaptive notification frequency
+- Flare-up detection
+- **Tasks**: 5.1-5.3
+
+### Phase 6: Doctor Visit Tracking (45 mins)
+- UI for marking doctor visits
+- "Since last visit" reports
+- **Tasks**: 6.1-6.2
+
+### Phase 7: Export Functionality (2-3 hours)
+- PDF report generation
+- CSV export
+- XLSX export
+- **Tasks**: 7.1-7.3
+
+### Phase 8: Testing & Validation (30 mins)
+- Preview testing
+- Build verification
+- **Tasks**: 8.1-8.2
+
+### Phase 9: Documentation (30 mins)
+- Update README
+- Implementation summary
+- **Tasks**: 9.1-9.2
+
+**Remaining time estimate**: 6-10 hours
+
+---
+
+## How to Resume
+
+### Recommended: Subagent-Driven Development
+
+**To continue with Phase 2:**
+```
+Use superpowers:subagent-driven-development to implement Phase 2 of the plan at docs/plans/2025-11-13-ml-features-implementation.md
+```
 
 **Advantages:**
-- Faster for straightforward tasks
+- Fresh subagent per task
+- Code review between tasks
+- Quality gates
+- Easy to pause/resume
+
+### Alternative: Execute All Remaining Phases
+```
+Use superpowers:executing-plans to implement Phases 2-9 of docs/plans/2025-11-13-ml-features-implementation.md
+```
+
+**Advantages:**
+- Faster batch execution
 - Less back-and-forth
-- Good for uninterrupted work sessions
-
-**Process:**
-```
-Phase 1 (all tasks) → Review → Approve → Phase 2 (all tasks) → Review → ...
-```
+- Good for uninterrupted sessions
 
 ---
 
-### Option 3: Manual Step-by-Step
+## Important Notes
 
-**Best for:** Learning the codebase or making modifications as you go
+### Before Continuing ML Implementation
 
-**How to do it:**
-1. Open `docs/plans/2025-11-13-ml-features-implementation.md`
-2. Start with Phase 1, Task 1.1
-3. Follow the exact steps (file paths, code, test procedures)
-4. Commit after each task with the provided commit message
-5. Move to next task
-
-**Advantages:**
-- Full control over each change
-- Easy to customize/modify during implementation
-- Great for understanding the code deeply
-
----
-
-## Recommended Workflow
-
-**My suggestion:** Start with **Option 1 (Subagent-Driven Development)**
-
-Here's why:
-- You get quality review after each task
-- Can pause at any point and resume later
-- Catches issues early (before they compound)
-- You maintain visibility into progress
-- Perfect for complex multi-phase work like this
-
-**First Session (1-2 hours):**
-1. Say: "Use superpowers:subagent-driven-development to implement Phase 1 of the plan at docs/plans/2025-11-13-ml-features-implementation.md"
-2. Let it complete Phase 1 (Enhanced Data Model - Tasks 1.1 through 1.4)
-3. Test the app builds and runs
-4. Review what changed
-
-**Subsequent Sessions:**
-- Continue with Phase 2, then Phase 3, etc.
-- Each phase is independent enough to pause between them
-- Total: ~8-12 hours across multiple sessions
-
----
-
-## Important Notes Before Starting
-
-### Core Data Model Changes
-Several tasks require manual Xcode work to update the Core Data model. The plan includes exact instructions, but here's what to expect:
-
-**Task 1.1:** Update `JournalEntry` entity
-- Open `wolfsbit.xcdatamodeld` in Xcode
-- Rename/add attributes as documented
-- Set Codegen to "Manual/None"
-
-**Task 1.2:** Add `DoctorVisit` entity
-- Add new entity to Core Data model
-- Configure attributes
+**Manual Xcode Steps Required:**
+Some tasks require updating Core Data models in Xcode (can't be automated). The plan includes exact instructions for:
+- Adding relationships between entities
+- Configuring fetch requests
+- Setting up indexes
 
 **After any Core Data changes:**
-- Clean build folder (`Cmd+Shift+K`)
-- Build (`Cmd+B`)
-- Core Data handles lightweight migration automatically
+1. Clean build folder (`Cmd+Shift+K`)
+2. Build (`Cmd+B`)
+3. Test on simulator
+4. Core Data handles lightweight migration
 
-### Testing Between Phases
+### Testing Checklist
 
-After each phase completes:
-1. Build the app (`Cmd+B`) - should succeed
-2. Run on simulator (`Cmd+R`) - should launch
-3. Quick smoke test of new features
-4. Verify existing features still work
+After each phase:
+- [ ] Build succeeds (`Cmd+B`)
+- [ ] App runs on simulator (`Cmd+R`)
+- [ ] New features work
+- [ ] Existing features still work
+- [ ] No crashes
 
-### Git Workflow
+### Current Build Status
 
-The plan includes commit messages for every task. The implementation will:
-- Commit frequently (after each completed task)
-- Use conventional commit format
-- Include co-authorship attribution
-- Keep commits atomic
-
-You'll have ~12-15 commits when done, easy to review or rollback if needed.
+**Last verified**: Build succeeded ✅
+**Device**: iPhone 17 Simulator, iOS 26.1
+**Target**: iOS 17.0+
 
 ---
 
-## If You Get Stuck
+## Files Modified This Session
 
-### Common Issues & Solutions
+### New Files
+- `wolfsbit/Localizable.xcstrings` - String Catalog for localization
+- `wolfsbit/views/ViewsOnboardingView.swift` - 5-page onboarding flow
+- `wolfsbit/views/ViewsEditEntryView.swift` - Entry editor modal
+- `docs/plans/2025-11-14-voice-input-ux-improvements.md` - Voice UX design
+- `docs/plans/2025-11-14-onboarding-localization-editing.md` - Complete UX design
 
-**Issue: Core Data migration error**
-- Solution: The plan uses lightweight migration (adding fields). If you see errors, delete the app from simulator and reinstall.
+### Modified Files
+- `wolfsbit/wolfsbitApp.swift` - First launch onboarding trigger
+- `wolfsbit/views/ViewsLogView.swift` - Voice UX improvements
+- `wolfsbit/views/ViewsDataView.swift` - Edit button wired up
+- `wolfsbit/views/ViewsHelpView.swift` - Re-run onboarding button
+- `wolfsbit/models/ModelsJournalEntry.swift` - ML fields added
+- `wolfsbit/models/ModelsDoctorVisit.swift` - New entity created
+- `wolfsbit/views/ViewModelsJournalViewModel.swift` - Initialize ML fields
+- `wolfsbit/Persistence.swift` - Preview data with ML scenarios
+- `wolfsbit/utilities/UtilitiesSpeechRecognizer.swift` - Bug fixes
 
-**Issue: Build errors after Core Data changes**
-- Solution: Clean build folder (`Cmd+Shift+K`), then build again. Verify entity attributes match Swift class exactly.
-
-**Issue: Preview crashes**
-- Solution: Core Data previews can be tricky. Run on simulator instead. Check `Persistence.preview` is set up correctly.
-
-**Issue: Voice input not working**
-- Solution: Grant microphone + speech recognition permissions. Check Info.plist has both privacy descriptions.
-
-### Getting Help
-
-If Claude encounters an issue during implementation:
-1. It will stop and report the problem
-2. Ask it: "What went wrong and how should we fix it?"
-3. It can debug or skip to next task if needed
-
-You can also:
-- Pause execution at any time
-- Resume from any task in the plan
-- Skip tasks that are optional
+### Core Data Changes (Manual in Xcode)
+- `wolfsbit.xcdatamodeld` - JournalEntry updated with 7 new attributes
+- `wolfsbit.xcdatamodeld` - DoctorVisit entity added with 4 attributes
 
 ---
 
-## After Implementation
+## Known Issues
 
-When all phases are complete, you'll have:
+### None Currently
 
-1. **Enhanced App Features:**
-   - ML-powered health scoring (infrastructure ready)
-   - Voice-first logging experience
-   - Dynamic reminders during flare-ups
-   - Doctor visit tracking
-   - PDF/CSV/XLSX exports
-
-2. **Next Steps (Not in Plan):**
-   - Train actual Core ML model with real patient data
-   - Conduct UX testing with chronic illness patients
-   - Validate question set with medical practitioners
-   - Add unit tests
-   - Prepare for TestFlight beta
-
-3. **Documentation:**
-   - Updated README
-   - Implementation summary in `docs/IMPLEMENTATION_SUMMARY.md`
-   - Original design in `docs/plans/2025-11-13-ml-integration-design.md`
+All features tested and working:
+- ✅ Voice input works across multiple questions
+- ✅ Entry editing saves correctly
+- ✅ Onboarding shows on first launch
+- ✅ Localization ready (needs translation)
+- ✅ Navigation locked during recording
 
 ---
 
-## Quick Start Command
+## German Translation Workflow
 
-When you're ready to begin:
+### When Ready to Translate
 
+**Step 1: Export from Xcode**
+1. Open project in Xcode
+2. Product → Export Localizations...
+3. Select German (de)
+4. Export to a folder
+5. You'll get: `de.xliff` file
+
+**Step 2: Translate**
+- Use translation service (DeepL, professional translator)
+- Or manually edit the XLIFF file
+- Key strings to translate: all UI text, button labels, help content
+
+**Step 3: Import back to Xcode**
+1. Product → Import Localizations...
+2. Select translated `de.xliff` file
+3. Xcode updates `Localizable.xcstrings`
+4. Build and test
+
+**Step 4: Test in German**
+1. iOS Simulator → Settings → General → Language & Region
+2. Set iPhone Language to "Deutsch"
+3. Run app
+4. Verify all text is German
+5. Commit: `feat(i18n): add German translations`
+
+---
+
+## What You Have Now
+
+**Working Features:**
+- 3-question daily journaling
+- Voice input with live transcription
+- Entry editing
+- Health score tracking
+- Charts with time filtering
+- Preview data with ML scenarios
+- First-launch onboarding
+- Localization framework (English baseline, German ready)
+- Doctor visit entity (ready for Phase 6)
+- ML scoring fields (ready for Phase 2)
+
+**Ready for German Testing:**
+- UI framework supports German
+- Just need to translate ~50-80 strings
+- App will automatically use device language
+
+**Ready for ML Integration:**
+- Data model supports dual scoring (heuristic + ML)
+- Confidence thresholds implemented
+- Need to add MLModelManager (Phase 2)
+- Need to train/download actual model
+
+---
+
+## Quick Reference
+
+**Design Documents:**
+- ML Integration Design: `docs/plans/2025-11-13-ml-integration-design.md`
+- ML Implementation Plan: `docs/plans/2025-11-13-ml-features-implementation.md`
+- UX Improvements Design: `docs/plans/2025-11-14-onboarding-localization-editing.md`
+
+**Key Files:**
+- App Entry: `wolfsbit/wolfsbitApp.swift`
+- Main Views: `wolfsbit/views/Views*.swift`
+- Models: `wolfsbit/models/Models*.swift`
+- View Models: `wolfsbit/views/ViewModels*.swift`
+- Core Data: `wolfsbit.xcdatamodeld`
+- Localization: `wolfsbit/Localizable.xcstrings`
+
+**Git Status:**
+- Branch: `main`
+- Clean working directory
+- All changes committed
+- Ready to continue
+
+---
+
+## Timeline to Completion
+
+**Phase 1** ✅ DONE (2 hours) - Enhanced Data Model
+**UX Improvements** ✅ DONE (3 hours) - Localization, Voice, Editing, Onboarding
+**Translation** ⏳ TODO (30-60 mins) - German translations
+**Phase 2-9** ⏳ TODO (6-10 hours) - ML integration, features, export
+
+**Estimated remaining**: 7-11 hours total
+**Can split into**: 2-3 sessions of 3-4 hours each
+
+---
+
+## When You're Ready
+
+**To continue ML implementation:**
 ```
-Use superpowers:subagent-driven-development to implement the plan at docs/plans/2025-11-13-ml-features-implementation.md starting with Phase 1
+Use superpowers:subagent-driven-development to implement Phase 2 of the plan at docs/plans/2025-11-13-ml-features-implementation.md
 ```
 
-Or if you prefer batch mode:
+**To translate to German:**
+```
+I'm ready to translate the app to German. Guide me through exporting the String Catalog.
+```
 
-```
-Use superpowers:executing-plans to implement docs/plans/2025-11-13-ml-features-implementation.md
-```
+**To test current features:**
+Just run the app and explore! Everything should work:
+- LOG → answer questions with voice
+- DATA → view charts, edit entries
+- HELP → re-run onboarding
+- Delete app and reinstall to see onboarding
 
 ---
 
-## Timeline Estimate
-
-**Phase 1 (Data Model):** 1-2 hours
-**Phase 2 (ML Infrastructure):** 1 hour
-**Phase 3 (Voice-First UI):** 30 mins
-**Phase 4 (Visualization):** 1 hour
-**Phase 5 (Reminders):** 1.5 hours
-**Phase 6 (Doctor Visits):** 45 mins
-**Phase 7 (Export):** 2-3 hours
-**Phase 8 (Testing):** 30 mins
-**Phase 9 (Docs):** 30 mins
-
-**Total:** 8-12 hours (can be split across multiple sessions)
-
----
-
-## Questions Before Starting?
-
-If you want to:
-- Modify the plan before implementing
-- Skip certain features
-- Add additional features
-- Change the implementation approach
-
-Just tell Claude what you want to adjust, and it can update the plan accordingly.
-
----
-
-**Good night! When you're ready to continue, the plan is waiting. 🌙**
+**Great progress today! Phase 1 complete + major UX improvements. Ready to continue whenever you are. 🚀**
