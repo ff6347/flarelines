@@ -24,7 +24,33 @@ struct PersistenceController {
             entry.feeling = ["Feeling good", "A bit tired", "Energetic", "Moderate", "Not great"].randomElement()
             entry.painLevel = Int16.random(in: 2...8)
             entry.symptoms = ["Headache", "Fatigue", "No symptoms", "Mild discomfort", "Some pain"].randomElement()
-            entry.healthScore = 10.0 - Double(entry.painLevel)
+
+            // Set heuristic score
+            entry.heuristicScore = 10.0 - Double(entry.painLevel)
+
+            // Simulate some entries with ML scores
+            if i % 3 == 0 {
+                entry.mlScore = entry.heuristicScore + Double.random(in: -0.5...0.5)
+                entry.scoreConfidence = Double.random(in: 0.7...0.95)
+                entry.activeScore = entry.mlScore
+                entry.needsReview = false
+            } else if i % 3 == 1 {
+                // Low confidence entry
+                entry.mlScore = entry.heuristicScore + Double.random(in: -1.0...1.0)
+                entry.scoreConfidence = Double.random(in: 0.3...0.59)
+                entry.activeScore = entry.heuristicScore  // Fall back to heuristic
+                entry.needsReview = true
+            } else {
+                // No ML score yet
+                entry.mlScore = 0.0
+                entry.scoreConfidence = 0.0
+                entry.activeScore = entry.heuristicScore
+                entry.needsReview = false
+            }
+
+            // Flag some days
+            entry.isFlaggedDay = (i % 4 == 0)
+            entry.notes = entry.isFlaggedDay ? "Particularly difficult day" : nil
         }
         
         do {
