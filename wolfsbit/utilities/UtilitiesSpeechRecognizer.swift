@@ -85,12 +85,13 @@ class SpeechRecognizer: ObservableObject {
                 }
             }
         }
-        
-        let recordingFormat = inputNode.outputFormat(forBus: 0)
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, _ in
+
+        // Install tap with nil format to use the input node's default format
+        // This is more reliable than using outputFormat(forBus:) which can be invalid
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: nil) { buffer, _ in
             recognitionRequest.append(buffer)
         }
-        
+
         audioEngine.prepare()
         try audioEngine.start()
         
