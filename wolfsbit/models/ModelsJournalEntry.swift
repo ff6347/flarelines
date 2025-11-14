@@ -1,3 +1,5 @@
+// ABOUTME: Core Data model for journal entries tracking daily health status.
+// ABOUTME: Supports dual scoring (heuristic + ML), user flags, and symptom tracking.
 //
 //  JournalEntry.swift
 //  wolfsbit
