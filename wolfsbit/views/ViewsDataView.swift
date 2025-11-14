@@ -183,22 +183,28 @@ struct GroupedEntry {
 struct JournalEntryCard: View {
     let entry: JournalEntry
     @State private var isExpanded = false
-    
+    @State private var showingEditSheet = false
+    @Environment(\.managedObjectContext) private var viewContext
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text(entry.timestamp, style: .time)
                     .font(.caption)
                     .foregroundColor(.secondary)
-                
+
                 Spacer()
-                
+
                 Button(action: {
-                    // Edit functionality
+                    showingEditSheet = true
                 }) {
                     Image(systemName: "pencil")
                         .foregroundColor(.secondary)
                         .font(.caption)
+                }
+                .sheet(isPresented: $showingEditSheet) {
+                    EditEntryView(entry: entry)
+                        .environment(\.managedObjectContext, viewContext)
                 }
             }
             
