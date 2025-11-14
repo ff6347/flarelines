@@ -1,0 +1,4 @@
+app_path: /Applications/Xcode.app
+version: 26.1
+build: 24454
+synced_at: 20251114-1059
