@@ -19,7 +19,18 @@ reason: 'required condition is false: IsFormatSampleRateAndChannelCountValid(for
 ```
 
 **Current Issue (After refactoring):**
-Voice input button triggers recording but immediately stops. On second tap, app crashes with the nullptr Tap error again.
+NOW FAILS ON FIRST TAP - worse than before. Audio engine fails to initialize at all.
+
+**Error 3 (Latest - Audio Unit failure):**
+```
+AddInstanceForFactory: No factory registered for id <CFUUID 0x600000238ac0> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+AURemoteIO.cpp:1135  failed: -10851 (enable 1, outf< 2 ch, 0 Hz, Float32, deinterleaved> inf< 2 ch, 0 Hz, Float32, deinterleaved>)
+HALC_ShellPlugIn.cpp:915    HAL_HardwarePlugIn_ObjectHasProperty: no object
+HALSystem.cpp:2229   AudioObjectPropertiesChanged: no such object
+SetProperty: RPC timeout. Apparently deadlocked. Aborting now.
+```
+
+**Error Code:** `-10851` = `kAudioUnitErr_NoConnection` (Audio Unit cannot connect to hardware)
 
 ## File Location
 
@@ -81,26 +92,75 @@ Button(action: {
 ```
 
 User flow:
+1. Tap mic button on Question 1 → **CRASH** ❌ (after latest refactoring)
+
+Previous behavior (before refactoring):
 1. Tap mic button on Question 1 → Works ✓
 2. Recording stops (either auto or manual)
 3. Navigate to Question 2
 4. Tap mic button → **CRASH** ❌
 
-## Root Cause Hypothesis
+## Root Cause Analysis
 
-The AVAudioEngine tap is not being properly cleaned up between recording sessions. Possible issues:
-- Race condition between cleanup and new tap installation
-- Audio engine state not fully reset
-- Tap removal failing silently
-- SwiftUI state updates causing multiple reset() calls
+**Primary Issue: iOS Simulator Audio Limitations**
+
+The latest error (`-10851 kAudioUnitErr_NoConnection`) reveals the core problem is with the **Audio Unit Remote I/O** component failing to initialize properly on the simulator, especially after stop/restart cycles.
+
+**Root causes:**
+1. **Simulator audio hardware emulation is fragile** - Audio Units don't properly reset between sessions
+2. **Audio session not fully deactivating** - Session remains in a bad state after stopping
+3. **Race condition in audio engine lifecycle** - Starting too soon after stopping
+4. **Output format has invalid sample rate (0 Hz)** - Indicates audio engine initialization failure
+
+**Additional issues:**
+- AVAudioEngine tap is not being properly cleaned up between recording sessions
+- Audio engine state not fully reset before restart
+- Tap removal may be failing silently
+- SwiftUI state updates may be causing multiple reset() calls
 
 ## What We Need
 
 A robust implementation of SpeechRecognizer that:
-1. Properly cleans up AVAudioEngine tap between recordings
-2. Handles multiple start/stop cycles without crashing
-3. Works when navigating between SwiftUI views
-4. Doesn't have race conditions between cleanup and initialization
+1. **Handles iOS Simulator audio limitations** - Gracefully handles Audio Unit failures
+2. **Properly resets the audio session** - Fully deactivate/reactivate between sessions
+3. **Avoids race conditions** - Add appropriate delays or synchronization
+4. **Cleans up AVAudioEngine tap completely** - No leftover taps between recordings
+5. **Handles multiple start/stop cycles** - Works reliably across questions
+6. **Works when navigating between SwiftUI views** - State persists correctly
+
+## Potential Solutions
+
+1. **Full audio session reset between recordings:**
+   ```swift
+   try audioSession.setActive(false, options: .notifyOthersOnDeactivation)
+   // Small delay to let hardware reset
+   try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+   ```
+
+2. **Recreate AVAudioEngine instance** - Don't reuse the same instance
+   - Create new `AVAudioEngine()` on each startRecording()
+   - Prevents accumulated state issues
+
+3. **Add async/await delays** - Give audio hardware time to reset:
+   ```swift
+   try await Task.sleep(nanoseconds: 100_000_000) // 100ms
+   ```
+
+4. **Better error handling** - Catch and recover from Audio Unit failures:
+   ```swift
+   do {
+       try audioEngine.start()
+   } catch {
+       // Retry with fresh audio session
+   }
+   ```
+
+5. **Simulator detection** - Different behavior for simulator vs device:
+   ```swift
+   #if targetEnvironment(simulator)
+   // More conservative approach for simulator
+   #endif
+   ```
 
 ## Environment
 
