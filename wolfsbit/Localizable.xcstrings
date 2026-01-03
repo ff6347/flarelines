@@ -1,37 +1,47 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%d/10" : {
-
+    "%d - %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$d - %2$@"
+          }
+        }
+      }
     },
     "%lld entries" : {
 
     },
-    "%lld%%" : {
+    "0" : {
+
+    },
+    "0 = Remission, 1 = Mild, 2 = Moderate, 3 = Severe" : {
+
+    },
+    "1" : {
 
     },
     "1.0.0" : {
 
     },
+    "2" : {
+
+    },
+    "3" : {
+
+    },
     "About" : {
 
     },
-    "Active Score" : {
-
-    },
-    "Additional notes (optional)" : {
+    "Activity Score" : {
 
     },
     "Allow Microphone & Speech" : {
 
     },
     "Answer daily questions using your voice. Wolfsbit needs microphone and speech recognition access." : {
-
-    },
-    "Any symptoms you noticed?" : {
-
-    },
-    "Basic scoring ready" : {
 
     },
     "Cancel" : {
@@ -44,6 +54,9 @@
 
     },
     "Continue" : {
+
+    },
+    "Corner Radii Found" : {
 
     },
     "Daily health tracking" : {
@@ -61,9 +74,6 @@
     "Data" : {
 
     },
-    "DATA" : {
-
-    },
     "Date" : {
 
     },
@@ -73,19 +83,22 @@
     "Debug Tools" : {
 
     },
-    "Describe your pain level" : {
+    "Delete" : {
 
     },
-    "Download an AI model that learns your patterns and provides more accurate health scores over time." : {
+    "Done" : {
 
     },
-    "Download Later" : {
+    "Download Model" : {
 
     },
-    "Download Now" : {
+    "Download the AI model that analyzes your entries and provides health scores. This is a research project—the model is required." : {
 
     },
-    "Download: ~50-100 MB" : {
+    "Download: ~1.8 GB" : {
+
+    },
+    "Edit" : {
 
     },
     "Edit Entry" : {
@@ -104,9 +117,6 @@
 
     },
     "Export reports for your doctor" : {
-
-    },
-    "Feeling" : {
 
     },
     "Generate 1 Year" : {
@@ -130,19 +140,13 @@
     "Health Progress" : {
 
     },
-    "HELP" : {
+    "Help" : {
 
     },
     "Help & Support" : {
 
     },
-    "Heuristic Score" : {
-
-    },
-    "How are you feeling today?" : {
-
-    },
-    "How intense is your pain on a scale of 0-10?" : {
+    "How are you doing today?" : {
 
     },
     "I'll enable this later" : {
@@ -151,16 +155,10 @@
     "Journal Entries" : {
 
     },
-    "LOG" : {
+    "Journal Entry" : {
 
     },
-    "Low confidence - needs review" : {
-
-    },
-    "ML Score" : {
-
-    },
-    "Next" : {
+    "Model download pending" : {
 
     },
     "No data available for this time range" : {
@@ -178,35 +176,16 @@
     "OK" : {
 
     },
-    "Pain" : {
-
-    },
-    "Pain Level" : {
-
-    },
-    "Pain level: %d/10" : {
-
-    },
-    "Previous" : {
+    "Optional additional notes" : {
 
     },
     "Privacy Policy" : {
 
     },
-    "Question %lld of %lld" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Question %1$lld of %2$lld"
-          }
-        }
-      }
-    },
-    "Re-run Onboarding" : {
+    "Rate your activity!" : {
 
     },
-    "Recording..." : {
+    "Re-run Onboarding" : {
 
     },
     "Reminder Time" : {
@@ -221,10 +200,7 @@
     "Save" : {
 
     },
-    "Scores (Read-Only)" : {
-
-    },
-    "Scores are automatically recalculated when you save changes." : {
+    "Scan Corner Radii" : {
 
     },
     "Settings" : {
@@ -236,7 +212,7 @@
     "Skip for now" : {
 
     },
-    "Smart Health Scoring (Optional)" : {
+    "Smart Health Scoring" : {
 
     },
     "Start by logging how you're feeling today. Your first entry takes less than a minute." : {
@@ -245,7 +221,7 @@
     "Start Journaling" : {
 
     },
-    "Symptoms" : {
+    "Start writing..." : {
 
     },
     "Terms of Service" : {
@@ -263,9 +239,6 @@
     "Version" : {
 
     },
-    "Voice Input" : {
-
-    },
     "Voice input enabled" : {
 
     },
@@ -278,19 +251,13 @@
     "Welcome to Wolfsbit" : {
 
     },
-    "What symptoms are you experiencing?" : {
-
-    },
-    "You can use the app without this. It will use basic scoring until you download the model." : {
-
-    },
     "You're All Set!" : {
 
     },
     "Your data stays private" : {
 
     },
-    "Your journal entry has been saved successfully." : {
+    "Your journal entry has been saved." : {
 
     }
   },
