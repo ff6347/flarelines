@@ -57,8 +57,6 @@ struct EditEntryView: View {
                         TextEditor(text: $journalText)
                             .frame(height: DesignTokens.Dimensions.textEditorHeightSmall)
                             .scrollContentBackground(.hidden)
-                            .background(Color(UIColor.secondarySystemBackground))
-                            .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.sm, style: .continuous))
                     }
 
                     Divider()
@@ -100,8 +98,6 @@ struct EditEntryView: View {
                         TextEditor(text: $notes)
                             .frame(height: DesignTokens.Dimensions.textEditorHeightCompact)
                             .scrollContentBackground(.hidden)
-                            .background(Color(UIColor.secondarySystemBackground))
-                            .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.sm, style: .continuous))
 
                         Text("Optional additional notes")
                             .font(DesignTokens.Typography.caption)

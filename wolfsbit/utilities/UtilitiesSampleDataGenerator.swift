@@ -163,6 +163,7 @@ struct DebugControlsView: View {
                 }
             }
         }
+        .listStyle(.plain)
         .navigationTitle("Debug Controls")
     }
 }
