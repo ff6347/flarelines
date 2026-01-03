@@ -28,7 +28,7 @@ struct EditEntryView: View {
                     // Entry Details
                     VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
                         Text("Entry Details")
-                            .font(.headline)
+                            .font(DesignTokens.Typography.headline)
                             .fontWeight(.bold)
 
                         HStack {
@@ -51,7 +51,7 @@ struct EditEntryView: View {
                     // Journal Entry
                     VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
                         Text("Journal Entry")
-                            .font(.headline)
+                            .font(DesignTokens.Typography.headline)
                             .fontWeight(.bold)
 
                         TextEditor(text: $journalText)
@@ -66,7 +66,7 @@ struct EditEntryView: View {
                     // Activity Score
                     VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
                         Text("Activity Score")
-                            .font(.headline)
+                            .font(DesignTokens.Typography.headline)
                             .fontWeight(.bold)
 
                         Slider(value: $activityScore, in: 0...3, step: 1)
@@ -81,11 +81,11 @@ struct EditEntryView: View {
                             Spacer()
                             Text("3")
                         }
-                        .font(.caption)
+                        .font(DesignTokens.Typography.caption)
                         .foregroundColor(.secondary)
 
                         Text("0 = Remission, 1 = Mild, 2 = Moderate, 3 = Severe")
-                            .font(.caption)
+                            .font(DesignTokens.Typography.caption)
                             .foregroundColor(.secondary)
                     }
 
@@ -94,7 +94,7 @@ struct EditEntryView: View {
                     // Notes
                     VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
                         Text("Notes")
-                            .font(.headline)
+                            .font(DesignTokens.Typography.headline)
                             .fontWeight(.bold)
 
                         TextEditor(text: $notes)
@@ -104,7 +104,7 @@ struct EditEntryView: View {
                             .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.sm, style: .continuous))
 
                         Text("Optional additional notes")
-                            .font(.caption)
+                            .font(DesignTokens.Typography.caption)
                             .foregroundColor(.secondary)
                     }
                 }

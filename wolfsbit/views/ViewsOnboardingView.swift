@@ -47,7 +47,7 @@ struct OnboardingView: View {
                         Button("Skip") {
                             currentPage = 4
                         }
-                        .font(.subheadline)
+                        .font(DesignTokens.Typography.secondary)
                         .padding()
                     }
                 }
@@ -69,7 +69,7 @@ struct OnboardingView: View {
 
             VStack(spacing: DesignTokens.Spacing.lg) {
                 Text("Welcome to Wolfsbit")
-                    .font(.largeTitle)
+                    .font(DesignTokens.Typography.largeTitle)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
 
@@ -81,13 +81,13 @@ struct OnboardingView: View {
 
             VStack(alignment: .leading, spacing: DesignTokens.Spacing.lg) {
                 Label("Voice input for easy logging", systemImage: "mic.fill")
-                    .font(.headline)
+                    .font(DesignTokens.Typography.headline)
 
                 Label("Daily health tracking", systemImage: "cylinder.split.1x2")
-                    .font(.headline)
+                    .font(DesignTokens.Typography.headline)
 
                 Label("Export reports for your doctor", systemImage: "doc.text.fill")
-                    .font(.headline)
+                    .font(DesignTokens.Typography.headline)
             }
             .frame(maxWidth: DesignTokens.Dimensions.contentMaxWidth)
 
@@ -123,7 +123,7 @@ struct OnboardingView: View {
 
             VStack(spacing: DesignTokens.Spacing.lg) {
                 Text("Voice Input Makes Logging Easy")
-                    .font(.title)
+                    .font(DesignTokens.Typography.title)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
 
@@ -133,7 +133,7 @@ struct OnboardingView: View {
                     .padding(.horizontal, DesignTokens.Spacing.xxl)
 
                 Text("Typing can be exhausting when you're fatigued. Voice input is faster and easier.")
-                    .font(.subheadline)
+                    .font(DesignTokens.Typography.secondary)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, DesignTokens.Spacing.xxl)
@@ -159,7 +159,7 @@ struct OnboardingView: View {
                         currentPage = 2
                     }
                 }
-                .font(.subheadline)
+                .font(DesignTokens.Typography.secondary)
                 .foregroundColor(.secondary)
             }
             .padding(.horizontal, DesignTokens.Spacing.xxl)
@@ -179,7 +179,7 @@ struct OnboardingView: View {
 
             VStack(spacing: DesignTokens.Spacing.lg) {
                 Text("Daily Reminders (Optional)")
-                    .font(.title)
+                    .font(DesignTokens.Typography.title)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
 
@@ -189,7 +189,7 @@ struct OnboardingView: View {
                     .padding(.horizontal, DesignTokens.Spacing.xxl)
 
                 Text("Consistent tracking helps you and your doctor see patterns.")
-                    .font(.subheadline)
+                    .font(DesignTokens.Typography.secondary)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, DesignTokens.Spacing.xxl)
@@ -215,7 +215,7 @@ struct OnboardingView: View {
                         currentPage = 3
                     }
                 }
-                .font(.subheadline)
+                .font(DesignTokens.Typography.secondary)
                 .foregroundColor(.secondary)
             }
             .padding(.horizontal, DesignTokens.Spacing.xxl)
@@ -235,7 +235,7 @@ struct OnboardingView: View {
 
             VStack(spacing: DesignTokens.Spacing.lg) {
                 Text("Smart Health Scoring")
-                    .font(.title)
+                    .font(DesignTokens.Typography.title)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
 
@@ -249,7 +249,7 @@ struct OnboardingView: View {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(.secondary)
                         Text("Runs on your device")
-                            .font(.subheadline)
+                            .font(DesignTokens.Typography.secondary)
                         Spacer()
                     }
 
@@ -257,7 +257,7 @@ struct OnboardingView: View {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(.secondary)
                         Text("Your data stays private")
-                            .font(.subheadline)
+                            .font(DesignTokens.Typography.secondary)
                         Spacer()
                     }
 
@@ -265,7 +265,7 @@ struct OnboardingView: View {
                         Image(systemName: "arrow.down.circle.fill")
                             .foregroundColor(.secondary)
                         Text("Download: ~1.8 GB")
-                            .font(.subheadline)
+                            .font(DesignTokens.Typography.secondary)
                         Spacer()
                     }
                 }
@@ -305,7 +305,7 @@ struct OnboardingView: View {
 
             VStack(spacing: DesignTokens.Spacing.lg) {
                 Text("You're All Set!")
-                    .font(.largeTitle)
+                    .font(DesignTokens.Typography.largeTitle)
                     .fontWeight(.bold)
 
                 Text("Start by logging how you're feeling today. Your first entry takes less than a minute.")
@@ -330,7 +330,7 @@ struct OnboardingView: View {
                 Label("Model download pending", systemImage: "arrow.down.circle")
                     .foregroundColor(.secondary)
             }
-            .font(.subheadline)
+            .font(DesignTokens.Typography.secondary)
 
             Spacer()
 

@@ -38,7 +38,7 @@ struct JournalEditorView: View {
                     headerButton
                 }
                 .padding(.horizontal)
-                .padding(.top, 8)
+                .padding(.top, DesignTokens.Spacing.sm)
 
                 // Two-page content
                 TabView(selection: $currentPage) {
@@ -52,11 +52,11 @@ struct JournalEditorView: View {
 
                 // Page indicator spacing
                 Spacer()
-                    .frame(height: 24)
+                    .frame(height: DesignTokens.Spacing.xl)
 
                 // Toolbar
                 editorToolbar
-                    .padding(.bottom, 8)
+                    .padding(.bottom, DesignTokens.Spacing.sm)
             }
         }
         .preferredColorScheme(.dark)
@@ -103,10 +103,10 @@ struct JournalEditorView: View {
             // Page 1: Navigate to page 2
             Button(action: { withAnimation { currentPage = 1 } }) {
                 Image(systemName: "chevron.right")
-                    .font(.title2)
+                    .font(DesignTokens.Typography.title2)
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
-                    .frame(width: 56, height: 56)
+                    .frame(width: DesignTokens.Dimensions.actionButtonSize, height: DesignTokens.Dimensions.actionButtonSize)
                     .background(DesignTokens.Colors.highlight)
                     .clipShape(Circle())
             }
@@ -114,10 +114,10 @@ struct JournalEditorView: View {
             // Page 2: Save entry
             Button(action: saveEntry) {
                 Image(systemName: "checkmark")
-                    .font(.title2)
+                    .font(DesignTokens.Typography.title2)
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
-                    .frame(width: 56, height: 56)
+                    .frame(width: DesignTokens.Dimensions.actionButtonSize, height: DesignTokens.Dimensions.actionButtonSize)
                     .background(DesignTokens.Colors.highlight)
                     .clipShape(Circle())
             }
@@ -129,7 +129,7 @@ struct JournalEditorView: View {
     private var textEntryPage: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("How are you doing today?")
-                .font(.title3)
+                .font(DesignTokens.Typography.questionText)
                 .foregroundColor(.white)
                 .padding(.horizontal)
                 .padding(.top, DesignTokens.Spacing.xl)
@@ -144,7 +144,7 @@ struct JournalEditorView: View {
                 if speechRecognizer.isRecording {
                     // Live transcription view
                     ScrollView {
-                        VStack(alignment: .leading, spacing: 4) {
+                        VStack(alignment: .leading, spacing: DesignTokens.Spacing.xs) {
                             if !journalText.isEmpty {
                                 Text(journalText)
                                     .foregroundColor(.white)
@@ -154,7 +154,7 @@ struct JournalEditorView: View {
                                     .foregroundColor(.gray)
                             }
                         }
-                        .font(.body)
+                        .font(DesignTokens.Typography.body)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()
                     }
@@ -162,7 +162,7 @@ struct JournalEditorView: View {
                     TextEditor(text: $journalText)
                         .scrollContentBackground(.hidden)
                         .background(Color.clear)
-                        .font(.body)
+                        .font(DesignTokens.Typography.body)
                         .foregroundColor(.white)
                         .focused($isEditorFocused)
                         .padding(.horizontal, DesignTokens.Spacing.md)
@@ -172,10 +172,10 @@ struct JournalEditorView: View {
                 // Placeholder
                 if journalText.isEmpty && !speechRecognizer.isRecording {
                     Text("Start writing...")
-                        .font(.body)
+                        .font(DesignTokens.Typography.body)
                         .foregroundColor(.gray)
-                        .padding(.horizontal, 17)
-                        .padding(.top, 16)
+                        .padding(.horizontal, DesignTokens.Spacing.lg)
+                        .padding(.top, DesignTokens.Spacing.lg)
                         .allowsHitTesting(false)
                 }
             }
@@ -189,7 +189,7 @@ struct JournalEditorView: View {
     private var activityRatingPage: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("Rate your activity!")
-                .font(.title3)
+                .font(DesignTokens.Typography.questionText)
                 .foregroundColor(.white)
                 .padding(.horizontal)
                 .padding(.top, DesignTokens.Spacing.xl)
@@ -211,9 +211,9 @@ struct JournalEditorView: View {
                     Spacer()
                     Text("3")
                 }
-                .font(.caption)
+                .font(DesignTokens.Typography.caption)
                 .foregroundColor(.gray)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, DesignTokens.Spacing.xl)
             }
 
             Spacer()
@@ -223,44 +223,47 @@ struct JournalEditorView: View {
     // MARK: - Editor Toolbar
 
     private var editorToolbar: some View {
-        HStack(spacing: 0) {
-            // Mic button with pulse animation when recording
-            Button(action: toggleVoiceInput) {
-                Image(systemName: speechRecognizer.isRecording ? "mic.fill" : "mic")
-                    .foregroundColor(speechRecognizer.isRecording ? DesignTokens.Colors.highlight : .white)
-                    .scaleEffect(isPulsing ? 1.3 : 1.0)
-            }
-            .frame(maxWidth: .infinity)
+        VStack(spacing: 0) {
+            Divider()
+                .background(Color.gray.opacity(0.5))
 
-            // Data button
-            Button(action: { showingData = true }) {
-                Image(systemName: "cylinder.split.1x2")
-            }
-            .frame(maxWidth: .infinity)
+            HStack(spacing: 0) {
+                // Mic button with pulse animation when recording
+                Button(action: toggleVoiceInput) {
+                    Image(systemName: speechRecognizer.isRecording ? "mic.fill" : "mic")
+                        .foregroundColor(speechRecognizer.isRecording ? DesignTokens.Colors.highlight : .white)
+                        .scaleEffect(isPulsing ? 1.3 : 1.0)
+                }
+                .frame(maxWidth: .infinity)
 
-            // Help button
-            Button(action: { showingHelp = true }) {
-                Image(systemName: "questionmark.circle")
-            }
-            .frame(maxWidth: .infinity)
+                // Data button
+                Button(action: { showingData = true }) {
+                    Image(systemName: "cylinder.split.1x2")
+                }
+                .frame(maxWidth: .infinity)
 
-            // Settings button
-            Button(action: { showingSettings = true }) {
-                Image(systemName: "gearshape")
-            }
-            .frame(maxWidth: .infinity)
+                // Help button
+                Button(action: { showingHelp = true }) {
+                    Image(systemName: "questionmark.circle")
+                }
+                .frame(maxWidth: .infinity)
 
-            // Keyboard toggle button
-            Button(action: toggleKeyboard) {
-                Image(systemName: isEditorFocused ? "keyboard.chevron.compact.down" : "keyboard")
+                // Settings button
+                Button(action: { showingSettings = true }) {
+                    Image(systemName: "gearshape")
+                }
+                .frame(maxWidth: .infinity)
+
+                // Keyboard toggle button
+                Button(action: toggleKeyboard) {
+                    Image(systemName: isEditorFocused ? "keyboard.chevron.compact.down" : "keyboard")
+                }
+                .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity)
+            .font(DesignTokens.Typography.title2)
+            .foregroundColor(.white)
+            .padding(.vertical, DesignTokens.Spacing.md)
         }
-        .font(.title2)
-        .foregroundColor(.white)
-        .padding(.vertical, DesignTokens.Spacing.md)
-        .background(Color(white: 0.15))
-        .cornerRadius(DesignTokens.CornerRadius.lg)
         .padding(.horizontal)
     }
 

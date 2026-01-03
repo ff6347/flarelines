@@ -11,7 +11,7 @@ struct HelpView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignTokens.Spacing.xl) {
                 Text("Help & Support")
-                    .font(.largeTitle)
+                    .font(DesignTokens.Typography.largeTitle)
                     .fontWeight(.bold)
 
                 // Re-run Onboarding button
@@ -84,13 +84,13 @@ struct HelpSection: View {
             HStack {
                 Image(systemName: icon)
                     .foregroundColor(DesignTokens.Colors.highlight)
-                    .font(.title2)
+                    .font(DesignTokens.Typography.title2)
                 Text(title)
-                    .font(.headline)
+                    .font(DesignTokens.Typography.headline)
             }
-            
+
             Text(content)
-                .font(.body)
+                .font(DesignTokens.Typography.body)
                 .foregroundColor(.secondary)
 
             Divider()

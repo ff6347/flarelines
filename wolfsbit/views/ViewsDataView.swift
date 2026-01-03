@@ -51,10 +51,10 @@ struct DataView: View {
                     HStack {
                         Image(systemName: "cylinder.split.1x2")
                         Text("Health Progress")
-                            .font(.headline)
+                            .font(DesignTokens.Typography.headline)
                         Spacer()
                         Text("\(filteredEntries.count) entries")
-                            .font(.caption)
+                            .font(DesignTokens.Typography.caption)
                             .foregroundColor(.secondary)
                     }
                     .foregroundColor(.primary)
@@ -66,7 +66,7 @@ struct DataView: View {
                                 selectedTimeRange = range
                             }) {
                                 Text(range.rawValue)
-                                    .font(.caption)
+                                    .font(DesignTokens.Typography.caption)
                                     .fontWeight(selectedTimeRange == range ? .semibold : .regular)
                                     .foregroundColor(selectedTimeRange == range ? .white : .primary)
                                     .padding(.horizontal, DesignTokens.Spacing.md)
@@ -101,13 +101,13 @@ struct DataView: View {
                         .chartXAxis {
                             AxisMarks(values: .automatic) { value in
                                 AxisValueLabel(format: .dateTime.month().day())
-                                    .font(.caption2)
+                                    .font(DesignTokens.Typography.caption2)
                             }
                         }
                         .chartYAxis {
                             AxisMarks(position: .leading) { value in
                                 AxisValueLabel()
-                                    .font(.caption2)
+                                    .font(DesignTokens.Typography.caption2)
                             }
                         }
                     } else {
@@ -128,7 +128,7 @@ struct DataView: View {
                 HStack {
                     Image(systemName: "book")
                     Text("Journal Entries")
-                        .font(.headline)
+                        .font(DesignTokens.Typography.headline)
                 }
             }
             .listRowBackground(Color.clear)
@@ -153,8 +153,7 @@ struct DataView: View {
                         }
                     } header: {
                         Text(group.date, style: .date)
-                            .font(.subheadline)
-                            .fontWeight(.bold)
+                            .font(DesignTokens.Typography.sectionHeader)
                             .foregroundColor(.primary)
                             .textCase(nil)
                     }
@@ -208,19 +207,19 @@ struct JournalEntryCard: View {
         VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
             HStack {
                 Text(entry.timestamp, style: .time)
-                    .font(.caption)
+                    .font(DesignTokens.Typography.caption)
                     .foregroundColor(.secondary)
 
                 Spacer()
 
                 Text("\(entry.painLevel) - \(activityScoreLabel)")
-                    .font(.caption)
+                    .font(DesignTokens.Typography.caption)
                     .foregroundColor(.secondary)
             }
 
             if let feeling = entry.feeling, !feeling.isEmpty {
                 Text(feeling)
-                    .font(.subheadline)
+                    .font(DesignTokens.Typography.secondary)
                     .foregroundColor(.primary)
             }
         }
