@@ -14,7 +14,7 @@ struct SettingsView: View {
     @State private var showingRadiusAlert = false
 
     var body: some View {
-        Form {
+        List {
             Section("Notifications") {
                 Toggle("Daily Reminders", isOn: $notificationsEnabled)
                 
@@ -59,6 +59,7 @@ struct SettingsView: View {
                 Link("Terms of Service", destination: URL(string: "https://example.com/terms")!)
             }
         }
+        .listStyle(.plain)
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
