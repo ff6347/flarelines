@@ -40,6 +40,8 @@ enum DesignTokens {
         static let lg: CGFloat = 16
         static let xl: CGFloat = 24
         static let xxl: CGFloat = 32
+        static let xxxl: CGFloat = 48
+        static let huge: CGFloat = 64
     }
     
     // MARK: - Corner Radius
@@ -63,9 +65,15 @@ enum DesignTokens {
     // MARK: - Dimensions
     enum Dimensions {
         static let textEditorHeight: CGFloat = 200
+        static let textEditorHeightSmall: CGFloat = 100
+        static let textEditorHeightCompact: CGFloat = 80
         static let chartHeight: CGFloat = 200
-        static let buttonHeight: CGFloat = 50
+        static let chartPointSize: CGFloat = 60
+        static let buttonHeight: CGFloat = 48
+        static let actionButtonSize: CGFloat = 56
         static let progressBarHeight: CGFloat = 4
+        static let heroIconSize: CGFloat = 80
+        static let contentMaxWidth: CGFloat = 300
     }
 }
 
@@ -76,7 +84,7 @@ struct CardStyle: ViewModifier {
         content
             .padding()
             .background(DesignTokens.Colors.cardBackground)
-            .cornerRadius(DesignTokens.CornerRadius.md)
+            .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.md, style: .continuous))
             .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
     }
 }
@@ -90,7 +98,7 @@ struct PrimaryButtonStyle: ButtonStyle {
             .padding()
             .background(isEnabled ? DesignTokens.Colors.accent : Color.gray)
             .foregroundColor(.white)
-            .cornerRadius(DesignTokens.CornerRadius.md)
+            .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.md, style: .continuous))
             .opacity(configuration.isPressed ? 0.8 : 1.0)
     }
 }
@@ -105,7 +113,7 @@ struct SecondaryButtonStyle: ButtonStyle {
             .background(DesignTokens.Colors.cardBackground)
             .foregroundColor(isEnabled ? DesignTokens.Colors.primaryText : .gray)
             .overlay(
-                RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.md)
+                RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.md, style: .continuous)
                     .stroke(DesignTokens.Colors.accentLight, lineWidth: 1)
             )
             .opacity(configuration.isPressed ? 0.8 : 1.0)
@@ -120,7 +128,7 @@ struct QuestionCardStyle: ViewModifier {
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignTokens.Spacing.xxl)
             .background(DesignTokens.Colors.accent)
-            .cornerRadius(DesignTokens.CornerRadius.md)
+            .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.md, style: .continuous))
     }
 }
 

@@ -9,7 +9,7 @@ struct HelpView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading, spacing: DesignTokens.Spacing.xl) {
                 Text("Help & Support")
                     .font(.largeTitle)
                     .fontWeight(.bold)
@@ -23,7 +23,7 @@ struct HelpView: View {
                         .padding()
                         .background(DesignTokens.Colors.highlight)
                         .foregroundColor(.white)
-                        .cornerRadius(DesignTokens.CornerRadius.lg)
+                        .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.lg, style: .continuous))
                 }
                 .sheet(isPresented: $showingOnboarding) {
                     OnboardingView(isPresented: $showingOnboarding)
@@ -80,10 +80,10 @@ struct HelpSection: View {
     let content: String
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: DesignTokens.Spacing.md) {
             HStack {
                 Image(systemName: icon)
-                    .foregroundColor(.blue)
+                    .foregroundColor(DesignTokens.Colors.highlight)
                     .font(.title2)
                 Text(title)
                     .font(.headline)
@@ -92,10 +92,10 @@ struct HelpSection: View {
             Text(content)
                 .font(.body)
                 .foregroundColor(.secondary)
+
+            Divider()
         }
-        .padding()
-        .background(Color(UIColor.secondarySystemGroupedBackground))
-        .cornerRadius(DesignTokens.CornerRadius.lg)
+        .padding(.vertical, DesignTokens.Spacing.sm)
     }
 }
 

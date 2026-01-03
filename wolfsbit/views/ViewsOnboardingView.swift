@@ -60,14 +60,14 @@ struct OnboardingView: View {
     // MARK: - Page 1: Welcome
 
     private var welcomePage: some View {
-        VStack(spacing: 32) {
+        VStack(spacing: DesignTokens.Spacing.xxl) {
             Spacer()
 
             Image(systemName: "heart.text.square.fill")
-                .font(.system(size: 80))
-                .foregroundColor(.red)
+                .font(.system(size: DesignTokens.Dimensions.heroIconSize))
+                .foregroundColor(DesignTokens.Colors.highlight)
 
-            VStack(spacing: 16) {
+            VStack(spacing: DesignTokens.Spacing.lg) {
                 Text("Welcome to Wolfsbit")
                     .font(.largeTitle)
                     .fontWeight(.bold)
@@ -76,10 +76,10 @@ struct OnboardingView: View {
                 Text("Track your chronic illness symptoms with voice-first journaling. Designed for people with fatigue and brain fog.")
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)
-                    .padding(.horizontal, 32)
+                    .padding(.horizontal, DesignTokens.Spacing.xxl)
             }
 
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: DesignTokens.Spacing.lg) {
                 Label("Voice input for easy logging", systemImage: "mic.fill")
                     .font(.headline)
 
@@ -89,7 +89,7 @@ struct OnboardingView: View {
                 Label("Export reports for your doctor", systemImage: "doc.text.fill")
                     .font(.headline)
             }
-            .frame(maxWidth: 300)
+            .frame(maxWidth: DesignTokens.Dimensions.contentMaxWidth)
 
             Spacer()
 
@@ -104,24 +104,24 @@ struct OnboardingView: View {
                     .padding()
                     .background(DesignTokens.Colors.highlight)
                     .foregroundColor(.white)
-                    .cornerRadius(DesignTokens.CornerRadius.lg)
+                    .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.lg, style: .continuous))
             }
-            .padding(.horizontal, 32)
-            .padding(.bottom, 40)
+            .padding(.horizontal, DesignTokens.Spacing.xxl)
+            .padding(.bottom, DesignTokens.Spacing.huge)
         }
     }
 
     // MARK: - Page 2: Voice Permissions
 
     private var voicePermissionsPage: some View {
-        VStack(spacing: 32) {
+        VStack(spacing: DesignTokens.Spacing.xxl) {
             Spacer()
 
             Image(systemName: "mic.circle.fill")
-                .font(.system(size: 80))
-                .foregroundColor(.blue)
+                .font(.system(size: DesignTokens.Dimensions.heroIconSize))
+                .foregroundColor(DesignTokens.Colors.highlight)
 
-            VStack(spacing: 16) {
+            VStack(spacing: DesignTokens.Spacing.lg) {
                 Text("Voice Input Makes Logging Easy")
                     .font(.title)
                     .fontWeight(.bold)
@@ -130,18 +130,18 @@ struct OnboardingView: View {
                 Text("Answer daily questions using your voice. Wolfsbit needs microphone and speech recognition access.")
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)
-                    .padding(.horizontal, 32)
+                    .padding(.horizontal, DesignTokens.Spacing.xxl)
 
                 Text("Typing can be exhausting when you're fatigued. Voice input is faster and easier.")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal, 32)
+                    .padding(.horizontal, DesignTokens.Spacing.xxl)
             }
 
             Spacer()
 
-            VStack(spacing: 16) {
+            VStack(spacing: DesignTokens.Spacing.lg) {
                 Button(action: {
                     requestSpeechPermissions()
                 }) {
@@ -151,7 +151,7 @@ struct OnboardingView: View {
                         .padding()
                         .background(DesignTokens.Colors.highlight)
                         .foregroundColor(.white)
-                        .cornerRadius(DesignTokens.CornerRadius.lg)
+                        .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.lg, style: .continuous))
                 }
 
                 Button("I'll enable this later") {
@@ -162,22 +162,22 @@ struct OnboardingView: View {
                 .font(.subheadline)
                 .foregroundColor(.secondary)
             }
-            .padding(.horizontal, 32)
-            .padding(.bottom, 40)
+            .padding(.horizontal, DesignTokens.Spacing.xxl)
+            .padding(.bottom, DesignTokens.Spacing.huge)
         }
     }
 
     // MARK: - Page 3: Notifications
 
     private var notificationsPage: some View {
-        VStack(spacing: 32) {
+        VStack(spacing: DesignTokens.Spacing.xxl) {
             Spacer()
 
             Image(systemName: "bell.circle.fill")
-                .font(.system(size: 80))
-                .foregroundColor(.orange)
+                .font(.system(size: DesignTokens.Dimensions.heroIconSize))
+                .foregroundColor(DesignTokens.Colors.highlight)
 
-            VStack(spacing: 16) {
+            VStack(spacing: DesignTokens.Spacing.lg) {
                 Text("Daily Reminders (Optional)")
                     .font(.title)
                     .fontWeight(.bold)
@@ -186,18 +186,18 @@ struct OnboardingView: View {
                 Text("Get reminded to log your symptoms. You can adjust frequency during flare-ups.")
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)
-                    .padding(.horizontal, 32)
+                    .padding(.horizontal, DesignTokens.Spacing.xxl)
 
                 Text("Consistent tracking helps you and your doctor see patterns.")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal, 32)
+                    .padding(.horizontal, DesignTokens.Spacing.xxl)
             }
 
             Spacer()
 
-            VStack(spacing: 16) {
+            VStack(spacing: DesignTokens.Spacing.lg) {
                 Button(action: {
                     requestNotificationPermissions()
                 }) {
@@ -207,7 +207,7 @@ struct OnboardingView: View {
                         .padding()
                         .background(DesignTokens.Colors.highlight)
                         .foregroundColor(.white)
-                        .cornerRadius(DesignTokens.CornerRadius.lg)
+                        .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.lg, style: .continuous))
                 }
 
                 Button("Skip for now") {
@@ -218,36 +218,36 @@ struct OnboardingView: View {
                 .font(.subheadline)
                 .foregroundColor(.secondary)
             }
-            .padding(.horizontal, 32)
-            .padding(.bottom, 40)
+            .padding(.horizontal, DesignTokens.Spacing.xxl)
+            .padding(.bottom, DesignTokens.Spacing.huge)
         }
     }
 
     // MARK: - Page 4: ML Model
 
     private var mlModelPage: some View {
-        VStack(spacing: 32) {
+        VStack(spacing: DesignTokens.Spacing.xxl) {
             Spacer()
 
             Image(systemName: "brain.head.profile")
-                .font(.system(size: 80))
-                .foregroundColor(.purple)
+                .font(.system(size: DesignTokens.Dimensions.heroIconSize))
+                .foregroundColor(DesignTokens.Colors.highlight)
 
-            VStack(spacing: 16) {
-                Text("Smart Health Scoring (Optional)")
+            VStack(spacing: DesignTokens.Spacing.lg) {
+                Text("Smart Health Scoring")
                     .font(.title)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
 
-                Text("Download an AI model that learns your patterns and provides more accurate health scores over time.")
+                Text("Download the AI model that analyzes your entries and provides health scores. This is a research project—the model is required.")
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)
-                    .padding(.horizontal, 32)
+                    .padding(.horizontal, DesignTokens.Spacing.xxl)
 
-                VStack(spacing: 8) {
+                VStack(spacing: DesignTokens.Spacing.sm) {
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
-                            .foregroundColor(.green)
+                            .foregroundColor(.secondary)
                         Text("Runs on your device")
                             .font(.subheadline)
                         Spacer()
@@ -255,7 +255,7 @@ struct OnboardingView: View {
 
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
-                            .foregroundColor(.green)
+                            .foregroundColor(.secondary)
                         Text("Your data stays private")
                             .font(.subheadline)
                         Spacer()
@@ -263,63 +263,47 @@ struct OnboardingView: View {
 
                     HStack {
                         Image(systemName: "arrow.down.circle.fill")
-                            .foregroundColor(.blue)
-                        Text("Download: ~50-100 MB")
+                            .foregroundColor(.secondary)
+                        Text("Download: ~1.8 GB")
                             .font(.subheadline)
                         Spacer()
                     }
                 }
-                .padding(.horizontal, 48)
-
-                Text("You can use the app without this. It will use basic scoring until you download the model.")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 32)
+                .padding(.horizontal, DesignTokens.Spacing.xxl)
             }
 
             Spacer()
 
-            VStack(spacing: 16) {
-                Button(action: {
-                    // TODO: Trigger ML model download (Phase 2+)
-                    withAnimation {
-                        currentPage = 4
-                    }
-                }) {
-                    Text("Download Now")
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(DesignTokens.Colors.highlight)
-                        .foregroundColor(.white)
-                        .cornerRadius(DesignTokens.CornerRadius.lg)
+            Button(action: {
+                // TODO: Trigger ML model download
+                withAnimation {
+                    currentPage = 4
                 }
-
-                Button("Download Later") {
-                    withAnimation {
-                        currentPage = 4
-                    }
-                }
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+            }) {
+                Text("Download Model")
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(DesignTokens.Colors.highlight)
+                    .foregroundColor(.white)
+                    .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.lg, style: .continuous))
             }
-            .padding(.horizontal, 32)
-            .padding(.bottom, 40)
+            .padding(.horizontal, DesignTokens.Spacing.xxl)
+            .padding(.bottom, DesignTokens.Spacing.huge)
         }
     }
 
     // MARK: - Page 5: Ready
 
     private var readyPage: some View {
-        VStack(spacing: 32) {
+        VStack(spacing: DesignTokens.Spacing.xxl) {
             Spacer()
 
             Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 80))
-                .foregroundColor(.green)
+                .font(.system(size: DesignTokens.Dimensions.heroIconSize))
+                .foregroundColor(DesignTokens.Colors.highlight)
 
-            VStack(spacing: 16) {
+            VStack(spacing: DesignTokens.Spacing.lg) {
                 Text("You're All Set!")
                     .font(.largeTitle)
                     .fontWeight(.bold)
@@ -327,24 +311,24 @@ struct OnboardingView: View {
                 Text("Start by logging how you're feeling today. Your first entry takes less than a minute.")
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)
-                    .padding(.horizontal, 32)
+                    .padding(.horizontal, DesignTokens.Spacing.xxl)
             }
 
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: DesignTokens.Spacing.md) {
                 if speechRecognizer.authorizationStatus == .authorized {
                     Label("Voice input enabled", systemImage: "checkmark.circle.fill")
-                        .foregroundColor(.green)
+                        .foregroundColor(.secondary)
                 }
 
                 // TODO: Check notification permission status
                 // For now, just show placeholder
                 Label("Reminders configured", systemImage: "checkmark.circle.fill")
-                    .foregroundColor(.green)
+                    .foregroundColor(.secondary)
                     .opacity(0.5)
 
-                // TODO: Check ML model download status (Phase 2+)
-                Label("Basic scoring ready", systemImage: "checkmark.circle.fill")
-                    .foregroundColor(.green)
+                // TODO: Check ML model download status
+                Label("Model download pending", systemImage: "arrow.down.circle")
+                    .foregroundColor(.secondary)
             }
             .font(.subheadline)
 
@@ -359,10 +343,10 @@ struct OnboardingView: View {
                     .padding()
                     .background(DesignTokens.Colors.highlight)
                     .foregroundColor(.white)
-                    .cornerRadius(DesignTokens.CornerRadius.lg)
+                    .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.lg, style: .continuous))
             }
-            .padding(.horizontal, 32)
-            .padding(.bottom, 40)
+            .padding(.horizontal, DesignTokens.Spacing.xxl)
+            .padding(.bottom, DesignTokens.Spacing.huge)
         }
     }
 

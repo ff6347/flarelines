@@ -72,7 +72,7 @@ struct DataView: View {
                                     .padding(.horizontal, DesignTokens.Spacing.md)
                                     .padding(.vertical, DesignTokens.Spacing.sm)
                                     .background(selectedTimeRange == range ? Color.black : Color.clear)
-                                    .cornerRadius(DesignTokens.CornerRadius.sm)
+                                    .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.sm, style: .continuous))
                             }
                         }
                     }
