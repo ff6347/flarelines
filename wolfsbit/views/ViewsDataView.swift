@@ -72,7 +72,7 @@ struct DataView: View {
                                     .padding(.horizontal, 12)
                                     .padding(.vertical, 6)
                                     .background(selectedTimeRange == range ? Color.black : Color.clear)
-                                    .cornerRadius(4)
+                                    .cornerRadius(DesignTokens.CornerRadius.sm)
                             }
                         }
                     }
@@ -119,7 +119,7 @@ struct DataView: View {
                 }
                 .padding()
                 .background(Color(UIColor.secondarySystemGroupedBackground))
-                .cornerRadius(12)
+                .cornerRadius(DesignTokens.CornerRadius.lg)
                 
                 // Journal Entries
                 VStack(alignment: .leading, spacing: 12) {
@@ -243,7 +243,7 @@ struct JournalEntryCard: View {
         }
         .padding()
         .background(Color(UIColor.secondarySystemGroupedBackground))
-        .cornerRadius(8)
+        .cornerRadius(DesignTokens.CornerRadius.md)
     }
 }
 

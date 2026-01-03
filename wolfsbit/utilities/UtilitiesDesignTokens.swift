@@ -22,8 +22,8 @@ enum DesignTokens {
         static let accent = Color.black
         static let accentLight = Color.gray.opacity(0.3)
 
-        // Pink/mauve accent for save button
-        static let saveButton = Color(red: 0.85, green: 0.75, blue: 0.80)
+        // Highlight color (tomato red #ff6347)
+        static let highlight = Color(red: 1.0, green: 0.388, blue: 0.278)
 
         static let recordingActive = Color.red
         static let recordingBackground = Color.red.opacity(0.1)

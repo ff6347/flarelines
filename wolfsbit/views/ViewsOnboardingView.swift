@@ -102,9 +102,9 @@ struct OnboardingView: View {
                     .fontWeight(.semibold)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue)
+                    .background(DesignTokens.Colors.highlight)
                     .foregroundColor(.white)
-                    .cornerRadius(12)
+                    .cornerRadius(DesignTokens.CornerRadius.lg)
             }
             .padding(.horizontal, 32)
             .padding(.bottom, 40)
@@ -149,9 +149,9 @@ struct OnboardingView: View {
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(DesignTokens.Colors.highlight)
                         .foregroundColor(.white)
-                        .cornerRadius(12)
+                        .cornerRadius(DesignTokens.CornerRadius.lg)
                 }
 
                 Button("I'll enable this later") {
@@ -205,9 +205,9 @@ struct OnboardingView: View {
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(DesignTokens.Colors.highlight)
                         .foregroundColor(.white)
-                        .cornerRadius(12)
+                        .cornerRadius(DesignTokens.CornerRadius.lg)
                 }
 
                 Button("Skip for now") {
@@ -291,9 +291,9 @@ struct OnboardingView: View {
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(DesignTokens.Colors.highlight)
                         .foregroundColor(.white)
-                        .cornerRadius(12)
+                        .cornerRadius(DesignTokens.CornerRadius.lg)
                 }
 
                 Button("Download Later") {
@@ -357,9 +357,9 @@ struct OnboardingView: View {
                     .fontWeight(.semibold)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue)
+                    .background(DesignTokens.Colors.highlight)
                     .foregroundColor(.white)
-                    .cornerRadius(12)
+                    .cornerRadius(DesignTokens.CornerRadius.lg)
             }
             .padding(.horizontal, 32)
             .padding(.bottom, 40)

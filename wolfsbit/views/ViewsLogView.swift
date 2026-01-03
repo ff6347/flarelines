@@ -23,32 +23,16 @@ struct JournalEditorView: View {
     @State private var showingHelp = false
     @State private var showingSettings = false
 
-    // Display text with live transcription
-    private var displayText: String {
-        if speechRecognizer.isRecording && !speechRecognizer.transcript.isEmpty {
-            return journalText + (journalText.isEmpty ? "" : " ") + speechRecognizer.transcript
-        }
-        return journalText
-    }
-
     var body: some View {
         ZStack {
             // Background
             Color.black.ignoresSafeArea()
 
             VStack(spacing: 0) {
-                // Save button header
+                // Header with action button
                 HStack {
                     Spacer()
-                    Button(action: saveEntry) {
-                        Image(systemName: "checkmark")
-                            .font(.title2)
-                            .fontWeight(.medium)
-                            .foregroundColor(DesignTokens.Colors.accent)
-                            .frame(width: 56, height: 56)
-                            .background(DesignTokens.Colors.saveButton)
-                            .clipShape(Circle())
-                    }
+                    headerButton
                 }
                 .padding(.horizontal)
                 .padding(.top, 8)
@@ -61,7 +45,11 @@ struct JournalEditorView: View {
                     activityRatingPage
                         .tag(1)
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
+                .tabViewStyle(.page(indexDisplayMode: .always))
+
+                // Page indicator spacing
+                Spacer()
+                    .frame(height: 24)
 
                 // Toolbar
                 editorToolbar
@@ -93,6 +81,35 @@ struct JournalEditorView: View {
         }
     }
 
+    // MARK: - Header Button
+
+    @ViewBuilder
+    private var headerButton: some View {
+        if currentPage == 0 {
+            // Page 1: Navigate to page 2
+            Button(action: { withAnimation { currentPage = 1 } }) {
+                Image(systemName: "chevron.right")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white)
+                    .frame(width: 56, height: 56)
+                    .background(DesignTokens.Colors.highlight)
+                    .clipShape(Circle())
+            }
+        } else {
+            // Page 2: Save entry
+            Button(action: saveEntry) {
+                Image(systemName: "checkmark")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white)
+                    .frame(width: 56, height: 56)
+                    .background(DesignTokens.Colors.highlight)
+                    .clipShape(Circle())
+            }
+        }
+    }
+
     // MARK: - Text Entry Page
 
     private var textEntryPage: some View {
@@ -101,12 +118,12 @@ struct JournalEditorView: View {
                 .font(.title3)
                 .foregroundColor(.white)
                 .padding(.horizontal)
-                .padding(.top, 24)
+                .padding(.top, DesignTokens.Spacing.xl)
 
             Divider()
                 .background(Color.gray.opacity(0.5))
                 .padding(.horizontal)
-                .padding(.top, 8)
+                .padding(.top, DesignTokens.Spacing.sm)
 
             // Text editor area
             ZStack(alignment: .topLeading) {
@@ -123,6 +140,7 @@ struct JournalEditorView: View {
                                     .foregroundColor(.gray)
                             }
                         }
+                        .font(.body)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()
                     }
@@ -130,15 +148,17 @@ struct JournalEditorView: View {
                     TextEditor(text: $journalText)
                         .scrollContentBackground(.hidden)
                         .background(Color.clear)
+                        .font(.body)
                         .foregroundColor(.white)
                         .focused($isEditorFocused)
-                        .padding(.horizontal, 12)
-                        .padding(.top, 8)
+                        .padding(.horizontal, DesignTokens.Spacing.md)
+                        .padding(.top, DesignTokens.Spacing.sm)
                 }
 
                 // Placeholder
                 if journalText.isEmpty && !speechRecognizer.isRecording {
                     Text("Start writing...")
+                        .font(.body)
                         .foregroundColor(.gray)
                         .padding(.horizontal, 17)
                         .padding(.top, 16)
@@ -158,14 +178,14 @@ struct JournalEditorView: View {
                 .font(.title3)
                 .foregroundColor(.white)
                 .padding(.horizontal)
-                .padding(.top, 24)
+                .padding(.top, DesignTokens.Spacing.xl)
 
             // Slider with tick marks
-            VStack(spacing: 8) {
+            VStack(spacing: DesignTokens.Spacing.sm) {
                 Slider(value: $activityScore, in: 0...3, step: 1)
-                    .tint(.gray)
+                    .tint(DesignTokens.Colors.highlight)
                     .padding(.horizontal)
-                    .padding(.top, 16)
+                    .padding(.top, DesignTokens.Spacing.lg)
 
                 // Tick mark labels
                 HStack {
@@ -193,7 +213,7 @@ struct JournalEditorView: View {
             // Mic button
             Button(action: toggleVoiceInput) {
                 Image(systemName: speechRecognizer.isRecording ? "mic.fill" : "mic")
-                    .foregroundColor(speechRecognizer.isRecording ? .red : .white)
+                    .foregroundColor(speechRecognizer.isRecording ? DesignTokens.Colors.highlight : .white)
             }
             .frame(maxWidth: .infinity)
 
@@ -215,21 +235,32 @@ struct JournalEditorView: View {
             }
             .frame(maxWidth: .infinity)
 
-            // Dismiss keyboard button
-            Button(action: { isEditorFocused = false }) {
-                Image(systemName: "keyboard.chevron.compact.down")
+            // Keyboard toggle button
+            Button(action: toggleKeyboard) {
+                Image(systemName: isEditorFocused ? "keyboard.chevron.compact.down" : "keyboard")
             }
             .frame(maxWidth: .infinity)
         }
         .font(.title2)
         .foregroundColor(.white)
-        .padding(.vertical, 12)
+        .padding(.vertical, DesignTokens.Spacing.md)
         .background(Color(white: 0.15))
-        .cornerRadius(12)
+        .cornerRadius(DesignTokens.CornerRadius.lg)
         .padding(.horizontal)
     }
 
     // MARK: - Actions
+
+    private func toggleKeyboard() {
+        if isEditorFocused {
+            isEditorFocused = false
+        } else {
+            // Only makes sense on page 1 with text editor
+            if currentPage == 0 {
+                isEditorFocused = true
+            }
+        }
+    }
 
     private func toggleVoiceInput() {
         if speechRecognizer.isRecording {

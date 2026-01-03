@@ -21,9 +21,9 @@ struct HelpView: View {
                     Label("Re-run Onboarding", systemImage: "arrow.clockwise")
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(DesignTokens.Colors.highlight)
                         .foregroundColor(.white)
-                        .cornerRadius(12)
+                        .cornerRadius(DesignTokens.CornerRadius.lg)
                 }
                 .sheet(isPresented: $showingOnboarding) {
                     OnboardingView(isPresented: $showingOnboarding)
@@ -95,7 +95,7 @@ struct HelpSection: View {
         }
         .padding()
         .background(Color(UIColor.secondarySystemGroupedBackground))
-        .cornerRadius(12)
+        .cornerRadius(DesignTokens.CornerRadius.lg)
     }
 }
 
