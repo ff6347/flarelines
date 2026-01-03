@@ -44,10 +44,10 @@ struct DataView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 24) {
-                // Health Progress Chart
-                VStack(alignment: .leading, spacing: 16) {
+        List {
+            // Health Progress Chart Section
+            Section {
+                VStack(alignment: .leading, spacing: DesignTokens.Spacing.lg) {
                     HStack {
                         Image(systemName: "cylinder.split.1x2")
                         Text("Health Progress")
@@ -58,9 +58,9 @@ struct DataView: View {
                             .foregroundColor(.secondary)
                     }
                     .foregroundColor(.primary)
-                    
+
                     // Time Range Selector
-                    HStack(spacing: 8) {
+                    HStack(spacing: DesignTokens.Spacing.sm) {
                         ForEach(TimeRange.allCases, id: \.self) { range in
                             Button(action: {
                                 selectedTimeRange = range
@@ -69,14 +69,14 @@ struct DataView: View {
                                     .font(.caption)
                                     .fontWeight(selectedTimeRange == range ? .semibold : .regular)
                                     .foregroundColor(selectedTimeRange == range ? .white : .primary)
-                                    .padding(.horizontal, 12)
-                                    .padding(.vertical, 6)
+                                    .padding(.horizontal, DesignTokens.Spacing.md)
+                                    .padding(.vertical, DesignTokens.Spacing.sm)
                                     .background(selectedTimeRange == range ? Color.black : Color.clear)
                                     .cornerRadius(DesignTokens.CornerRadius.sm)
                             }
                         }
                     }
-                    
+
                     // Chart
                     if !filteredEntries.isEmpty {
                         Chart {
@@ -86,17 +86,17 @@ struct DataView: View {
                                     y: .value("Health", entry.healthScore)
                                 )
                                 .interpolationMethod(.catmullRom)
-                                .foregroundStyle(Color.blue)
-                                
+                                .foregroundStyle(.primary)
+
                                 PointMark(
                                     x: .value("Date", entry.timestamp),
                                     y: .value("Health", entry.healthScore)
                                 )
-                                .symbolSize(60)
-                                .foregroundStyle(Color.blue)
+                                .symbolSize(DesignTokens.Dimensions.chartPointSize)
+                                .foregroundStyle(.primary)
                             }
                         }
-                        .frame(height: 200)
+                        .frame(height: DesignTokens.Dimensions.chartHeight)
                         .chartYScale(domain: 0...10)
                         .chartXAxis {
                             AxisMarks(values: .automatic) { value in
@@ -113,52 +113,54 @@ struct DataView: View {
                     } else {
                         Text("No data available for this time range")
                             .foregroundColor(.secondary)
-                            .frame(height: 200)
+                            .frame(height: DesignTokens.Dimensions.chartHeight)
                             .frame(maxWidth: .infinity)
                     }
                 }
                 .padding()
-                .background(Color(UIColor.secondarySystemGroupedBackground))
-                .cornerRadius(DesignTokens.CornerRadius.lg)
-                
-                // Journal Entries
-                VStack(alignment: .leading, spacing: 12) {
-                    HStack {
-                        Image(systemName: "book")
-                        Text("Journal Entries")
-                            .font(.headline)
-                    }
-                    .padding(.horizontal)
-                    
-                    if entries.isEmpty {
-                        Text("No entries yet. Start logging your health journey!")
-                            .foregroundColor(.secondary)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                    } else {
-                        ForEach(groupedEntries, id: \.date) { group in
-                            VStack(alignment: .leading, spacing: 8) {
-                                // Date Header
-                                Text(group.date, style: .date)
-                                    .font(.subheadline)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.white)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.horizontal)
-                                    .padding(.vertical, 8)
-                                    .background(Color.black)
-                                
-                                // Entries for this date
-                                ForEach(group.entries) { entry in
-                                    JournalEntryCard(entry: entry)
-                                }
-                            }
-                        }
-                    }
+            }
+            .listRowInsets(EdgeInsets())
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
+
+            // Journal Entries Header
+            Section {
+                HStack {
+                    Image(systemName: "book")
+                    Text("Journal Entries")
+                        .font(.headline)
                 }
             }
-            .padding()
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
+
+            // Journal Entries grouped by date
+            if entries.isEmpty {
+                Section {
+                    Text("No entries yet. Start logging your health journey!")
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity)
+                }
+                .listRowBackground(Color.clear)
+            } else {
+                ForEach(groupedEntries, id: \.date) { group in
+                    Section {
+                        ForEach(group.entries) { entry in
+                            JournalEntryCard(entry: entry)
+                        }
+                    } header: {
+                        Text(group.date, style: .date)
+                            .font(.subheadline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.primary)
+                            .textCase(nil)
+                    }
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                }
+            }
         }
+        .listStyle(.plain)
         .background(Color(UIColor.systemGroupedBackground))
         .navigationTitle("Data")
         .navigationBarTitleDisplayMode(.inline)
@@ -188,12 +190,21 @@ struct GroupedEntry {
 
 struct JournalEntryCard: View {
     let entry: JournalEntry
-    @State private var isExpanded = false
     @State private var showingEditSheet = false
     @Environment(\.managedObjectContext) private var viewContext
 
+    private var activityScoreLabel: String {
+        switch entry.painLevel {
+        case 0: return "Remission"
+        case 1: return "Mild"
+        case 2: return "Moderate"
+        case 3: return "Severe"
+        default: return "Unknown"
+        }
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
             HStack {
                 Text(entry.timestamp, style: .time)
                     .font(.caption)
@@ -201,49 +212,46 @@ struct JournalEntryCard: View {
 
                 Spacer()
 
-                Button(action: {
-                    showingEditSheet = true
-                }) {
-                    Image(systemName: "pencil")
-                        .foregroundColor(.secondary)
-                        .font(.caption)
-                }
-                .sheet(isPresented: $showingEditSheet) {
-                    EditEntryView(entry: entry)
-                        .environment(\.managedObjectContext, viewContext)
-                }
-            }
-            
-            // Question 1: How are you feeling?
-            VStack(alignment: .leading, spacing: 4) {
-                Text("How are you feeling today?")
+                Text("\(entry.painLevel) - \(activityScoreLabel)")
                     .font(.caption)
                     .foregroundColor(.secondary)
-                Text(entry.feeling ?? "No response")
-                    .font(.subheadline)
             }
-            
-            // Question 2: Pain level
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Describe your pain level")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                Text("Pain level: \(entry.painLevel)/10")
+
+            if let feeling = entry.feeling, !feeling.isEmpty {
+                Text(feeling)
                     .font(.subheadline)
-            }
-            
-            // Question 3: Symptoms
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Any symptoms you noticed?")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                Text(entry.symptoms ?? "No symptoms reported")
-                    .font(.subheadline)
+                    .foregroundColor(.primary)
             }
         }
-        .padding()
-        .background(Color(UIColor.secondarySystemGroupedBackground))
-        .cornerRadius(DesignTokens.CornerRadius.md)
+        .padding(.horizontal)
+        .padding(.vertical, DesignTokens.Spacing.sm)
+        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+            Button(role: .destructive) {
+                deleteEntry()
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+
+            Button {
+                showingEditSheet = true
+            } label: {
+                Label("Edit", systemImage: "pencil")
+            }
+            .tint(.blue)
+        }
+        .sheet(isPresented: $showingEditSheet) {
+            EditEntryView(entry: entry)
+                .environment(\.managedObjectContext, viewContext)
+        }
+    }
+
+    private func deleteEntry() {
+        viewContext.delete(entry)
+        do {
+            try viewContext.save()
+        } catch {
+            print("Failed to delete entry: \(error)")
+        }
     }
 }
 
