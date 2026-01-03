@@ -10,6 +10,9 @@ struct SettingsView: View {
     @AppStorage("notificationsEnabled") private var notificationsEnabled = false
     @AppStorage("dailyReminderTime") private var dailyReminderTime = Date()
 
+    @State private var cornerRadiusResult: String = ""
+    @State private var showingRadiusAlert = false
+
     var body: some View {
         Form {
             Section("Notifications") {
@@ -38,8 +41,8 @@ struct SettingsView: View {
                     DebugControlsView()
                 }
 
-                Button("Print Corner Radii") {
-                    printAllCornerRadii()
+                Button("Scan Corner Radii") {
+                    scanAndShowCornerRadii()
                 }
             }
             #endif
@@ -65,7 +68,53 @@ struct SettingsView: View {
                 }
             }
         }
+        .alert("Corner Radii Found", isPresented: $showingRadiusAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(cornerRadiusResult)
+        }
     }
+
+    #if DEBUG
+    private func scanAndShowCornerRadii() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                  let window = windowScene.windows.first else {
+                cornerRadiusResult = "No window found"
+                showingRadiusAlert = true
+                return
+            }
+
+            var found: [CGFloat: Int] = [:]
+            scanCornerRadiiForAlert(view: window, depth: 0, maxDepth: 10, results: &found)
+
+            var resultText = ""
+            for (radius, count) in found.sorted(by: { $0.key > $1.key }) {
+                resultText += "\(radius) pt: \(count) views\n"
+            }
+
+            if resultText.isEmpty {
+                resultText = "No corner radii found"
+            }
+
+            cornerRadiusResult = resultText
+            showingRadiusAlert = true
+        }
+    }
+
+    private func scanCornerRadiiForAlert(view: UIView, depth: Int, maxDepth: Int, results: inout [CGFloat: Int]) {
+        guard depth < maxDepth else { return }
+
+        if view.layer.cornerRadius > 0 {
+            let radius = view.layer.cornerRadius
+            results[radius, default: 0] += 1
+        }
+
+        for subview in view.subviews {
+            scanCornerRadiiForAlert(view: subview, depth: depth + 1, maxDepth: maxDepth, results: &results)
+        }
+    }
+    #endif
 }
 
 #Preview {
@@ -73,32 +122,3 @@ struct SettingsView: View {
         SettingsView()
     }
 }
-
-// MARK: - Debug Helper
-
-#if DEBUG
-func printAllCornerRadii() {
-    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-          let window = windowScene.windows.first else {
-        print("Could not find window")
-        return
-    }
-
-    print("\n========== CORNER RADII SCAN ==========")
-    scanCornerRadii(view: window, depth: 0)
-    print("========================================\n")
-}
-
-private func scanCornerRadii(view: UIView, depth: Int) {
-    let indent = String(repeating: "  ", count: depth)
-    let viewType = String(describing: type(of: view))
-
-    if view.layer.cornerRadius > 0 {
-        print("\(indent)\(viewType): cornerRadius = \(view.layer.cornerRadius)")
-    }
-
-    for subview in view.subviews {
-        scanCornerRadii(view: subview, depth: depth + 1)
-    }
-}
-#endif

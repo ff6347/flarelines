@@ -43,13 +43,13 @@ enum DesignTokens {
     }
     
     // MARK: - Corner Radius
-    // TODO: Verify exact iOS Form/List insetGrouped radius via View Debugger
+    // Matches iOS Form/List insetGrouped style (12.83pt)
     enum CornerRadius {
-        static let standard: CGFloat = 10
-        static let sm: CGFloat = 10
-        static let md: CGFloat = 10
-        static let lg: CGFloat = 10
-        static let xl: CGFloat = 10
+        static let standard: CGFloat = 12.83
+        static let sm: CGFloat = 12.83
+        static let md: CGFloat = 12.83
+        static let lg: CGFloat = 12.83
+        static let xl: CGFloat = 12.83
     }
     
     // MARK: - Typography
