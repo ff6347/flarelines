@@ -1,9 +1,5 @@
-//
-//  DataView.swift
-//  wolfsbit
-//
-//  Created by Fabian Moron Zirfas on 13.11.25.
-//
+// ABOUTME: Displays health progress charts and journal entry history.
+// ABOUTME: Shows time-range filtered data visualization and grouped entries.
 
 import SwiftUI
 import Charts
@@ -11,6 +7,7 @@ import CoreData
 
 struct DataView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.dismiss) private var dismiss
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \JournalEntry.timestamp, ascending: false)],
@@ -52,7 +49,7 @@ struct DataView: View {
                 // Health Progress Chart
                 VStack(alignment: .leading, spacing: 16) {
                     HStack {
-                        Image(systemName: "chart.line.uptrend.xyaxis")
+                        Image(systemName: "cylinder.split.1x2")
                         Text("Health Progress")
                             .font(.headline)
                         Spacer()
@@ -75,7 +72,7 @@ struct DataView: View {
                                     .padding(.horizontal, 12)
                                     .padding(.vertical, 6)
                                     .background(selectedTimeRange == range ? Color.black : Color.clear)
-                                    .cornerRadius(4)
+                                    .cornerRadius(DesignTokens.CornerRadius.sm)
                             }
                         }
                     }
@@ -122,7 +119,7 @@ struct DataView: View {
                 }
                 .padding()
                 .background(Color(UIColor.secondarySystemGroupedBackground))
-                .cornerRadius(12)
+                .cornerRadius(DesignTokens.CornerRadius.lg)
                 
                 // Journal Entries
                 VStack(alignment: .leading, spacing: 12) {
@@ -163,6 +160,15 @@ struct DataView: View {
             .padding()
         }
         .background(Color(UIColor.systemGroupedBackground))
+        .navigationTitle("Data")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Done") {
+                    dismiss()
+                }
+            }
+        }
     }
     
     var groupedEntries: [GroupedEntry] {
@@ -237,7 +243,7 @@ struct JournalEntryCard: View {
         }
         .padding()
         .background(Color(UIColor.secondarySystemGroupedBackground))
-        .cornerRadius(8)
+        .cornerRadius(DesignTokens.CornerRadius.md)
     }
 }
 

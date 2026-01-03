@@ -83,7 +83,7 @@ struct OnboardingView: View {
                 Label("Voice input for easy logging", systemImage: "mic.fill")
                     .font(.headline)
 
-                Label("Daily health tracking", systemImage: "chart.line.uptrend.xyaxis")
+                Label("Daily health tracking", systemImage: "cylinder.split.1x2")
                     .font(.headline)
 
                 Label("Export reports for your doctor", systemImage: "doc.text.fill")
@@ -102,9 +102,9 @@ struct OnboardingView: View {
                     .fontWeight(.semibold)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue)
+                    .background(DesignTokens.Colors.highlight)
                     .foregroundColor(.white)
-                    .cornerRadius(12)
+                    .cornerRadius(DesignTokens.CornerRadius.lg)
             }
             .padding(.horizontal, 32)
             .padding(.bottom, 40)
@@ -149,9 +149,9 @@ struct OnboardingView: View {
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(DesignTokens.Colors.highlight)
                         .foregroundColor(.white)
-                        .cornerRadius(12)
+                        .cornerRadius(DesignTokens.CornerRadius.lg)
                 }
 
                 Button("I'll enable this later") {
@@ -205,9 +205,9 @@ struct OnboardingView: View {
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(DesignTokens.Colors.highlight)
                         .foregroundColor(.white)
-                        .cornerRadius(12)
+                        .cornerRadius(DesignTokens.CornerRadius.lg)
                 }
 
                 Button("Skip for now") {
@@ -291,9 +291,9 @@ struct OnboardingView: View {
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(DesignTokens.Colors.highlight)
                         .foregroundColor(.white)
-                        .cornerRadius(12)
+                        .cornerRadius(DesignTokens.CornerRadius.lg)
                 }
 
                 Button("Download Later") {
@@ -357,9 +357,9 @@ struct OnboardingView: View {
                     .fontWeight(.semibold)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue)
+                    .background(DesignTokens.Colors.highlight)
                     .foregroundColor(.white)
-                    .cornerRadius(12)
+                    .cornerRadius(DesignTokens.CornerRadius.lg)
             }
             .padding(.horizontal, 32)
             .padding(.bottom, 40)

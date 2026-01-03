@@ -15,16 +15,19 @@ enum DesignTokens {
         static let primaryBackground = Color(UIColor.systemGroupedBackground)
         static let secondaryBackground = Color(UIColor.secondarySystemGroupedBackground)
         static let cardBackground = Color(UIColor.systemBackground)
-        
+
         static let primaryText = Color.primary
         static let secondaryText = Color.secondary
-        
+
         static let accent = Color.black
         static let accentLight = Color.gray.opacity(0.3)
-        
+
+        // Highlight color (tomato red #ff6347)
+        static let highlight = Color(red: 1.0, green: 0.388, blue: 0.278)
+
         static let recordingActive = Color.red
         static let recordingBackground = Color.red.opacity(0.1)
-        
+
         static let chartLine = Color.primary
         static let chartPoint = Color.primary
     }
@@ -40,11 +43,13 @@ enum DesignTokens {
     }
     
     // MARK: - Corner Radius
+    // Matches iOS Form/List insetGrouped style (12.83pt)
     enum CornerRadius {
-        static let sm: CGFloat = 4
-        static let md: CGFloat = 8
-        static let lg: CGFloat = 12
-        static let xl: CGFloat = 16
+        static let standard: CGFloat = 12.83
+        static let sm: CGFloat = 12.83
+        static let md: CGFloat = 12.83
+        static let lg: CGFloat = 12.83
+        static let xl: CGFloat = 12.83
     }
     
     // MARK: - Typography

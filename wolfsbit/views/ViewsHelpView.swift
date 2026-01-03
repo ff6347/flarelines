@@ -1,13 +1,10 @@
-//
-//  HelpView.swift
-//  wolfsbit
-//
-//  Created by Fabian Moron Zirfas on 13.11.25.
-//
+// ABOUTME: Help and support view with onboarding replay and usage guidance.
+// ABOUTME: Explains app features including logging, voice input, and data viewing.
 
 import SwiftUI
 
 struct HelpView: View {
+    @Environment(\.dismiss) private var dismiss
     @State private var showingOnboarding = false
 
     var body: some View {
@@ -24,9 +21,9 @@ struct HelpView: View {
                     Label("Re-run Onboarding", systemImage: "arrow.clockwise")
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(DesignTokens.Colors.highlight)
                         .foregroundColor(.white)
-                        .cornerRadius(12)
+                        .cornerRadius(DesignTokens.CornerRadius.lg)
                 }
                 .sheet(isPresented: $showingOnboarding) {
                     OnboardingView(isPresented: $showingOnboarding)
@@ -65,6 +62,15 @@ struct HelpView: View {
             .padding()
         }
         .background(Color(UIColor.systemGroupedBackground))
+        .navigationTitle("Help")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Done") {
+                    dismiss()
+                }
+            }
+        }
     }
 }
 
@@ -89,7 +95,7 @@ struct HelpSection: View {
         }
         .padding()
         .background(Color(UIColor.secondarySystemGroupedBackground))
-        .cornerRadius(12)
+        .cornerRadius(DesignTokens.CornerRadius.lg)
     }
 }
 
