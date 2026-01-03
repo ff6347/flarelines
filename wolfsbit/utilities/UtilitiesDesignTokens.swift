@@ -56,26 +56,11 @@ enum DesignTokens {
     
     // MARK: - Typography
     enum Typography {
-        // Titles
-        static let largeTitle = Font.largeTitle
-        static let title = Font.title
-        static let title2 = Font.title2
-        static let title3 = Font.title3
-
-        // Questions (main prompt text in LogView)
-        static let questionText = Font.title2.weight(.semibold)
-
-        // Headers
-        static let headline = Font.headline
-        static let sectionHeader = Font.subheadline.weight(.bold)
-
-        // Body
-        static let body = Font.body
-        static let secondary = Font.subheadline
-
-        // Small text
-        static let caption = Font.caption
-        static let caption2 = Font.caption2
+        static let title = Font.largeTitle      // Page titles (h1)
+        static let heading = Font.title2        // Section headings (h2)
+        static let subheading = Font.headline   // Subsections (h3)
+        static let body = Font.body             // Content text (p)
+        static let caption = Font.caption       // Metadata (small)
     }
     
     // MARK: - Dimensions
@@ -139,7 +124,8 @@ struct SecondaryButtonStyle: ButtonStyle {
 struct QuestionCardStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(DesignTokens.Typography.questionText)
+            .font(DesignTokens.Typography.heading)
+            .fontWeight(.semibold)
             .foregroundColor(.white)
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignTokens.Spacing.xxl)

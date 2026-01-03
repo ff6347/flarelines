@@ -51,7 +51,7 @@ struct DataView: View {
                     HStack {
                         Image(systemName: "cylinder.split.1x2")
                         Text("Health Progress")
-                            .font(DesignTokens.Typography.headline)
+                            .font(DesignTokens.Typography.subheading)
                         Spacer()
                         Text("\(filteredEntries.count) entries")
                             .font(DesignTokens.Typography.caption)
@@ -101,13 +101,13 @@ struct DataView: View {
                         .chartXAxis {
                             AxisMarks(values: .automatic) { value in
                                 AxisValueLabel(format: .dateTime.month().day())
-                                    .font(DesignTokens.Typography.caption2)
+                                    .font(DesignTokens.Typography.caption)
                             }
                         }
                         .chartYAxis {
                             AxisMarks(position: .leading) { value in
                                 AxisValueLabel()
-                                    .font(DesignTokens.Typography.caption2)
+                                    .font(DesignTokens.Typography.caption)
                             }
                         }
                     } else {
@@ -128,7 +128,7 @@ struct DataView: View {
                 HStack {
                     Image(systemName: "book")
                     Text("Journal Entries")
-                        .font(DesignTokens.Typography.headline)
+                        .font(DesignTokens.Typography.subheading)
                 }
             }
             .listRowBackground(Color.clear)
@@ -153,7 +153,7 @@ struct DataView: View {
                         }
                     } header: {
                         Text(group.date, style: .date)
-                            .font(DesignTokens.Typography.sectionHeader)
+                            .font(DesignTokens.Typography.subheading)
                             .foregroundColor(.primary)
                             .textCase(nil)
                     }
@@ -219,7 +219,7 @@ struct JournalEntryCard: View {
 
             if let feeling = entry.feeling, !feeling.isEmpty {
                 Text(feeling)
-                    .font(DesignTokens.Typography.secondary)
+                    .font(DesignTokens.Typography.body)
                     .foregroundColor(.primary)
             }
         }

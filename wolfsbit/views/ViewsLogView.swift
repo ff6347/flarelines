@@ -103,7 +103,7 @@ struct JournalEditorView: View {
             // Page 1: Navigate to page 2
             Button(action: { withAnimation { currentPage = 1 } }) {
                 Image(systemName: "chevron.right")
-                    .font(DesignTokens.Typography.title2)
+                    .font(DesignTokens.Typography.heading)
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
                     .frame(width: DesignTokens.Dimensions.actionButtonSize, height: DesignTokens.Dimensions.actionButtonSize)
@@ -114,7 +114,7 @@ struct JournalEditorView: View {
             // Page 2: Save entry
             Button(action: saveEntry) {
                 Image(systemName: "checkmark")
-                    .font(DesignTokens.Typography.title2)
+                    .font(DesignTokens.Typography.heading)
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
                     .frame(width: DesignTokens.Dimensions.actionButtonSize, height: DesignTokens.Dimensions.actionButtonSize)
@@ -129,7 +129,8 @@ struct JournalEditorView: View {
     private var textEntryPage: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("How are you doing today?")
-                .font(DesignTokens.Typography.questionText)
+                .font(DesignTokens.Typography.heading)
+                .fontWeight(.semibold)
                 .foregroundColor(.white)
                 .padding(.horizontal)
                 .padding(.top, DesignTokens.Spacing.xl)
@@ -189,7 +190,8 @@ struct JournalEditorView: View {
     private var activityRatingPage: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("Rate your activity!")
-                .font(DesignTokens.Typography.questionText)
+                .font(DesignTokens.Typography.heading)
+                .fontWeight(.semibold)
                 .foregroundColor(.white)
                 .padding(.horizontal)
                 .padding(.top, DesignTokens.Spacing.xl)
@@ -260,7 +262,7 @@ struct JournalEditorView: View {
                 }
                 .frame(maxWidth: .infinity)
             }
-            .font(DesignTokens.Typography.title2)
+            .font(DesignTokens.Typography.heading)
             .foregroundColor(.white)
             .padding(.vertical, DesignTokens.Spacing.md)
         }

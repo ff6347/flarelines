@@ -28,7 +28,7 @@ struct EditEntryView: View {
                     // Entry Details
                     VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
                         Text("Entry Details")
-                            .font(DesignTokens.Typography.headline)
+                            .font(DesignTokens.Typography.subheading)
                             .fontWeight(.bold)
 
                         HStack {
@@ -51,7 +51,7 @@ struct EditEntryView: View {
                     // Journal Entry
                     VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
                         Text("Journal Entry")
-                            .font(DesignTokens.Typography.headline)
+                            .font(DesignTokens.Typography.subheading)
                             .fontWeight(.bold)
 
                         TextEditor(text: $journalText)
@@ -64,7 +64,7 @@ struct EditEntryView: View {
                     // Activity Score
                     VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
                         Text("Activity Score")
-                            .font(DesignTokens.Typography.headline)
+                            .font(DesignTokens.Typography.subheading)
                             .fontWeight(.bold)
 
                         Slider(value: $activityScore, in: 0...3, step: 1)
@@ -92,7 +92,7 @@ struct EditEntryView: View {
                     // Notes
                     VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
                         Text("Notes")
-                            .font(DesignTokens.Typography.headline)
+                            .font(DesignTokens.Typography.subheading)
                             .fontWeight(.bold)
 
                         TextEditor(text: $notes)
