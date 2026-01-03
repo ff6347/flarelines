@@ -29,7 +29,7 @@ struct EditEntryView: View {
                     VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
                         Text("Entry Details")
                             .font(DesignTokens.Typography.subheading)
-                            .fontWeight(.bold)
+                            .fontWeight(DesignTokens.Weight.strong)
 
                         HStack {
                             Text("Date")
@@ -52,7 +52,7 @@ struct EditEntryView: View {
                     VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
                         Text("Journal Entry")
                             .font(DesignTokens.Typography.subheading)
-                            .fontWeight(.bold)
+                            .fontWeight(DesignTokens.Weight.strong)
 
                         TextEditor(text: $journalText)
                             .frame(height: DesignTokens.Dimensions.textEditorHeightSmall)
@@ -65,7 +65,7 @@ struct EditEntryView: View {
                     VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
                         Text("Activity Score")
                             .font(DesignTokens.Typography.subheading)
-                            .fontWeight(.bold)
+                            .fontWeight(DesignTokens.Weight.strong)
 
                         Slider(value: $activityScore, in: 0...3, step: 1)
                             .tint(DesignTokens.Colors.highlight)
@@ -93,7 +93,7 @@ struct EditEntryView: View {
                     VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
                         Text("Notes")
                             .font(DesignTokens.Typography.subheading)
-                            .fontWeight(.bold)
+                            .fontWeight(DesignTokens.Weight.strong)
 
                         TextEditor(text: $notes)
                             .frame(height: DesignTokens.Dimensions.textEditorHeightCompact)
@@ -119,7 +119,7 @@ struct EditEntryView: View {
                     Button("Save") {
                         saveChanges()
                     }
-                    .fontWeight(.semibold)
+                    .fontWeight(DesignTokens.Weight.emphasis)
                 }
             }
         }

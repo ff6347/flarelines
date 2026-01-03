@@ -104,7 +104,7 @@ struct JournalEditorView: View {
             Button(action: { withAnimation { currentPage = 1 } }) {
                 Image(systemName: "chevron.right")
                     .font(DesignTokens.Typography.heading)
-                    .fontWeight(.semibold)
+                    .fontWeight(DesignTokens.Weight.emphasis)
                     .foregroundColor(.white)
                     .frame(width: DesignTokens.Dimensions.actionButtonSize, height: DesignTokens.Dimensions.actionButtonSize)
                     .background(DesignTokens.Colors.highlight)
@@ -115,7 +115,7 @@ struct JournalEditorView: View {
             Button(action: saveEntry) {
                 Image(systemName: "checkmark")
                     .font(DesignTokens.Typography.heading)
-                    .fontWeight(.semibold)
+                    .fontWeight(DesignTokens.Weight.emphasis)
                     .foregroundColor(.white)
                     .frame(width: DesignTokens.Dimensions.actionButtonSize, height: DesignTokens.Dimensions.actionButtonSize)
                     .background(DesignTokens.Colors.highlight)
@@ -130,7 +130,7 @@ struct JournalEditorView: View {
         VStack(alignment: .leading, spacing: 0) {
             Text("How are you doing today?")
                 .font(DesignTokens.Typography.heading)
-                .fontWeight(.semibold)
+                .fontWeight(DesignTokens.Weight.emphasis)
                 .foregroundColor(.white)
                 .padding(.horizontal)
                 .padding(.top, DesignTokens.Spacing.xl)
@@ -191,7 +191,7 @@ struct JournalEditorView: View {
         VStack(alignment: .leading, spacing: 0) {
             Text("Rate your activity!")
                 .font(DesignTokens.Typography.heading)
-                .fontWeight(.semibold)
+                .fontWeight(DesignTokens.Weight.emphasis)
                 .foregroundColor(.white)
                 .padding(.horizontal)
                 .padding(.top, DesignTokens.Spacing.xl)

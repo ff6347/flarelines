@@ -70,7 +70,7 @@ struct OnboardingView: View {
             VStack(spacing: DesignTokens.Spacing.lg) {
                 Text("Welcome to Wolfsbit")
                     .font(DesignTokens.Typography.title)
-                    .fontWeight(.bold)
+                    .fontWeight(DesignTokens.Weight.strong)
                     .multilineTextAlignment(.center)
 
                 Text("Track your chronic illness symptoms with voice-first journaling. Designed for people with fatigue and brain fog.")
@@ -99,7 +99,7 @@ struct OnboardingView: View {
                 }
             }) {
                 Text("Continue")
-                    .fontWeight(.semibold)
+                    .fontWeight(DesignTokens.Weight.emphasis)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(DesignTokens.Colors.highlight)
@@ -124,7 +124,7 @@ struct OnboardingView: View {
             VStack(spacing: DesignTokens.Spacing.lg) {
                 Text("Voice Input Makes Logging Easy")
                     .font(DesignTokens.Typography.heading)
-                    .fontWeight(.bold)
+                    .fontWeight(DesignTokens.Weight.emphasis)
                     .multilineTextAlignment(.center)
 
                 Text("Answer daily questions using your voice. Wolfsbit needs microphone and speech recognition access.")
@@ -146,7 +146,7 @@ struct OnboardingView: View {
                     requestSpeechPermissions()
                 }) {
                     Text("Allow Microphone & Speech")
-                        .fontWeight(.semibold)
+                        .fontWeight(DesignTokens.Weight.emphasis)
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(DesignTokens.Colors.highlight)
@@ -180,7 +180,7 @@ struct OnboardingView: View {
             VStack(spacing: DesignTokens.Spacing.lg) {
                 Text("Daily Reminders (Optional)")
                     .font(DesignTokens.Typography.heading)
-                    .fontWeight(.bold)
+                    .fontWeight(DesignTokens.Weight.emphasis)
                     .multilineTextAlignment(.center)
 
                 Text("Get reminded to log your symptoms. You can adjust frequency during flare-ups.")
@@ -202,7 +202,7 @@ struct OnboardingView: View {
                     requestNotificationPermissions()
                 }) {
                     Text("Enable Reminders")
-                        .fontWeight(.semibold)
+                        .fontWeight(DesignTokens.Weight.emphasis)
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(DesignTokens.Colors.highlight)
@@ -236,7 +236,7 @@ struct OnboardingView: View {
             VStack(spacing: DesignTokens.Spacing.lg) {
                 Text("Smart Health Scoring")
                     .font(DesignTokens.Typography.heading)
-                    .fontWeight(.bold)
+                    .fontWeight(DesignTokens.Weight.emphasis)
                     .multilineTextAlignment(.center)
 
                 Text("Download the AI model that analyzes your entries and provides health scores. This is a research project—the model is required.")
@@ -281,7 +281,7 @@ struct OnboardingView: View {
                 }
             }) {
                 Text("Download Model")
-                    .fontWeight(.semibold)
+                    .fontWeight(DesignTokens.Weight.emphasis)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(DesignTokens.Colors.highlight)
@@ -306,7 +306,7 @@ struct OnboardingView: View {
             VStack(spacing: DesignTokens.Spacing.lg) {
                 Text("You're All Set!")
                     .font(DesignTokens.Typography.title)
-                    .fontWeight(.bold)
+                    .fontWeight(DesignTokens.Weight.strong)
 
                 Text("Start by logging how you're feeling today. Your first entry takes less than a minute.")
                     .multilineTextAlignment(.center)
@@ -338,7 +338,7 @@ struct OnboardingView: View {
                 completeOnboarding()
             }) {
                 Text("Start Journaling")
-                    .fontWeight(.semibold)
+                    .fontWeight(DesignTokens.Weight.emphasis)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(DesignTokens.Colors.highlight)

@@ -12,7 +12,7 @@ struct HelpView: View {
             VStack(alignment: .leading, spacing: DesignTokens.Spacing.xl) {
                 Text("Help & Support")
                     .font(DesignTokens.Typography.title)
-                    .fontWeight(.bold)
+                    .fontWeight(DesignTokens.Weight.strong)
 
                 // Re-run Onboarding button
                 Button(action: {

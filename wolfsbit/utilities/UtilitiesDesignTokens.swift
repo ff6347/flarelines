@@ -62,7 +62,13 @@ enum DesignTokens {
         static let body = Font.body             // Content text (p)
         static let caption = Font.caption       // Metadata (small)
     }
-    
+
+    // MARK: - Font Weight
+    enum Weight {
+        static let emphasis: Font.Weight = .semibold   // Headings, buttons
+        static let strong: Font.Weight = .bold         // Page titles, section headers
+    }
+
     // MARK: - Dimensions
     enum Dimensions {
         static let textEditorHeight: CGFloat = 200
@@ -125,7 +131,7 @@ struct QuestionCardStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(DesignTokens.Typography.heading)
-            .fontWeight(.semibold)
+            .fontWeight(DesignTokens.Weight.emphasis)
             .foregroundColor(.white)
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignTokens.Spacing.xxl)
