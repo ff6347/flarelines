@@ -49,7 +49,7 @@ struct DataView: View {
                 // Health Progress Chart
                 VStack(alignment: .leading, spacing: 16) {
                     HStack {
-                        Image(systemName: "chart.line.uptrend.xyaxis")
+                        Image(systemName: "cylinder.split.1x2")
                         Text("Health Progress")
                             .font(.headline)
                         Spacer()

@@ -83,7 +83,7 @@ struct OnboardingView: View {
                 Label("Voice input for easy logging", systemImage: "mic.fill")
                     .font(.headline)
 
-                Label("Daily health tracking", systemImage: "chart.line.uptrend.xyaxis")
+                Label("Daily health tracking", systemImage: "cylinder.split.1x2")
                     .font(.headline)
 
                 Label("Export reports for your doctor", systemImage: "doc.text.fill")
