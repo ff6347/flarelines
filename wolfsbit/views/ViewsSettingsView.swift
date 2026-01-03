@@ -1,14 +1,11 @@
-//
-//  SettingsView.swift
-//  wolfsbit
-//
-//  Created by Fabian Moron Zirfas on 13.11.25.
-//
+// ABOUTME: App settings for notifications, data management, and debug tools.
+// ABOUTME: Provides daily reminder configuration and data export/clear options.
 
 import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.dismiss) private var dismiss
     @AppStorage("notificationsEnabled") private var notificationsEnabled = false
     @AppStorage("dailyReminderTime") private var dailyReminderTime = Date()
     
@@ -55,7 +52,14 @@ struct SettingsView: View {
             }
         }
         .navigationTitle("Settings")
-        .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.large)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Done") {
+                    dismiss()
+                }
+            }
+        }
     }
 }
 

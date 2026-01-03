@@ -1,205 +1,294 @@
-//
-//  LogView.swift
-//  wolfsbit
-//
-//  Created by Fabian Moron Zirfas on 13.11.25.
-//
+// ABOUTME: Full-screen journal editor with two-step entry flow.
+// ABOUTME: Step 1: Text/voice diary entry. Step 2: Activity rating (0-3).
 
 import SwiftUI
 import Speech
 import CoreData
 
-struct LogView: View {
-    @StateObject private var viewModel: JournalViewModel
+struct JournalEditorView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var speechRecognizer = SpeechRecognizer()
-    @State private var currentAnswer = ""
+
+    // Entry state
+    @State private var journalText = ""
+    @State private var activityScore: Double = 1
+    @State private var currentPage = 0
+
+    // UI state
+    @FocusState private var isEditorFocused: Bool
     @State private var showingSavedAlert = false
 
-    // Computed property for displaying text with live transcription
+    // Sheet presentation
+    @State private var showingData = false
+    @State private var showingHelp = false
+    @State private var showingSettings = false
+
+    // Display text with live transcription
     private var displayText: String {
         if speechRecognizer.isRecording && !speechRecognizer.transcript.isEmpty {
-            return currentAnswer + (currentAnswer.isEmpty ? "" : " ") + speechRecognizer.transcript
+            return journalText + (journalText.isEmpty ? "" : " ") + speechRecognizer.transcript
         }
-        return currentAnswer
+        return journalText
     }
-    
-    init(context: NSManagedObjectContext) {
-        _viewModel = StateObject(wrappedValue: JournalViewModel(context: context))
-    }
-    
+
     var body: some View {
-        VStack(spacing: 0) {
-            // Progress Section
-            VStack(spacing: 12) {
+        ZStack {
+            // Background
+            Color.black.ignoresSafeArea()
+
+            VStack(spacing: 0) {
+                // Save button header
                 HStack {
-                    Text("Question \(viewModel.currentQuestionIndex + 1) of \(viewModel.questions.count)")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                    
                     Spacer()
-                    
-                    Text("\(Int(viewModel.progress * 100))%")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                    Button(action: saveEntry) {
+                        Image(systemName: "checkmark")
+                            .font(.title2)
+                            .fontWeight(.medium)
+                            .foregroundColor(DesignTokens.Colors.accent)
+                            .frame(width: 56, height: 56)
+                            .background(DesignTokens.Colors.saveButton)
+                            .clipShape(Circle())
+                    }
                 }
-                
-                ProgressView(value: viewModel.progress)
-                    .tint(.primary)
+                .padding(.horizontal)
+                .padding(.top, 8)
+
+                // Two-page content
+                TabView(selection: $currentPage) {
+                    textEntryPage
+                        .tag(0)
+
+                    activityRatingPage
+                        .tag(1)
+                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+
+                // Toolbar
+                editorToolbar
+                    .padding(.bottom, 8)
             }
-            .padding(.horizontal)
-            .padding(.top, 20)
-            
-            Spacer()
-            
-            // Question Card
-            VStack(spacing: 24) {
-                Text(viewModel.currentQuestion.text)
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 32)
-                    .background(Color.black)
-                    .cornerRadius(8)
-                
-                // Text Input Area with live transcription
-                ZStack(alignment: .topLeading) {
-                    // Base text editor (only editable when not recording)
-                    TextEditor(text: $currentAnswer)
-                        .frame(height: 200)
-                        .padding(12)
-                        .background(Color(UIColor.systemBackground))
-                        .opacity(speechRecognizer.isRecording ? 0 : 1)
-                        .onChange(of: currentAnswer) { _, newValue in
-                            viewModel.updateAnswer(newValue)
-                        }
-
-                    // Display text with live transcription overlay
-                    if speechRecognizer.isRecording {
-                        VStack(alignment: .leading) {
-                            // Existing text in black
-                            if !currentAnswer.isEmpty {
-                                Text(currentAnswer)
-                                    .foregroundColor(.primary)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                            }
-
-                            // Live transcription in gray
-                            if !speechRecognizer.transcript.isEmpty {
-                                Text(speechRecognizer.transcript)
-                                    .foregroundColor(.secondary)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                            }
-                        }
-                        .font(.body)
-                        .padding(16)
-                        .frame(height: 200, alignment: .topLeading)
-                    }
-
-                    // Placeholder
-                    if currentAnswer.isEmpty && !speechRecognizer.isRecording {
-                        Text(viewModel.currentQuestion.placeholder)
-                            .foregroundColor(.gray)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 20)
-                            .allowsHitTesting(false)
-                    }
-                }
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                )
-                .onAppear {
-                    currentAnswer = viewModel.getCurrentAnswer()
-                }
-                
-                // Voice Input Button
-                Button(action: {
-                    if speechRecognizer.isRecording {
-                        speechRecognizer.stopRecording()
-                        currentAnswer += (currentAnswer.isEmpty ? "" : " ") + speechRecognizer.transcript
-                        viewModel.updateAnswer(currentAnswer)
-                    } else {
-                        do {
-                            try speechRecognizer.startRecording()
-                        } catch {
-                            print("Failed to start recording: \(error)")
-                        }
-                    }
-                }) {
-                    HStack {
-                        Image(systemName: speechRecognizer.isRecording ? "mic.fill" : "mic")
-                        Text(speechRecognizer.isRecording ? "Recording..." : "Voice Input")
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(speechRecognizer.isRecording ? Color.red.opacity(0.1) : Color(UIColor.systemBackground))
-                    .foregroundColor(speechRecognizer.isRecording ? .red : .primary)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(speechRecognizer.isRecording ? Color.red : Color.gray.opacity(0.3), lineWidth: 1)
-                    )
-                }
-                .disabled(speechRecognizer.authorizationStatus != .authorized)
-
-                // Navigation Buttons (locked while recording)
-                HStack(spacing: 16) {
-                    Button(action: {
-                        viewModel.previousQuestion()
-                        currentAnswer = viewModel.getCurrentAnswer()
-                    }) {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                            Text("Previous")
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color(UIColor.systemBackground))
-                        .foregroundColor(viewModel.canGoPrevious && !speechRecognizer.isRecording ? .primary : .gray)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                        )
-                    }
-                    .disabled(!viewModel.canGoPrevious || speechRecognizer.isRecording)
-                    
-                    Button(action: {
-                        if viewModel.canGoNext {
-                            viewModel.nextQuestion()
-                            currentAnswer = viewModel.getCurrentAnswer()
-                        } else {
-                            // Last question - save entry
-                            viewModel.saveEntry()
-                            currentAnswer = ""
-                            showingSavedAlert = true
-                        }
-                    }) {
-                        HStack {
-                            Text(viewModel.canGoNext ? "Next" : "Save")
-                            Image(systemName: "chevron.right")
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(speechRecognizer.isRecording ? Color.gray : Color.black)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                    }
-                    .disabled(speechRecognizer.isRecording)
-                }
-            }
-            .padding(.horizontal)
-            
-            Spacer()
         }
-        .background(Color(UIColor.systemGroupedBackground))
+        .preferredColorScheme(.dark)
         .alert("Entry Saved", isPresented: $showingSavedAlert) {
             Button("OK", role: .cancel) { }
         } message: {
-            Text("Your journal entry has been saved successfully.")
+            Text("Your journal entry has been saved.")
         }
+        .sheet(isPresented: $showingData) {
+            NavigationView {
+                DataView()
+                    .environment(\.managedObjectContext, viewContext)
+            }
+        }
+        .sheet(isPresented: $showingHelp) {
+            NavigationView {
+                HelpView()
+            }
+        }
+        .sheet(isPresented: $showingSettings) {
+            NavigationView {
+                SettingsView()
+                    .environment(\.managedObjectContext, viewContext)
+            }
+        }
+    }
+
+    // MARK: - Text Entry Page
+
+    private var textEntryPage: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text("How are you doing today?")
+                .font(.title3)
+                .foregroundColor(.white)
+                .padding(.horizontal)
+                .padding(.top, 24)
+
+            Divider()
+                .background(Color.gray.opacity(0.5))
+                .padding(.horizontal)
+                .padding(.top, 8)
+
+            // Text editor area
+            ZStack(alignment: .topLeading) {
+                if speechRecognizer.isRecording {
+                    // Live transcription view
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 4) {
+                            if !journalText.isEmpty {
+                                Text(journalText)
+                                    .foregroundColor(.white)
+                            }
+                            if !speechRecognizer.transcript.isEmpty {
+                                Text(speechRecognizer.transcript)
+                                    .foregroundColor(.gray)
+                            }
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
+                    }
+                } else {
+                    TextEditor(text: $journalText)
+                        .scrollContentBackground(.hidden)
+                        .background(Color.clear)
+                        .foregroundColor(.white)
+                        .focused($isEditorFocused)
+                        .padding(.horizontal, 12)
+                        .padding(.top, 8)
+                }
+
+                // Placeholder
+                if journalText.isEmpty && !speechRecognizer.isRecording {
+                    Text("Start writing...")
+                        .foregroundColor(.gray)
+                        .padding(.horizontal, 17)
+                        .padding(.top, 16)
+                        .allowsHitTesting(false)
+                }
+            }
+
+            Spacer()
+        }
+    }
+
+    // MARK: - Activity Rating Page
+
+    private var activityRatingPage: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text("Rate your activity!")
+                .font(.title3)
+                .foregroundColor(.white)
+                .padding(.horizontal)
+                .padding(.top, 24)
+
+            // Slider with tick marks
+            VStack(spacing: 8) {
+                Slider(value: $activityScore, in: 0...3, step: 1)
+                    .tint(.gray)
+                    .padding(.horizontal)
+                    .padding(.top, 16)
+
+                // Tick mark labels
+                HStack {
+                    Text("0")
+                    Spacer()
+                    Text("1")
+                    Spacer()
+                    Text("2")
+                    Spacer()
+                    Text("3")
+                }
+                .font(.caption)
+                .foregroundColor(.gray)
+                .padding(.horizontal, 20)
+            }
+
+            Spacer()
+        }
+    }
+
+    // MARK: - Editor Toolbar
+
+    private var editorToolbar: some View {
+        HStack(spacing: 0) {
+            // Mic button
+            Button(action: toggleVoiceInput) {
+                Image(systemName: speechRecognizer.isRecording ? "mic.fill" : "mic")
+                    .foregroundColor(speechRecognizer.isRecording ? .red : .white)
+            }
+            .frame(maxWidth: .infinity)
+
+            // Data button
+            Button(action: { showingData = true }) {
+                Image(systemName: "cylinder.split.1x2")
+            }
+            .frame(maxWidth: .infinity)
+
+            // Help button
+            Button(action: { showingHelp = true }) {
+                Image(systemName: "questionmark.circle")
+            }
+            .frame(maxWidth: .infinity)
+
+            // Settings button
+            Button(action: { showingSettings = true }) {
+                Image(systemName: "gearshape")
+            }
+            .frame(maxWidth: .infinity)
+
+            // Dismiss keyboard button
+            Button(action: { isEditorFocused = false }) {
+                Image(systemName: "keyboard.chevron.compact.down")
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .font(.title2)
+        .foregroundColor(.white)
+        .padding(.vertical, 12)
+        .background(Color(white: 0.15))
+        .cornerRadius(12)
+        .padding(.horizontal)
+    }
+
+    // MARK: - Actions
+
+    private func toggleVoiceInput() {
+        if speechRecognizer.isRecording {
+            speechRecognizer.stopRecording()
+            journalText += (journalText.isEmpty ? "" : " ") + speechRecognizer.transcript
+        } else {
+            // Dismiss keyboard when starting voice
+            isEditorFocused = false
+            do {
+                try speechRecognizer.startRecording()
+            } catch {
+                print("Failed to start recording: \(error)")
+            }
+        }
+    }
+
+    private func saveEntry() {
+        guard !journalText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return
+        }
+
+        let entry = JournalEntry(context: viewContext)
+        entry.id = UUID()
+        entry.timestamp = Date()
+        entry.feeling = journalText
+
+        // Store activity score (0-3) in painLevel for now
+        // CoreData migration will add proper userScore field
+        entry.painLevel = Int16(activityScore)
+
+        // Initialize scoring fields
+        entry.heuristicScore = activityScore
+        entry.mlScore = 0.0
+        entry.scoreConfidence = 0.0
+        entry.activeScore = activityScore
+        entry.needsReview = false
+        entry.isFlaggedDay = false
+
+        do {
+            try viewContext.save()
+            resetForm()
+            showingSavedAlert = true
+        } catch {
+            print("Error saving entry: \(error)")
+        }
+    }
+
+    private func resetForm() {
+        journalText = ""
+        activityScore = 1
+        currentPage = 0
+        isEditorFocused = false
     }
 }
 
+// Keep LogView as alias for compatibility
+typealias LogView = JournalEditorView
+
 #Preview {
-    LogView(context: PersistenceController.preview.container.viewContext)
+    JournalEditorView()
+        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

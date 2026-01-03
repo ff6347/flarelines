@@ -15,16 +15,19 @@ enum DesignTokens {
         static let primaryBackground = Color(UIColor.systemGroupedBackground)
         static let secondaryBackground = Color(UIColor.secondarySystemGroupedBackground)
         static let cardBackground = Color(UIColor.systemBackground)
-        
+
         static let primaryText = Color.primary
         static let secondaryText = Color.secondary
-        
+
         static let accent = Color.black
         static let accentLight = Color.gray.opacity(0.3)
-        
+
+        // Pink/mauve accent for save button
+        static let saveButton = Color(red: 0.85, green: 0.75, blue: 0.80)
+
         static let recordingActive = Color.red
         static let recordingBackground = Color.red.opacity(0.1)
-        
+
         static let chartLine = Color.primary
         static let chartPoint = Color.primary
     }
