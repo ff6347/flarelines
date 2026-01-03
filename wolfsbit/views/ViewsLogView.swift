@@ -88,6 +88,11 @@ struct JournalEditorView: View {
                 stopRecordingAndAppendText()
             }
         }
+        .onChange(of: speechRecognizer.isRecording) { _, isRecording in
+            withAnimation(isRecording ? .easeInOut(duration: 0.6).repeatForever(autoreverses: true) : .default) {
+                isPulsing = isRecording
+            }
+        }
     }
 
     // MARK: - Header Button
@@ -223,18 +228,9 @@ struct JournalEditorView: View {
             Button(action: toggleVoiceInput) {
                 Image(systemName: speechRecognizer.isRecording ? "mic.fill" : "mic")
                     .foregroundColor(speechRecognizer.isRecording ? DesignTokens.Colors.highlight : .white)
-                    .scaleEffect(isPulsing ? 1.2 : 1.0)
-                    .animation(
-                        speechRecognizer.isRecording
-                            ? .easeInOut(duration: 0.5).repeatForever(autoreverses: true)
-                            : .default,
-                        value: isPulsing
-                    )
+                    .scaleEffect(isPulsing ? 1.3 : 1.0)
             }
             .frame(maxWidth: .infinity)
-            .onChange(of: speechRecognizer.isRecording) { _, isRecording in
-                isPulsing = isRecording
-            }
 
             // Data button
             Button(action: { showingData = true }) {
