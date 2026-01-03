@@ -23,6 +23,9 @@ struct JournalEditorView: View {
     @State private var showingHelp = false
     @State private var showingSettings = false
 
+    // Recording pulse animation
+    @State private var isPulsing = false
+
     var body: some View {
         ZStack {
             // Background
@@ -77,6 +80,12 @@ struct JournalEditorView: View {
             NavigationView {
                 SettingsView()
                     .environment(\.managedObjectContext, viewContext)
+            }
+        }
+        .onChange(of: currentPage) { _, newPage in
+            // Stop recording when leaving page 1
+            if newPage != 0 && speechRecognizer.isRecording {
+                stopRecordingAndAppendText()
             }
         }
     }
@@ -210,12 +219,22 @@ struct JournalEditorView: View {
 
     private var editorToolbar: some View {
         HStack(spacing: 0) {
-            // Mic button
+            // Mic button with pulse animation when recording
             Button(action: toggleVoiceInput) {
                 Image(systemName: speechRecognizer.isRecording ? "mic.fill" : "mic")
                     .foregroundColor(speechRecognizer.isRecording ? DesignTokens.Colors.highlight : .white)
+                    .scaleEffect(isPulsing ? 1.2 : 1.0)
+                    .animation(
+                        speechRecognizer.isRecording
+                            ? .easeInOut(duration: 0.5).repeatForever(autoreverses: true)
+                            : .default,
+                        value: isPulsing
+                    )
             }
             .frame(maxWidth: .infinity)
+            .onChange(of: speechRecognizer.isRecording) { _, isRecording in
+                isPulsing = isRecording
+            }
 
             // Data button
             Button(action: { showingData = true }) {
@@ -264,8 +283,7 @@ struct JournalEditorView: View {
 
     private func toggleVoiceInput() {
         if speechRecognizer.isRecording {
-            speechRecognizer.stopRecording()
-            journalText += (journalText.isEmpty ? "" : " ") + speechRecognizer.transcript
+            stopRecordingAndAppendText()
         } else {
             // Dismiss keyboard when starting voice
             isEditorFocused = false
@@ -274,6 +292,14 @@ struct JournalEditorView: View {
             } catch {
                 print("Failed to start recording: \(error)")
             }
+        }
+    }
+
+    private func stopRecordingAndAppendText() {
+        guard speechRecognizer.isRecording else { return }
+        speechRecognizer.stopRecording()
+        if !speechRecognizer.transcript.isEmpty {
+            journalText += (journalText.isEmpty ? "" : " ") + speechRecognizer.transcript
         }
     }
 
