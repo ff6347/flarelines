@@ -1,7 +1,298 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%d/10" : {
 
+    },
+    "%lld entries" : {
+
+    },
+    "%lld%%" : {
+
+    },
+    "1.0.0" : {
+
+    },
+    "About" : {
+
+    },
+    "Active Score" : {
+
+    },
+    "Additional notes (optional)" : {
+
+    },
+    "Allow Microphone & Speech" : {
+
+    },
+    "Answer daily questions using your voice. Wolfsbit needs microphone and speech recognition access." : {
+
+    },
+    "Any symptoms you noticed?" : {
+
+    },
+    "Basic scoring ready" : {
+
+    },
+    "Cancel" : {
+
+    },
+    "Clear All Data" : {
+
+    },
+    "Consistent tracking helps you and your doctor see patterns." : {
+
+    },
+    "Continue" : {
+
+    },
+    "Daily health tracking" : {
+
+    },
+    "Daily Reminders" : {
+
+    },
+    "Daily Reminders (Optional)" : {
+
+    },
+    "Danger Zone" : {
+
+    },
+    "Data" : {
+
+    },
+    "DATA" : {
+
+    },
+    "Date" : {
+
+    },
+    "Debug Controls" : {
+
+    },
+    "Debug Tools" : {
+
+    },
+    "Describe your pain level" : {
+
+    },
+    "Download an AI model that learns your patterns and provides more accurate health scores over time." : {
+
+    },
+    "Download Later" : {
+
+    },
+    "Download Now" : {
+
+    },
+    "Download: ~50-100 MB" : {
+
+    },
+    "Edit Entry" : {
+
+    },
+    "Enable Reminders" : {
+
+    },
+    "Entry Details" : {
+
+    },
+    "Entry Saved" : {
+
+    },
+    "Export Data" : {
+
+    },
+    "Export reports for your doctor" : {
+
+    },
+    "Feeling" : {
+
+    },
+    "Generate 1 Year" : {
+
+    },
+    "Generate 7 Days" : {
+
+    },
+    "Generate 30 Days" : {
+
+    },
+    "Generate Sample Data" : {
+
+    },
+    "Get reminded to log your symptoms. You can adjust frequency during flare-ups." : {
+
+    },
+    "Health" : {
+
+    },
+    "Health Progress" : {
+
+    },
+    "HELP" : {
+
+    },
+    "Help & Support" : {
+
+    },
+    "Heuristic Score" : {
+
+    },
+    "How are you feeling today?" : {
+
+    },
+    "How intense is your pain on a scale of 0-10?" : {
+
+    },
+    "I'll enable this later" : {
+
+    },
+    "Journal Entries" : {
+
+    },
+    "LOG" : {
+
+    },
+    "Low confidence - needs review" : {
+
+    },
+    "ML Score" : {
+
+    },
+    "Next" : {
+
+    },
+    "No data available for this time range" : {
+
+    },
+    "No entries yet. Start logging your health journey!" : {
+
+    },
+    "Notes" : {
+
+    },
+    "Notifications" : {
+
+    },
+    "OK" : {
+
+    },
+    "Pain" : {
+
+    },
+    "Pain Level" : {
+
+    },
+    "Pain level: %d/10" : {
+
+    },
+    "Previous" : {
+
+    },
+    "Privacy Policy" : {
+
+    },
+    "Question %lld of %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Question %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "Re-run Onboarding" : {
+
+    },
+    "Recording..." : {
+
+    },
+    "Reminder Time" : {
+
+    },
+    "Reminders configured" : {
+
+    },
+    "Runs on your device" : {
+
+    },
+    "Save" : {
+
+    },
+    "Scores (Read-Only)" : {
+
+    },
+    "Scores are automatically recalculated when you save changes." : {
+
+    },
+    "Settings" : {
+
+    },
+    "Skip" : {
+
+    },
+    "Skip for now" : {
+
+    },
+    "Smart Health Scoring (Optional)" : {
+
+    },
+    "Start by logging how you're feeling today. Your first entry takes less than a minute." : {
+
+    },
+    "Start Journaling" : {
+
+    },
+    "Symptoms" : {
+
+    },
+    "Terms of Service" : {
+
+    },
+    "Time" : {
+
+    },
+    "Track your chronic illness symptoms with voice-first journaling. Designed for people with fatigue and brain fog." : {
+
+    },
+    "Typing can be exhausting when you're fatigued. Voice input is faster and easier." : {
+
+    },
+    "Version" : {
+
+    },
+    "Voice Input" : {
+
+    },
+    "Voice input enabled" : {
+
+    },
+    "Voice input for easy logging" : {
+
+    },
+    "Voice Input Makes Logging Easy" : {
+
+    },
+    "Welcome to Wolfsbit" : {
+
+    },
+    "What symptoms are you experiencing?" : {
+
+    },
+    "You can use the app without this. It will use basic scoring until you download the model." : {
+
+    },
+    "You're All Set!" : {
+
+    },
+    "Your data stays private" : {
+
+    },
+    "Your journal entry has been saved successfully." : {
+
+    }
   },
   "version" : "1.1"
 }

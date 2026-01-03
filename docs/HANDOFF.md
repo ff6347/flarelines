@@ -1,5 +1,18 @@
 # Wolfsbit Implementation Handoff
 
+## Issues to Address
+
+### UI/UX Improvements Needed
+- **Dark mode colors**: Need to handle dark mode color scheme properly
+- **Highlight color**: Change highlight color to `#ff6347` (tomato red)
+- **Onboarding layout**: Current layout needs visual polish and better spacing
+- **Sample data feedback**: Sample data generation gives no feedback to user that data was created
+- **Onboarding mic prompt**: Onboarding prompts for mic access directly on load (should defer until needed)
+- **Record button keyboard overlap**: When text field is focused and keyboard appears, record button is partially overlapped - button should always be fully visible
+- **Voice recording keyboard behavior**: When recording voice, keyboard should automatically hide
+
+---
+
 ## Current State
 
 You have a working iOS app with journaling functionality, localization support, enhanced UX, and Phase 1 of the ML integration complete.
