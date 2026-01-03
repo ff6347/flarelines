@@ -147,6 +147,9 @@ struct DataView: View {
                     Section {
                         ForEach(group.entries) { entry in
                             JournalEntryCard(entry: entry)
+                                .listRowInsets(EdgeInsets())
+                                .listRowBackground(Rectangle().fill(Color(UIColor.systemBackground)))
+                                .listRowSeparator(.visible)
                         }
                     } header: {
                         Text(group.date, style: .date)
@@ -155,8 +158,6 @@ struct DataView: View {
                             .foregroundColor(.primary)
                             .textCase(nil)
                     }
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 }
             }
         }
@@ -223,8 +224,8 @@ struct JournalEntryCard: View {
                     .foregroundColor(.primary)
             }
         }
-        .padding(.horizontal)
-        .padding(.vertical, DesignTokens.Spacing.sm)
+        .padding(.horizontal, DesignTokens.Spacing.xl)
+        .padding(.vertical, DesignTokens.Spacing.md)
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
             Button(role: .destructive) {
                 deleteEntry()
