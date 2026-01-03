@@ -53,7 +53,7 @@ struct EditEntryView: View {
                         TextEditor(text: $feeling)
                             .frame(height: 100)
                             .overlay(
-                                RoundedRectangle(cornerRadius: 8)
+                                RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.md)
                                     .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                             )
                     }
@@ -85,7 +85,7 @@ struct EditEntryView: View {
                         TextEditor(text: $symptoms)
                             .frame(height: 100)
                             .overlay(
-                                RoundedRectangle(cornerRadius: 8)
+                                RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.md)
                                     .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                             )
                     }
@@ -102,7 +102,7 @@ struct EditEntryView: View {
                         TextEditor(text: $notes)
                             .frame(height: 80)
                             .overlay(
-                                RoundedRectangle(cornerRadius: 8)
+                                RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.md)
                                     .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                             )
                     }

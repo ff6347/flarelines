@@ -43,11 +43,12 @@ enum DesignTokens {
     }
     
     // MARK: - Corner Radius
+    // Matches iOS Form/List grouped style (10pt)
     enum CornerRadius {
-        static let sm: CGFloat = 4
-        static let md: CGFloat = 8
-        static let lg: CGFloat = 12
-        static let xl: CGFloat = 16
+        static let sm: CGFloat = 10
+        static let md: CGFloat = 10
+        static let lg: CGFloat = 10
+        static let xl: CGFloat = 10
     }
     
     // MARK: - Typography
