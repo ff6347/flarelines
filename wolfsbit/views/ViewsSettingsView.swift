@@ -2,13 +2,14 @@
 // ABOUTME: Provides daily reminder configuration and data export/clear options.
 
 import SwiftUI
+import UIKit
 
 struct SettingsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     @AppStorage("notificationsEnabled") private var notificationsEnabled = false
     @AppStorage("dailyReminderTime") private var dailyReminderTime = Date()
-    
+
     var body: some View {
         Form {
             Section("Notifications") {
@@ -35,6 +36,10 @@ struct SettingsView: View {
             Section("Debug Tools") {
                 NavigationLink("Debug Controls") {
                     DebugControlsView()
+                }
+
+                Button("Print Corner Radii") {
+                    printAllCornerRadii()
                 }
             }
             #endif
@@ -68,3 +73,32 @@ struct SettingsView: View {
         SettingsView()
     }
 }
+
+// MARK: - Debug Helper
+
+#if DEBUG
+func printAllCornerRadii() {
+    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+          let window = windowScene.windows.first else {
+        print("Could not find window")
+        return
+    }
+
+    print("\n========== CORNER RADII SCAN ==========")
+    scanCornerRadii(view: window, depth: 0)
+    print("========================================\n")
+}
+
+private func scanCornerRadii(view: UIView, depth: Int) {
+    let indent = String(repeating: "  ", count: depth)
+    let viewType = String(describing: type(of: view))
+
+    if view.layer.cornerRadius > 0 {
+        print("\(indent)\(viewType): cornerRadius = \(view.layer.cornerRadius)")
+    }
+
+    for subview in view.subviews {
+        scanCornerRadii(view: subview, depth: depth + 1)
+    }
+}
+#endif
