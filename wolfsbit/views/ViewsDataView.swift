@@ -8,21 +8,21 @@ import CoreData
 struct DataView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
-    
+
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \JournalEntry.timestamp, ascending: false)],
         animation: .default)
     private var entries: FetchedResults<JournalEntry>
-    
+
     @State private var selectedTimeRange: TimeRange = .thirtyDays
-    
+
     enum TimeRange: String, CaseIterable {
         case sevenDays = "7D"
         case thirtyDays = "30D"
         case ninetyDays = "90D"
         case oneEightyDays = "180D"
         case oneYear = "1Y"
-        
+
         var days: Int {
             switch self {
             case .sevenDays: return 7
@@ -33,16 +33,16 @@ struct DataView: View {
             }
         }
     }
-    
+
     var filteredEntries: [JournalEntry] {
         let cutoffDate = Calendar.current.date(byAdding: .day, value: -selectedTimeRange.days, to: Date()) ?? Date()
         return entries.filter { $0.timestamp >= cutoffDate }
     }
-    
+
     var sortedFilteredEntries: [JournalEntry] {
         filteredEntries.sorted { $0.timestamp < $1.timestamp }
     }
-    
+
     var body: some View {
         List {
             // Health Progress Chart Section
@@ -83,29 +83,29 @@ struct DataView: View {
                             ForEach(sortedFilteredEntries) { entry in
                                 LineMark(
                                     x: .value("Date", entry.timestamp),
-                                    y: .value("Health", entry.healthScore)
+                                    y: .value("Score", Double(entry.userScore))
                                 )
                                 .interpolationMethod(.catmullRom)
                                 .foregroundStyle(.primary)
 
                                 PointMark(
                                     x: .value("Date", entry.timestamp),
-                                    y: .value("Health", entry.healthScore)
+                                    y: .value("Score", Double(entry.userScore))
                                 )
                                 .symbolSize(DesignTokens.Dimensions.chartPointSize)
                                 .foregroundStyle(.primary)
                             }
                         }
                         .frame(height: DesignTokens.Dimensions.chartHeight)
-                        .chartYScale(domain: 0...10)
+                        .chartYScale(domain: 0...3)
                         .chartXAxis {
-                            AxisMarks(values: .automatic) { value in
+                            AxisMarks(values: .automatic) { _ in
                                 AxisValueLabel(format: .dateTime.month().day())
                                     .font(DesignTokens.Typography.caption)
                             }
                         }
                         .chartYAxis {
-                            AxisMarks(position: .leading) { value in
+                            AxisMarks(position: .leading, values: [0, 1, 2, 3]) { _ in
                                 AxisValueLabel()
                                     .font(DesignTokens.Typography.caption)
                             }
@@ -172,7 +172,7 @@ struct DataView: View {
             }
         }
     }
-    
+
     var groupedEntries: [GroupedEntry] {
         let calendar = Calendar.current
         let grouped = Dictionary(grouping: entries) { entry in
@@ -193,8 +193,8 @@ struct JournalEntryCard: View {
     @State private var showingEditSheet = false
     @Environment(\.managedObjectContext) private var viewContext
 
-    private var activityScoreLabel: String {
-        switch entry.painLevel {
+    private var scoreLabel: String {
+        switch entry.userScore {
         case 0: return "Remission"
         case 1: return "Mild"
         case 2: return "Moderate"
@@ -212,13 +212,21 @@ struct JournalEntryCard: View {
 
                 Spacer()
 
-                Text("\(entry.painLevel) - \(activityScoreLabel)")
-                    .font(DesignTokens.Typography.caption)
-                    .foregroundColor(.secondary)
+                HStack(spacing: DesignTokens.Spacing.xs) {
+                    Text("\(entry.userScore) - \(scoreLabel)")
+                        .font(DesignTokens.Typography.caption)
+                        .foregroundColor(.secondary)
+
+                    if entry.mlScore >= 0 && entry.mlScore != entry.userScore {
+                        Text("(ML: \(entry.mlScore))")
+                            .font(DesignTokens.Typography.caption)
+                            .foregroundColor(.orange)
+                    }
+                }
             }
 
-            if let feeling = entry.feeling, !feeling.isEmpty {
-                Text(feeling)
+            if let journalText = entry.journalText, !journalText.isEmpty {
+                Text(journalText)
                     .font(DesignTokens.Typography.body)
                     .foregroundColor(.primary)
             }

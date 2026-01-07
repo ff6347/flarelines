@@ -1,5 +1,5 @@
 // ABOUTME: Modal view for editing saved journal entries.
-// ABOUTME: Allows editing input fields and recalculates scores on save.
+// ABOUTME: Allows editing journal text, user score, and notes.
 
 import SwiftUI
 import CoreData
@@ -11,13 +11,13 @@ struct EditEntryView: View {
     @ObservedObject var entry: JournalEntry
 
     @State private var journalText: String
-    @State private var activityScore: Double
+    @State private var userScore: Double
     @State private var notes: String
 
     init(entry: JournalEntry) {
         self.entry = entry
-        _journalText = State(initialValue: entry.feeling ?? "")
-        _activityScore = State(initialValue: Double(entry.painLevel))
+        _journalText = State(initialValue: entry.journalText ?? "")
+        _userScore = State(initialValue: Double(entry.userScore))
         _notes = State(initialValue: entry.notes ?? "")
     }
 
@@ -44,6 +44,15 @@ struct EditEntryView: View {
                             Text(entry.timestamp, style: .time)
                                 .foregroundColor(.secondary)
                         }
+
+                        if entry.mlScore >= 0 {
+                            HStack {
+                                Text("ML Score")
+                                Spacer()
+                                Text("\(entry.mlScore)")
+                                    .foregroundColor(.secondary)
+                            }
+                        }
                     }
 
                     Divider()
@@ -61,13 +70,13 @@ struct EditEntryView: View {
 
                     Divider()
 
-                    // Activity Score
+                    // User Score
                     VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
-                        Text("Activity Score")
+                        Text("Your Score")
                             .font(DesignTokens.Typography.subheading)
                             .fontWeight(DesignTokens.Weight.strong)
 
-                        Slider(value: $activityScore, in: 0...3, step: 1)
+                        Slider(value: $userScore, in: 0...3, step: 1)
                             .tint(DesignTokens.Colors.highlight)
 
                         HStack {
@@ -126,16 +135,10 @@ struct EditEntryView: View {
     }
 
     private func saveChanges() {
-        // Update entry fields
-        entry.feeling = journalText.isEmpty ? nil : journalText
-        entry.painLevel = Int16(activityScore)
+        entry.journalText = journalText.isEmpty ? nil : journalText
+        entry.userScore = Int16(userScore)
         entry.notes = notes.isEmpty ? nil : notes
 
-        // Use activity score as the heuristic/active score
-        entry.heuristicScore = activityScore
-        entry.activeScore = activityScore
-
-        // Save to Core Data
         do {
             try viewContext.save()
             dismiss()
@@ -150,12 +153,10 @@ struct EditEntryView: View {
     let entry = JournalEntry(context: context)
     entry.id = UUID()
     entry.timestamp = Date()
-    entry.feeling = "Feeling tired today, had some joint pain in the morning but it got better after taking medication."
-    entry.painLevel = 2
-    entry.heuristicScore = 2.0
-    entry.mlScore = 0
-    entry.activeScore = 2.0
-    entry.notes = "Started new medication"
+    entry.journalText = "Heute bin ich müde aufgewacht, hatte leichte Gelenkschmerzen am Morgen, die aber nach dem Aufstehen besser wurden."
+    entry.userScore = 1
+    entry.mlScore = 1
+    entry.notes = "Neue Medikation angefangen"
 
     return EditEntryView(entry: entry)
         .environment(\.managedObjectContext, context)

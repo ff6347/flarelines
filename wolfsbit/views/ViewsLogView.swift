@@ -312,18 +312,9 @@ struct JournalEditorView: View {
         let entry = JournalEntry(context: viewContext)
         entry.id = UUID()
         entry.timestamp = Date()
-        entry.feeling = journalText
-
-        // Store activity score (0-3) in painLevel for now
-        // CoreData migration will add proper userScore field
-        entry.painLevel = Int16(activityScore)
-
-        // Initialize scoring fields
-        entry.heuristicScore = activityScore
-        entry.mlScore = 0.0
-        entry.scoreConfidence = 0.0
-        entry.activeScore = activityScore
-        entry.needsReview = false
+        entry.journalText = journalText
+        entry.userScore = Int16(activityScore)
+        entry.mlScore = -1  // Not scored yet
         entry.isFlaggedDay = false
 
         do {

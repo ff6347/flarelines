@@ -7,17 +7,12 @@
         <attribute name="wasReportExported" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
     </entity>
     <entity name="JournalEntry" representedClassName=".JournalEntry" syncable="YES">
-        <attribute name="activeScore" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="feeling" optional="YES" attributeType="String"/>
-        <attribute name="heuristicScore" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isFlaggedDay" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="mlScore" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="needsReview" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="journalText" optional="YES" attributeType="String"/>
+        <attribute name="mlScore" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
-        <attribute name="painLevel" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="scoreConfidence" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="symptoms" optional="YES" attributeType="String"/>
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userScore" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
 </model>
