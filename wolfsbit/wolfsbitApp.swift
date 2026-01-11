@@ -30,10 +30,10 @@ struct wolfsbitApp: App {
 }
 
 /// Wrapper view that observes language preference and applies locale environment.
-private struct LocalizedRootView: View {
+struct LocalizedRootView: View {
     @Binding var hasCompletedOnboarding: Bool
     @Binding var showOnboarding: Bool
-    private var languagePreference = LanguagePreference.shared
+    var languagePreference = LanguagePreference.shared
 
     var body: some View {
         ContentView()

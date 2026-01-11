@@ -13,7 +13,7 @@ struct OnboardingView: View {
     @State private var speechRecognizer = SpeechRecognizer()
 
     // Language preference
-    private var languagePreference = LanguagePreference.shared
+    var languagePreference = LanguagePreference.shared
 
     // ML Model download state
     private let downloader = ModelDownloader.shared
