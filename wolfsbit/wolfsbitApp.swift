@@ -10,6 +10,10 @@ struct wolfsbitApp: App {
 
     let persistenceController = PersistenceController.shared
 
+    init() {
+        Analytics.initialize()
+    }
+
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @State private var showOnboarding = false
 
