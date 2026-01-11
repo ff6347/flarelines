@@ -522,6 +522,7 @@
       }
     },
     "Help & Support" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -696,13 +697,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tippe oben rechts auf das Menü, um deine Daten zu sehen. Du kannst verschiedene Zeiträume auswählen und deine Einträge nach Datum durchsuchen."
+            "value" : "Tippe auf das Daten-Symbol in der unteren Leiste, um deine Einträge zu sehen. Du kannst verschiedene Zeiträume auswählen und deine Einträge nach Datum durchsuchen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tap the menu button in the top right to view your data. You can select different time ranges and browse your entries by date."
+            "value" : "Tap the data icon in the bottom toolbar to view your entries. You can select different time ranges and browse your entries by date."
           }
         }
       }
@@ -728,13 +729,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tippe auf das Mikrofon-Symbol, um zu sprechen statt zu tippen. Die App transkribiert deine Sprache in Text, den du vor dem Speichern bearbeiten kannst."
+            "value" : "Tippe auf das Mikrofon-Symbol in der unteren Leiste, um zu sprechen statt zu tippen. Die App transkribiert deine Sprache in Text, den du vor dem Speichern bearbeiten kannst."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tap the microphone button to speak instead of type. The app transcribes your speech into text, which you can edit before saving."
+            "value" : "Tap the microphone icon in the bottom toolbar to speak instead of type. The app transcribes your speech into text, which you can edit before saving."
           }
         }
       }
@@ -952,6 +953,7 @@
       }
     },
     "Re-run Onboarding" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
