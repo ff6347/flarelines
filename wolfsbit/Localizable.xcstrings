@@ -2,7 +2,14 @@
   "sourceLanguage" : "en",
   "strings" : {
     "(ML: %d)" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(ML: %d)"
+          }
+        }
+      }
     },
     "/" : {
 
@@ -12,6 +19,12 @@
     },
     "%d - %@" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$d - %2$@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -21,7 +34,14 @@
       }
     },
     "%lld entries" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld Einträge"
+          }
+        }
+      }
     },
     "%lld%%" : {
 
@@ -30,7 +50,14 @@
 
     },
     "0 = Remission, 1 = Mild, 2 = Moderate, 3 = Severe" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "0 = Remission, 1 = Leicht, 2 = Moderat, 3 = Schwer"
+          }
+        }
+      }
     },
     "1" : {
 
@@ -45,265 +72,1128 @@
 
     },
     "About" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Über"
+          }
+        }
+      }
     },
     "Allow Microphone & Speech" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mikrofon & Sprache erlauben"
+          }
+        }
+      }
     },
     "Answer daily questions using your voice. Wolfsbit needs microphone and speech recognition access." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beantworte tägliche Fragen mit deiner Stimme. Wolfsbit benötigt Zugriff auf Mikrofon und Spracherkennung."
+          }
+        }
+      }
     },
     "Cancel" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        }
+      }
     },
     "Checking model status..." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modellstatus wird geprüft..."
+          }
+        }
+      }
     },
     "Clear All Data" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Daten löschen"
+          }
+        }
+      }
     },
     "Consistent tracking helps you and your doctor see patterns." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regelmäßige Aufzeichnungen helfen dir und deinem Arzt, Muster zu erkennen."
+          }
+        }
+      }
     },
     "Continue" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weiter"
+          }
+        }
+      }
     },
     "Continue (Download in Background)" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weiter (Download im Hintergrund)"
+          }
+        }
+      }
     },
     "Corner Radii Found" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eckenradien gefunden"
+          }
+        }
+      }
     },
     "Daily health tracking" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tägliche Gesundheitsverfolgung"
+          }
+        }
+      }
     },
     "Daily Reminders" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tägliche Erinnerungen"
+          }
+        }
+      }
     },
     "Daily Reminders (Optional)" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tägliche Erinnerungen (optional)"
+          }
+        }
+      }
     },
     "Danger Zone" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gefahrenzone"
+          }
+        }
+      }
     },
     "Data" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten"
+          }
+        }
+      }
     },
     "Date" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datum"
+          }
+        }
+      }
     },
     "Debug Controls" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debug-Steuerung"
+          }
+        }
+      }
     },
     "Debug Tools" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debug-Werkzeuge"
+          }
+        }
+      }
     },
     "Delete" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen"
+          }
+        }
+      }
     },
     "Delete ML Model?" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ML-Modell löschen?"
+          }
+        }
+      }
     },
     "Delete Model" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modell löschen"
+          }
+        }
+      }
     },
     "Done" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig"
+          }
+        }
+      }
     },
     "Download Model" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modell herunterladen"
+          }
+        }
+      }
     },
     "Download paused" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download pausiert"
+          }
+        }
+      }
     },
     "Download Paused" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download pausiert"
+          }
+        }
+      }
+    },
+    "Download Paused (%lld%%)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download pausiert (%lld%%)"
+          }
+        }
+      }
     },
     "Download the AI model that analyzes your entries and provides health scores. This is a research project—the model is required." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lade das KI-Modell herunter, das deine Einträge analysiert und Gesundheitsbewertungen erstellt. Dies ist ein Forschungsprojekt – das Modell ist erforderlich."
+          }
+        }
+      }
     },
     "Download: %@" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download: %@"
+          }
+        }
+      }
     },
     "Downloaded" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heruntergeladen"
+          }
+        }
+      }
     },
     "Downloading model" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modell wird heruntergeladen"
+          }
+        }
+      }
     },
     "Downloading model..." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modell wird heruntergeladen..."
+          }
+        }
+      }
     },
     "Edit" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bearbeiten"
+          }
+        }
+      }
     },
     "Edit Entry" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eintrag bearbeiten"
+          }
+        }
+      }
     },
     "Enable Reminders" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erinnerungen aktivieren"
+          }
+        }
+      }
     },
     "Entry Details" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eintragsdetails"
+          }
+        }
+      }
     },
     "Entry Saved" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eintrag gespeichert"
+          }
+        }
+      }
     },
     "Export Data" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten exportieren"
+          }
+        }
+      }
     },
     "Export reports for your doctor" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berichte für deinen Arzt exportieren"
+          }
+        }
+      }
     },
     "Generate 1 Year" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 Jahr generieren"
+          }
+        }
+      }
     },
     "Generate 7 Days" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "7 Tage generieren"
+          }
+        }
+      }
     },
     "Generate 30 Days" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "30 Tage generieren"
+          }
+        }
+      }
     },
     "Generate Sample Data" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beispieldaten generieren"
+          }
+        }
+      }
     },
     "Get reminded to log your symptoms. You can adjust frequency during flare-ups." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lass dich an das Protokollieren deiner Symptome erinnern. Du kannst die Häufigkeit bei Schüben anpassen."
+          }
+        }
+      }
     },
     "Health Progress" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesundheitsverlauf"
+          }
+        }
+      }
     },
     "Help" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hilfe"
+          }
+        }
+      }
     },
     "Help & Support" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hilfe & Support"
+          }
+        }
+      }
+    },
+    "help.gettingStarted.content" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wolfsbit hilft dir, deine chronische Erkrankung zu dokumentieren. Schreibe täglich kurze Einträge über dein Befinden und verfolge deinen Verlauf über Zeit."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wolfsbit helps you track your chronic illness journey. Write short daily entries about how you feel and visualize your progress over time."
+          }
+        }
+      }
+    },
+    "help.gettingStarted.title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erste Schritte"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Getting Started"
+          }
+        }
+      }
+    },
+    "help.journalFlow.content" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Tagebuch hat zwei Schritte: Zuerst schreibst du, wie es dir geht. Dann wischst du nach links und bewertest deine Aktivität auf einer Skala von 0-3. Tippe auf Speichern, wenn du fertig bist."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your journal has two steps: First, write how you're feeling. Then swipe left to rate your activity level on a scale of 0-3. Tap Save when you're done."
+          }
+        }
+      }
+    },
+    "help.journalFlow.title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tagebuch-Ablauf"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Journal Flow"
+          }
+        }
+      }
+    },
+    "help.mlScoring.content" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das KI-Modell analysiert deine Einträge und schlägt eine Aktivitätsbewertung vor. Du kannst diese anpassen, bevor du speicherst. Das Modell läuft komplett auf deinem Gerät."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The AI model analyzes your entries and suggests an activity score. You can adjust this before saving. The model runs entirely on your device."
+          }
+        }
+      }
+    },
+    "help.mlScoring.title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KI-Bewertung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AI Scoring"
+          }
+        }
+      }
+    },
+    "help.privacy.content" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle deine Daten werden sicher auf deinem Gerät gespeichert. Deine Gesundheitsinformationen sind privat und werden niemals ohne deine Erlaubnis geteilt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All your data is stored securely on your device. Your health information is private and never shared without your permission."
+          }
+        }
+      }
+    },
+    "help.privacy.title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datenschutz"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy"
+          }
+        }
+      }
+    },
+    "help.rerunOnboarding" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einführung wiederholen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Re-run Onboarding"
+          }
+        }
+      }
+    },
+    "help.title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hilfe & Support"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Help & Support"
+          }
+        }
+      }
+    },
+    "help.viewingData.content" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippe auf das Daten-Symbol in der unteren Leiste, um deine Einträge zu sehen. Du kannst verschiedene Zeiträume auswählen und deine Einträge nach Datum durchsuchen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap the data icon in the bottom toolbar to view your entries. You can select different time ranges and browse your entries by date."
+          }
+        }
+      }
+    },
+    "help.viewingData.title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten anzeigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viewing Data"
+          }
+        }
+      }
+    },
+    "help.voiceInput.content" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippe auf das Mikrofon-Symbol in der unteren Leiste, um zu sprechen statt zu tippen. Die App transkribiert deine Sprache in Text, den du vor dem Speichern bearbeiten kannst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap the microphone icon in the bottom toolbar to speak instead of type. The app transcribes your speech into text, which you can edit before saving."
+          }
+        }
+      }
+    },
+    "help.voiceInput.title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spracheingabe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voice Input"
+          }
+        }
+      }
     },
     "How are you doing today?" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie geht es dir heute?"
+          }
+        }
+      }
     },
     "I'll enable this later" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ich aktiviere das später"
+          }
+        }
+      }
     },
     "Journal Entries" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tagebucheinträge"
+          }
+        }
+      }
     },
     "Journal Entry" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tagebucheintrag"
+          }
+        }
+      }
     },
     "ML Model" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ML-Modell"
+          }
+        }
+      }
     },
     "ML Score" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ML-Bewertung"
+          }
+        }
+      }
     },
     "Model download pending" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modell-Download ausstehend"
+          }
+        }
+      }
     },
     "Model Downloaded" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modell heruntergeladen"
+          }
+        }
+      }
     },
     "Model ready" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modell bereit"
+          }
+        }
+      }
     },
     "No data available for this time range" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Daten für diesen Zeitraum verfügbar"
+          }
+        }
+      }
     },
     "No entries yet. Start logging your health journey!" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch keine Einträge. Beginne dein Gesundheitstagebuch!"
+          }
+        }
+      }
     },
     "No model available" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Modell verfügbar"
+          }
+        }
+      }
     },
     "Notes" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notizen"
+          }
+        }
+      }
     },
     "Notifications" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benachrichtigungen"
+          }
+        }
+      }
+    },
+    "Notifications Disabled" : {
 
     },
     "OK" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "Open Settings" : {
 
     },
     "Optional additional notes" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optionale zusätzliche Notizen"
+          }
+        }
+      }
     },
     "Pause" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause"
+          }
+        }
+      }
     },
     "Privacy Policy" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datenschutzrichtlinie"
+          }
+        }
+      }
     },
     "Rate your activity!" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bewerte deine Aktivität!"
+          }
+        }
+      }
     },
     "Re-run Onboarding" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einführung wiederholen"
+          }
+        }
+      }
     },
     "Reminder Time" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erinnerungszeit"
+          }
+        }
+      }
     },
     "Resume" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fortsetzen"
+          }
+        }
+      }
+    },
+    "Resume Download" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download fortsetzen"
+          }
+        }
+      }
     },
     "Retry" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erneut versuchen"
+          }
+        }
+      }
     },
     "Runs on your device" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Läuft auf deinem Gerät"
+          }
+        }
+      }
     },
     "Save" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichern"
+          }
+        }
+      }
     },
     "Scan Corner Radii" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eckenradien scannen"
+          }
+        }
+      }
     },
     "Score" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bewertung"
+          }
+        }
+      }
     },
     "Settings" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        }
+      }
     },
     "Skip" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Überspringen"
+          }
+        }
+      }
     },
     "Skip for now" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vorerst überspringen"
+          }
+        }
+      }
     },
     "Smart Health Scoring" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intelligente Gesundheitsbewertung"
+          }
+        }
+      }
     },
     "Start by logging how you're feeling today. Your first entry takes less than a minute." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beginne damit, wie du dich heute fühlst. Dein erster Eintrag dauert weniger als eine Minute."
+          }
+        }
+      }
     },
     "Start Journaling" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tagebuch starten"
+          }
+        }
+      }
     },
     "Start writing..." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beginne zu schreiben..."
+          }
+        }
+      }
     },
     "Tap to pause · %lld%%" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippen zum Pausieren · %lld%%"
+          }
+        }
+      }
     },
     "Tap to resume · %lld%%" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippen zum Fortsetzen · %lld%%"
+          }
+        }
+      }
     },
     "Terms of Service" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nutzungsbedingungen"
+          }
+        }
+      }
     },
     "Time" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeit"
+          }
+        }
+      }
+    },
+    "To enable reminders, please allow notifications in Settings." : {
 
     },
     "Track your chronic illness symptoms with voice-first journaling. Designed for people with fatigue and brain fog." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erfasse deine Symptome chronischer Erkrankungen mit sprachgesteuertem Tagebuch. Entwickelt für Menschen mit Erschöpfung und Brain Fog."
+          }
+        }
+      }
     },
     "Typing can be exhausting when you're fatigued. Voice input is faster and easier." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippen kann erschöpfend sein, wenn du müde bist. Spracheingabe ist schneller und einfacher."
+          }
+        }
+      }
     },
     "Version" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        }
+      }
     },
     "Version %@ • %@" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version %1$@ • %2$@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -313,34 +1203,104 @@
       }
     },
     "Voice input enabled" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spracheingabe aktiviert"
+          }
+        }
+      }
     },
     "Voice input for easy logging" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spracheingabe für einfaches Protokollieren"
+          }
+        }
+      }
     },
     "Voice Input Makes Logging Easy" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spracheingabe macht das Protokollieren einfach"
+          }
+        }
+      }
     },
     "Voice input not configured" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spracheingabe nicht konfiguriert"
+          }
+        }
+      }
     },
     "Welcome to Wolfsbit" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Willkommen bei Wolfsbit"
+          }
+        }
+      }
     },
     "You'll need to download the model again to use automatic scoring." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du musst das Modell erneut herunterladen, um die automatische Bewertung zu nutzen."
+          }
+        }
+      }
     },
     "You're All Set!" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alles bereit!"
+          }
+        }
+      }
     },
     "Your data stays private" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Daten bleiben privat"
+          }
+        }
+      }
     },
     "Your journal entry has been saved." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Tagebucheintrag wurde gespeichert."
+          }
+        }
+      }
     },
     "Your Score" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Bewertung"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

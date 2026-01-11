@@ -12,6 +12,9 @@ struct OnboardingView: View {
     @State private var currentPage = 0
     @State private var speechRecognizer = SpeechRecognizer()
 
+    // Language preference
+    var languagePreference = LanguagePreference.shared
+
     // ML Model download state
     private let downloader = ModelDownloader.shared
     @State private var modelInfo: ModelInfo?
@@ -97,6 +100,9 @@ struct OnboardingView: View {
             }
             .frame(maxWidth: DesignTokens.Dimensions.contentMaxWidth)
 
+            // Language picker
+            languagePicker
+
             Spacer()
 
             Button(action: {
@@ -114,6 +120,45 @@ struct OnboardingView: View {
             }
             .padding(.horizontal, DesignTokens.Spacing.xxl)
             .padding(.bottom, DesignTokens.Spacing.huge)
+        }
+    }
+
+    // MARK: - Language Picker
+
+    private var languagePicker: some View {
+        HStack(spacing: DesignTokens.Spacing.md) {
+            ForEach(AppLanguage.allCases) { language in
+                Button(action: {
+                    languagePreference.language = language
+                }) {
+                    Text(language.displayName)
+                        .font(DesignTokens.Typography.body)
+                        .fontWeight(languagePreference.language == language ? DesignTokens.Weight.emphasis : .regular)
+                        .padding(.horizontal, DesignTokens.Spacing.lg)
+                        .padding(.vertical, DesignTokens.Spacing.sm)
+                        .background(
+                            languagePreference.language == language
+                                ? DesignTokens.Colors.highlight.opacity(0.2)
+                                : Color.clear
+                        )
+                        .foregroundColor(
+                            languagePreference.language == language
+                                ? DesignTokens.Colors.highlight
+                                : .secondary
+                        )
+                        .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.md, style: .continuous))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.md, style: .continuous)
+                                .stroke(
+                                    languagePreference.language == language
+                                        ? DesignTokens.Colors.highlight
+                                        : Color.secondary.opacity(0.3),
+                                    lineWidth: 1
+                                )
+                        )
+                }
+                .buttonStyle(.plain)
+            }
         }
     }
 
