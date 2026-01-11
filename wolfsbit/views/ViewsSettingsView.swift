@@ -3,6 +3,7 @@
 
 import SwiftUI
 import UIKit
+import UserNotifications
 
 struct SettingsView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -12,19 +13,39 @@ struct SettingsView: View {
 
     @State private var cornerRadiusResult: String = ""
     @State private var showingRadiusAlert = false
+    @State private var showingPermissionDeniedAlert = false
 
     var body: some View {
         List {
             ModelDownloadSection()
 
             Section("Notifications") {
-                Toggle("Daily Reminders", isOn: $notificationsEnabled)
-                
+                Toggle("Daily Reminders", isOn: Binding(
+                    get: { notificationsEnabled },
+                    set: { newValue in
+                        if newValue {
+                            requestNotificationPermission()
+                        } else {
+                            notificationsEnabled = false
+                        }
+                    }
+                ))
+
                 if notificationsEnabled {
                     DatePicker("Reminder Time",
                              selection: $dailyReminderTime,
                              displayedComponents: .hourAndMinute)
                 }
+            }
+            .alert("Notifications Disabled", isPresented: $showingPermissionDeniedAlert) {
+                Button("Open Settings") {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
+                }
+                Button("Cancel", role: .cancel) { }
+            } message: {
+                Text("To enable reminders, please allow notifications in Settings.")
             }
             
             Section("Data") {
@@ -75,6 +96,43 @@ struct SettingsView: View {
             Button("OK", role: .cancel) { }
         } message: {
             Text(cornerRadiusResult)
+        }
+    }
+
+    private func requestNotificationPermission() {
+        Task {
+            let center = UNUserNotificationCenter.current()
+            let settings = await center.notificationSettings()
+
+            switch settings.authorizationStatus {
+            case .authorized, .provisional:
+                // Already authorized
+                await MainActor.run {
+                    notificationsEnabled = true
+                }
+            case .notDetermined:
+                // Request permission
+                do {
+                    let granted = try await center.requestAuthorization(options: [.alert, .sound, .badge])
+                    await MainActor.run {
+                        notificationsEnabled = granted
+                        if !granted {
+                            showingPermissionDeniedAlert = true
+                        }
+                    }
+                } catch {
+                    await MainActor.run {
+                        notificationsEnabled = false
+                    }
+                }
+            case .denied:
+                // Previously denied - show settings prompt
+                await MainActor.run {
+                    showingPermissionDeniedAlert = true
+                }
+            @unknown default:
+                break
+            }
         }
     }
 
