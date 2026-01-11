@@ -1,5 +1,5 @@
 // ABOUTME: Help and support view with onboarding replay and usage guidance.
-// ABOUTME: Explains app features including logging, voice input, and data viewing.
+// ABOUTME: Explains the two-step journal flow, voice input, and data viewing.
 
 import SwiftUI
 
@@ -10,7 +10,7 @@ struct HelpView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignTokens.Spacing.xl) {
-                Text("Help & Support")
+                Text("help.title")
                     .font(DesignTokens.Typography.title)
                     .fontWeight(DesignTokens.Weight.strong)
 
@@ -18,7 +18,7 @@ struct HelpView: View {
                 Button(action: {
                     showingOnboarding = true
                 }) {
-                    Label("Re-run Onboarding", systemImage: "arrow.clockwise")
+                    Label("help.rerunOnboarding", systemImage: "arrow.clockwise")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(DesignTokens.Colors.highlight)
@@ -30,39 +30,45 @@ struct HelpView: View {
                 }
 
                 HelpSection(
-                    title: "Getting Started",
+                    titleKey: "help.gettingStarted.title",
                     icon: "info.circle",
-                    content: "Wolfsbit helps you track your chronic illness journey. Log daily entries by answering questions about your health, and visualize your progress over time."
+                    contentKey: "help.gettingStarted.content"
                 )
-                
+
                 HelpSection(
-                    title: "Logging Entries",
+                    titleKey: "help.journalFlow.title",
                     icon: "pencil.circle",
-                    content: "Use the LOG tab to answer daily health questions. You can type your answers or use voice input for easier entry. Complete all questions and tap Save to record your entry."
+                    contentKey: "help.journalFlow.content"
                 )
-                
+
                 HelpSection(
-                    title: "Voice Input",
+                    titleKey: "help.voiceInput.title",
                     icon: "mic.circle",
-                    content: "Tap the Voice Input button to speak your answers. The app will transcribe your speech into text, which you can edit before saving."
+                    contentKey: "help.voiceInput.content"
                 )
-                
+
                 HelpSection(
-                    title: "Viewing Data",
+                    titleKey: "help.viewingData.title",
                     icon: "chart.line.uptrend.xyaxis.circle",
-                    content: "The DATA tab shows your health progress over time. Use the time range buttons to view different periods. Scroll down to see detailed journal entries grouped by date."
+                    contentKey: "help.viewingData.content"
                 )
-                
+
                 HelpSection(
-                    title: "Privacy",
+                    titleKey: "help.mlScoring.title",
+                    icon: "brain.head.profile",
+                    contentKey: "help.mlScoring.content"
+                )
+
+                HelpSection(
+                    titleKey: "help.privacy.title",
                     icon: "lock.circle",
-                    content: "All your data is stored securely on your device. Your health information is private and never shared without your permission."
+                    contentKey: "help.privacy.content"
                 )
             }
             .padding()
         }
         .background(Color(UIColor.systemGroupedBackground))
-        .navigationTitle("Help")
+        .navigationTitle(Text("Help"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -75,21 +81,21 @@ struct HelpView: View {
 }
 
 struct HelpSection: View {
-    let title: String
+    let titleKey: LocalizedStringKey
     let icon: String
-    let content: String
-    
+    let contentKey: LocalizedStringKey
+
     var body: some View {
         VStack(alignment: .leading, spacing: DesignTokens.Spacing.md) {
             HStack {
                 Image(systemName: icon)
                     .foregroundColor(DesignTokens.Colors.highlight)
                     .font(DesignTokens.Typography.heading)
-                Text(title)
+                Text(titleKey)
                     .font(DesignTokens.Typography.subheading)
             }
 
-            Text(content)
+            Text(contentKey)
                 .font(DesignTokens.Typography.body)
                 .foregroundColor(.secondary)
 
