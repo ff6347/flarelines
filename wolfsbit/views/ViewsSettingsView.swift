@@ -129,7 +129,7 @@ struct SettingsView: View {
 // MARK: - Model Download Section
 
 struct ModelDownloadSection: View {
-    @State private var downloader = ModelDownloader()
+    private var downloader = ModelDownloader.shared
     @State private var modelInfo: ModelInfo?
     @State private var isModelDownloaded = false
     @State private var isLoading = true
@@ -174,6 +174,8 @@ struct ModelDownloadSection: View {
 
         if downloader.isDownloading {
             downloadProgressView
+        } else if downloader.canResume {
+            pausedDownloadView
         } else if isModelDownloaded {
             downloadedView(info)
         } else {
@@ -194,8 +196,37 @@ struct ModelDownloadSection: View {
             .font(.caption)
             .foregroundStyle(.secondary)
 
-            Button("Cancel", role: .destructive) {
-                downloader.cancelDownload()
+            HStack {
+                Button("Pause") {
+                    downloader.pauseDownload()
+                }
+
+                Button("Cancel", role: .destructive) {
+                    downloader.cancelDownload()
+                }
+            }
+        }
+    }
+
+    private var pausedDownloadView: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Image(systemName: "pause.circle.fill")
+                    .foregroundStyle(.orange)
+                Text("Download Paused")
+                Spacer()
+                Text("\(Int(downloader.downloadProgress * 100))%")
+            }
+            .font(.subheadline)
+
+            HStack {
+                Button("Resume") {
+                    Task { try? await downloader.resumeDownload() }
+                }
+
+                Button("Cancel", role: .destructive) {
+                    downloader.cancelDownload()
+                }
             }
         }
     }

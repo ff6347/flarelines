@@ -44,6 +44,9 @@ enum NetworkType {
 
 @Observable
 final class ModelDownloader: NSObject {
+    /// Shared instance for app-wide download state
+    static let shared = ModelDownloader()
+
     // MARK: - Published State
 
     var downloadProgress: Double = 0

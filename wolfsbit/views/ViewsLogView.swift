@@ -8,6 +8,7 @@ import CoreData
 struct JournalEditorView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var speechRecognizer = SpeechRecognizer()
+    private let downloader = ModelDownloader.shared
 
     // Entry state
     @State private var journalText = ""
@@ -35,6 +36,12 @@ struct JournalEditorView: View {
                 // Header with action button
                 HStack {
                     Spacer()
+
+                    // Download indicator (show when downloading or paused)
+                    if downloader.isDownloading || downloader.canResume {
+                        downloadIndicator
+                    }
+
                     headerButton
                 }
                 .padding(.horizontal)
@@ -93,6 +100,35 @@ struct JournalEditorView: View {
                 isPulsing = isRecording
             }
         }
+    }
+
+    // MARK: - Download Indicator
+
+    private var downloadIndicator: some View {
+        Button {
+            if downloader.isDownloading {
+                downloader.pauseDownload()
+            } else if downloader.canResume {
+                Task { try? await downloader.resumeDownload() }
+            }
+        } label: {
+            HStack(spacing: 6) {
+                if downloader.isDownloading {
+                    ProgressView(value: downloader.downloadProgress)
+                        .progressViewStyle(.circular)
+                        .scaleEffect(0.7)
+                        .tint(.white)
+                } else {
+                    Image(systemName: "play.circle.fill")
+                        .foregroundStyle(.orange)
+                }
+
+                Text("\(Int(downloader.downloadProgress * 100))%")
+                    .font(.caption2)
+                    .foregroundColor(downloader.isDownloading ? .secondary : .orange)
+            }
+        }
+        .padding(.trailing, 8)
     }
 
     // MARK: - Header Button
