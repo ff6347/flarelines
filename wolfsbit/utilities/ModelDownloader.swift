@@ -44,6 +44,9 @@ enum NetworkType {
 
 @Observable
 final class ModelDownloader: NSObject {
+    /// Shared instance for app-wide download state
+    static let shared = ModelDownloader()
+
     // MARK: - Published State
 
     var downloadProgress: Double = 0
@@ -96,16 +99,21 @@ final class ModelDownloader: NSObject {
     ///   - expectedSHA256: Expected SHA256 hash for checksum validation
     /// - Throws: ModelDownloadError if download fails or checksum doesn't match
     func downloadModel(from url: URL, to destination: URL, expectedSHA256: String) async throws {
-        guard !isDownloading else {
-            throw ModelDownloadError.downloadInProgress
+        // Atomically check and set isDownloading to prevent duplicate downloads
+        let canStart = await MainActor.run {
+            if isDownloading {
+                return false
+            }
+            isDownloading = true
+            downloadProgress = 0
+            bytesDownloaded = 0
+            totalBytes = 0
+            error = nil
+            return true
         }
 
-        await MainActor.run {
-            self.isDownloading = true
-            self.downloadProgress = 0
-            self.bytesDownloaded = 0
-            self.totalBytes = 0
-            self.error = nil
+        guard canStart else {
+            throw ModelDownloadError.downloadInProgress
         }
 
         pendingDestination = destination
@@ -156,7 +164,7 @@ final class ModelDownloader: NSObject {
             throw ModelDownloadError.noResumeData
         }
 
-        guard let destination = pendingDestination, let checksum = pendingChecksum else {
+        guard pendingDestination != nil, pendingChecksum != nil else {
             throw ModelDownloadError.noResumeData
         }
 
@@ -332,9 +340,14 @@ extension ModelDownloader: URLSessionDownloadDelegate {
     }
 
     func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        // Called when all background tasks are complete
-        // The app delegate should call the completion handler here
-        // This is handled by the app through background session events
+        guard let identifier = session.configuration.identifier,
+              let completionHandler = AppDelegate.backgroundCompletionHandlers.removeValue(forKey: identifier) else {
+            return
+        }
+
+        DispatchQueue.main.async {
+            completionHandler()
+        }
     }
 }
 

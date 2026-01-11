@@ -8,6 +8,7 @@ import CoreData
 struct JournalEditorView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var speechRecognizer = SpeechRecognizer()
+    private let downloader = ModelDownloader.shared
 
     // Entry state
     @State private var journalText = ""
@@ -34,7 +35,13 @@ struct JournalEditorView: View {
             VStack(spacing: 0) {
                 // Header with action button
                 HStack {
+                    // Download indicator (show when downloading or paused)
+                    if downloader.isDownloading || downloader.canResume {
+                        downloadIndicator
+                    }
+
                     Spacer()
+
                     headerButton
                 }
                 .padding(.horizontal)
@@ -91,6 +98,49 @@ struct JournalEditorView: View {
         .onChange(of: speechRecognizer.isRecording) { _, isRecording in
             withAnimation(isRecording ? .easeInOut(duration: 0.6).repeatForever(autoreverses: true) : .default) {
                 isPulsing = isRecording
+            }
+        }
+    }
+
+    // MARK: - Download Indicator
+
+    private var downloadIndicator: some View {
+        Button {
+            if downloader.isDownloading {
+                downloader.pauseDownload()
+            } else if downloader.canResume {
+                Task { try? await downloader.resumeDownload() }
+            }
+        } label: {
+            HStack(spacing: 8) {
+                if downloader.isDownloading {
+                    ProgressView(value: downloader.downloadProgress)
+                        .progressViewStyle(.circular)
+                        .scaleEffect(0.6)
+                        .tint(DesignTokens.Colors.highlight)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Downloading model")
+                            .font(DesignTokens.Typography.caption)
+                            .foregroundColor(.white)
+                        Text("Tap to pause · \(Int(downloader.downloadProgress * 100))%")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                    }
+                } else {
+                    Image(systemName: "pause.circle.fill")
+                        .font(.title3)
+                        .foregroundStyle(.orange)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Download paused")
+                            .font(DesignTokens.Typography.caption)
+                            .foregroundColor(.white)
+                        Text("Tap to resume · \(Int(downloader.downloadProgress * 100))%")
+                            .font(.caption2)
+                            .foregroundColor(.orange)
+                    }
+                }
             }
         }
     }

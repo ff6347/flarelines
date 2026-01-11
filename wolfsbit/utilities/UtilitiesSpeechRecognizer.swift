@@ -23,9 +23,9 @@ class SpeechRecognizer: ObservableObject {
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
 
     init() {
-        Task {
-            await requestAuthorization()
-        }
+        // Don't request authorization here - let views request it explicitly
+        // when the user is ready (e.g., after seeing the onboarding explanation)
+        authorizationStatus = SFSpeechRecognizer.authorizationStatus()
     }
 
     func requestAuthorization() async {

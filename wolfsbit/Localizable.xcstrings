@@ -4,6 +4,9 @@
     "(ML: %d)" : {
 
     },
+    "/" : {
+
+    },
     "%d" : {
 
     },
@@ -18,6 +21,9 @@
       }
     },
     "%lld entries" : {
+
+    },
+    "%lld%%" : {
 
     },
     "0" : {
@@ -50,6 +56,9 @@
     "Cancel" : {
 
     },
+    "Checking model status..." : {
+
+    },
     "Clear All Data" : {
 
     },
@@ -57,6 +66,9 @@
 
     },
     "Continue" : {
+
+    },
+    "Continue (Download in Background)" : {
 
     },
     "Corner Radii Found" : {
@@ -89,16 +101,37 @@
     "Delete" : {
 
     },
+    "Delete ML Model?" : {
+
+    },
+    "Delete Model" : {
+
+    },
     "Done" : {
 
     },
     "Download Model" : {
 
     },
+    "Download paused" : {
+
+    },
+    "Download Paused" : {
+
+    },
     "Download the AI model that analyzes your entries and provides health scores. This is a research project—the model is required." : {
 
     },
-    "Download: ~1.8 GB" : {
+    "Download: %@" : {
+
+    },
+    "Downloaded" : {
+
+    },
+    "Downloading model" : {
+
+    },
+    "Downloading model..." : {
 
     },
     "Edit" : {
@@ -158,16 +191,28 @@
     "Journal Entry" : {
 
     },
+    "ML Model" : {
+
+    },
     "ML Score" : {
 
     },
     "Model download pending" : {
 
     },
+    "Model Downloaded" : {
+
+    },
+    "Model ready" : {
+
+    },
     "No data available for this time range" : {
 
     },
     "No entries yet. Start logging your health journey!" : {
+
+    },
+    "No model available" : {
 
     },
     "Notes" : {
@@ -182,6 +227,9 @@
     "Optional additional notes" : {
 
     },
+    "Pause" : {
+
+    },
     "Privacy Policy" : {
 
     },
@@ -194,7 +242,10 @@
     "Reminder Time" : {
 
     },
-    "Reminders configured" : {
+    "Resume" : {
+
+    },
+    "Retry" : {
 
     },
     "Runs on your device" : {
@@ -230,6 +281,12 @@
     "Start writing..." : {
 
     },
+    "Tap to pause · %lld%%" : {
+
+    },
+    "Tap to resume · %lld%%" : {
+
+    },
     "Terms of Service" : {
 
     },
@@ -245,6 +302,16 @@
     "Version" : {
 
     },
+    "Version %@ • %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Version %1$@ • %2$@"
+          }
+        }
+      }
+    },
     "Voice input enabled" : {
 
     },
@@ -254,7 +321,13 @@
     "Voice Input Makes Logging Easy" : {
 
     },
+    "Voice input not configured" : {
+
+    },
     "Welcome to Wolfsbit" : {
+
+    },
+    "You'll need to download the model again to use automatic scoring." : {
 
     },
     "You're All Set!" : {

@@ -12,6 +12,12 @@ struct OnboardingView: View {
     @State private var currentPage = 0
     @State private var speechRecognizer = SpeechRecognizer()
 
+    // ML Model download state
+    private let downloader = ModelDownloader.shared
+    @State private var modelInfo: ModelInfo?
+    @State private var isModelDownloaded = false
+    @State private var downloadError: String?
+
     var body: some View {
         ZStack {
             TabView(selection: $currentPage) {
@@ -261,35 +267,118 @@ struct OnboardingView: View {
                         Spacer()
                     }
 
-                    HStack {
-                        Image(systemName: "arrow.down.circle.fill")
-                            .foregroundColor(.secondary)
-                        Text("Download: ~1.8 GB")
-                            .font(DesignTokens.Typography.body)
-                        Spacer()
+                    if let info = modelInfo {
+                        HStack {
+                            Image(systemName: "arrow.down.circle.fill")
+                                .foregroundColor(.secondary)
+                            Text("Download: \(info.formattedSize)")
+                                .font(DesignTokens.Typography.body)
+                            Spacer()
+                        }
                     }
                 }
                 .padding(.horizontal, DesignTokens.Spacing.xxl)
+
+                // Download progress - always reserve space to prevent layout shift
+                VStack(spacing: DesignTokens.Spacing.sm) {
+                    ProgressView(value: downloader.downloadProgress)
+                    HStack {
+                        Text(formatBytes(downloader.bytesDownloaded))
+                        Text("/")
+                        Text(formatBytes(downloader.totalBytes))
+                        Spacer()
+                        Text("\(Int(downloader.downloadProgress * 100))%")
+                    }
+                    .font(DesignTokens.Typography.caption)
+                    .foregroundStyle(.secondary)
+                }
+                .padding(.horizontal, DesignTokens.Spacing.xxl)
+                .opacity(downloader.isDownloading ? 1 : 0)
+
+                if let error = downloadError {
+                    Text(error)
+                        .font(DesignTokens.Typography.caption)
+                        .foregroundStyle(.red)
+                        .padding(.horizontal, DesignTokens.Spacing.xxl)
+                }
             }
 
             Spacer()
 
-            Button(action: {
-                // TODO: Trigger ML model download
-                withAnimation {
-                    currentPage = 4
+            VStack(spacing: DesignTokens.Spacing.lg) {
+                if isModelDownloaded {
+                    // Already downloaded
+                    HStack {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundStyle(.green)
+                        Text("Model Downloaded")
+                    }
+                    .font(DesignTokens.Typography.body)
+
+                    Button(action: {
+                        withAnimation { currentPage = 4 }
+                    }) {
+                        Text("Continue")
+                            .fontWeight(DesignTokens.Weight.emphasis)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(DesignTokens.Colors.highlight)
+                            .foregroundColor(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.lg, style: .continuous))
+                    }
+                } else if downloader.isDownloading {
+                    // Download in progress
+                    Button(action: {
+                        withAnimation { currentPage = 4 }
+                    }) {
+                        Text("Continue (Download in Background)")
+                            .fontWeight(DesignTokens.Weight.emphasis)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(DesignTokens.Colors.highlight)
+                            .foregroundColor(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.lg, style: .continuous))
+                    }
+                } else if downloader.canResume {
+                    // Download paused - show resume option
+                    HStack {
+                        Image(systemName: "pause.circle.fill")
+                            .foregroundStyle(.orange)
+                        Text("Download Paused (\(Int(downloader.downloadProgress * 100))%)")
+                    }
+                    .font(DesignTokens.Typography.body)
+
+                    Button(action: {
+                        Task { try? await downloader.resumeDownload() }
+                    }) {
+                        Text("Resume Download")
+                            .fontWeight(DesignTokens.Weight.emphasis)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(DesignTokens.Colors.highlight)
+                            .foregroundColor(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.lg, style: .continuous))
+                    }
+                } else {
+                    // Not started
+                    Button(action: {
+                        startModelDownload()
+                    }) {
+                        Text("Download Model")
+                            .fontWeight(DesignTokens.Weight.emphasis)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(DesignTokens.Colors.highlight)
+                            .foregroundColor(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.lg, style: .continuous))
+                    }
                 }
-            }) {
-                Text("Download Model")
-                    .fontWeight(DesignTokens.Weight.emphasis)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(DesignTokens.Colors.highlight)
-                    .foregroundColor(.white)
-                    .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.lg, style: .continuous))
             }
             .padding(.horizontal, DesignTokens.Spacing.xxl)
             .padding(.bottom, DesignTokens.Spacing.huge)
+        }
+        .task {
+            await loadModelInfo()
         }
     }
 
@@ -317,18 +406,26 @@ struct OnboardingView: View {
             VStack(alignment: .leading, spacing: DesignTokens.Spacing.md) {
                 if speechRecognizer.authorizationStatus == .authorized {
                     Label("Voice input enabled", systemImage: "checkmark.circle.fill")
+                        .foregroundColor(.green)
+                } else {
+                    Label("Voice input not configured", systemImage: "mic.slash")
                         .foregroundColor(.secondary)
                 }
 
-                // TODO: Check notification permission status
-                // For now, just show placeholder
-                Label("Reminders configured", systemImage: "checkmark.circle.fill")
-                    .foregroundColor(.secondary)
-                    .opacity(0.5)
-
-                // TODO: Check ML model download status
-                Label("Model download pending", systemImage: "arrow.down.circle")
-                    .foregroundColor(.secondary)
+                // ML model status
+                if isModelDownloaded {
+                    Label("Model ready", systemImage: "checkmark.circle.fill")
+                        .foregroundColor(.green)
+                } else if downloader.isDownloading {
+                    HStack {
+                        Label("Downloading model...", systemImage: "arrow.down.circle")
+                        Text("\(Int(downloader.downloadProgress * 100))%")
+                    }
+                    .foregroundColor(.orange)
+                } else {
+                    Label("Model download pending", systemImage: "arrow.down.circle")
+                        .foregroundColor(.secondary)
+                }
             }
             .font(DesignTokens.Typography.body)
 
@@ -388,6 +485,46 @@ struct OnboardingView: View {
     private func completeOnboarding() {
         hasCompletedOnboarding = true
         isPresented = false
+    }
+
+    // MARK: - ML Model Helpers
+
+    private func loadModelInfo() async {
+        do {
+            modelInfo = try await ManifestFetcher.shared.currentModel()
+            if let info = modelInfo {
+                isModelDownloaded = await ModelStorage.shared.modelExists(filename: info.filename)
+            }
+        } catch {
+            downloadError = error.localizedDescription
+        }
+    }
+
+    private func startModelDownload() {
+        guard let info = modelInfo, let downloadURL = URL(string: info.downloadUrl) else {
+            return
+        }
+
+        Task {
+            do {
+                let destination = try await ModelStorage.shared.modelPath(for: info.filename)
+                try await downloader.downloadModel(
+                    from: downloadURL,
+                    to: destination,
+                    expectedSHA256: info.sha256
+                )
+                isModelDownloaded = true
+            } catch {
+                downloadError = error.localizedDescription
+            }
+        }
+    }
+
+    private func formatBytes(_ bytes: Int64) -> String {
+        let formatter = ByteCountFormatter()
+        formatter.allowedUnits = [.useGB, .useMB]
+        formatter.countStyle = .file
+        return formatter.string(fromByteCount: bytes)
     }
 }
 

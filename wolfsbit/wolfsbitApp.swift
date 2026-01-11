@@ -1,15 +1,13 @@
-//
-//  wolfsbitApp.swift
-//  wolfsbit
-//
-//  Created by Fabian Moron Zirfas on 13.11.25.
-//
+// ABOUTME: Main entry point for the wolfsbit iOS app.
+// ABOUTME: Configures CoreData persistence and AppDelegate for background downloads.
 
 import SwiftUI
 import CoreData
 
 @main
 struct wolfsbitApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     let persistenceController = PersistenceController.shared
 
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
