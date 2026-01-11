@@ -279,22 +279,21 @@ struct OnboardingView: View {
                 }
                 .padding(.horizontal, DesignTokens.Spacing.xxl)
 
-                // Download progress
-                if downloader.isDownloading {
-                    VStack(spacing: DesignTokens.Spacing.sm) {
-                        ProgressView(value: downloader.downloadProgress)
-                        HStack {
-                            Text(formatBytes(downloader.bytesDownloaded))
-                            Text("/")
-                            Text(formatBytes(downloader.totalBytes))
-                            Spacer()
-                            Text("\(Int(downloader.downloadProgress * 100))%")
-                        }
-                        .font(DesignTokens.Typography.caption)
-                        .foregroundStyle(.secondary)
+                // Download progress - always reserve space to prevent layout shift
+                VStack(spacing: DesignTokens.Spacing.sm) {
+                    ProgressView(value: downloader.downloadProgress)
+                    HStack {
+                        Text(formatBytes(downloader.bytesDownloaded))
+                        Text("/")
+                        Text(formatBytes(downloader.totalBytes))
+                        Spacer()
+                        Text("\(Int(downloader.downloadProgress * 100))%")
                     }
-                    .padding(.horizontal, DesignTokens.Spacing.xxl)
+                    .font(DesignTokens.Typography.caption)
+                    .foregroundStyle(.secondary)
                 }
+                .padding(.horizontal, DesignTokens.Spacing.xxl)
+                .opacity(downloader.isDownloading ? 1 : 0)
 
                 if let error = downloadError {
                     Text(error)
