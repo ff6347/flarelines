@@ -321,6 +321,11 @@ struct JournalEditorView: View {
             try viewContext.save()
             resetForm()
             showingSavedAlert = true
+
+            // Trigger async ML scoring in background
+            Task {
+                await ScoringService.shared.scoreEntry(entry, in: viewContext)
+            }
         } catch {
             print("Error saving entry: \(error)")
         }

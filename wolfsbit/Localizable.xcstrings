@@ -1,6 +1,12 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "(ML: %d)" : {
+
+    },
+    "%d" : {
+
+    },
     "%d - %@" : {
       "localizations" : {
         "en" : {
@@ -33,9 +39,6 @@
 
     },
     "About" : {
-
-    },
-    "Activity Score" : {
 
     },
     "Allow Microphone & Speech" : {
@@ -134,9 +137,6 @@
     "Get reminded to log your symptoms. You can adjust frequency during flare-ups." : {
 
     },
-    "Health" : {
-
-    },
     "Health Progress" : {
 
     },
@@ -156,6 +156,9 @@
 
     },
     "Journal Entry" : {
+
+    },
+    "ML Score" : {
 
     },
     "Model download pending" : {
@@ -201,6 +204,9 @@
 
     },
     "Scan Corner Radii" : {
+
+    },
+    "Score" : {
 
     },
     "Settings" : {
@@ -258,6 +264,9 @@
 
     },
     "Your journal entry has been saved." : {
+
+    },
+    "Your Score" : {
 
     }
   },

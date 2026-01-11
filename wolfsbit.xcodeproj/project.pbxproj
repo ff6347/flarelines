@@ -27,6 +27,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		CF1B6F2D2F0EEC43001904F2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		CF229C122EC64498005B43C5 /* wolfsbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wolfsbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF229C242EC64499005B43C5 /* wolfsbitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wolfsbitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,9 +47,25 @@
 		CF229C602EC64A46005B43C5 /* wolfsbit.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = wolfsbit.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		CF1B6F2E2F0EEC43001904F2 /* Exceptions for "wolfsbit" folder in "Embed Frameworks" phase from "wolfsbit" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			attributesByRelativePath = {
+				llama.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+			};
+			buildPhase = CF1B6F2D2F0EEC43001904F2 /* Embed Frameworks */;
+			membershipExceptions = (
+				llama.xcframework,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CF229C142EC64498005B43C5 /* wolfsbit */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CF1B6F2E2F0EEC43001904F2 /* Exceptions for "wolfsbit" folder in "Embed Frameworks" phase from "wolfsbit" target */,
+			);
 			path = wolfsbit;
 			sourceTree = "<group>";
 		};
@@ -108,6 +137,7 @@
 				CF229C0E2EC64498005B43C5 /* Sources */,
 				CF229C0F2EC64498005B43C5 /* Frameworks */,
 				CF229C102EC64498005B43C5 /* Resources */,
+				CF1B6F2D2F0EEC43001904F2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
