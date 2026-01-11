@@ -1,5 +1,5 @@
 // ABOUTME: App settings for notifications, data management, and debug tools.
-// ABOUTME: Provides daily reminder configuration and data export/clear options.
+// ABOUTME: Provides daily reminder configuration, ML model download, and data export/clear options.
 
 import SwiftUI
 import UIKit
@@ -15,6 +15,8 @@ struct SettingsView: View {
 
     var body: some View {
         List {
+            ModelDownloadSection()
+
             Section("Notifications") {
                 Toggle("Daily Reminders", isOn: $notificationsEnabled)
                 
@@ -121,5 +123,166 @@ struct SettingsView: View {
 #Preview {
     NavigationView {
         SettingsView()
+    }
+}
+
+// MARK: - Model Download Section
+
+struct ModelDownloadSection: View {
+    @State private var downloader = ModelDownloader()
+    @State private var modelInfo: ModelInfo?
+    @State private var isModelDownloaded = false
+    @State private var isLoading = true
+    @State private var errorMessage: String?
+    @State private var showDeleteConfirmation = false
+
+    var body: some View {
+        Section("ML Model") {
+            if isLoading {
+                HStack {
+                    ProgressView()
+                    Text("Checking model status...")
+                        .foregroundStyle(.secondary)
+                }
+            } else if let error = errorMessage {
+                Text(error)
+                    .foregroundStyle(.red)
+                Button("Retry") {
+                    Task { await loadModelStatus() }
+                }
+            } else if let info = modelInfo {
+                modelInfoView(info)
+            } else {
+                Text("No model available")
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .task {
+            await loadModelStatus()
+        }
+    }
+
+    @ViewBuilder
+    private func modelInfoView(_ info: ModelInfo) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(info.id)
+                .font(.headline)
+            Text("Version \(info.version) • \(info.formattedSize)")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+
+        if downloader.isDownloading {
+            downloadProgressView
+        } else if isModelDownloaded {
+            downloadedView(info)
+        } else {
+            downloadButton(info)
+        }
+    }
+
+    private var downloadProgressView: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            ProgressView(value: downloader.downloadProgress)
+            HStack {
+                Text(formatBytes(downloader.bytesDownloaded))
+                Text("/")
+                Text(formatBytes(downloader.totalBytes))
+                Spacer()
+                Text("\(Int(downloader.downloadProgress * 100))%")
+            }
+            .font(.caption)
+            .foregroundStyle(.secondary)
+
+            Button("Cancel", role: .destructive) {
+                downloader.cancelDownload()
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func downloadedView(_ info: ModelInfo) -> some View {
+        HStack {
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundStyle(.green)
+            Text("Downloaded")
+                .foregroundStyle(.secondary)
+        }
+
+        Button("Delete Model", role: .destructive) {
+            showDeleteConfirmation = true
+        }
+        .confirmationDialog(
+            "Delete ML Model?",
+            isPresented: $showDeleteConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button("Delete", role: .destructive) {
+                Task { await deleteModel(info) }
+            }
+        } message: {
+            Text("You'll need to download the model again to use automatic scoring.")
+        }
+    }
+
+    private func downloadButton(_ info: ModelInfo) -> some View {
+        Button {
+            Task { await downloadModel(info) }
+        } label: {
+            HStack {
+                Image(systemName: "arrow.down.circle")
+                Text("Download Model")
+            }
+        }
+    }
+
+    // MARK: - Actions
+
+    private func loadModelStatus() async {
+        isLoading = true
+        errorMessage = nil
+
+        do {
+            modelInfo = try await ManifestFetcher.shared.currentModel()
+            if let info = modelInfo {
+                isModelDownloaded = await ModelStorage.shared.modelExists(filename: info.filename)
+            }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+
+        isLoading = false
+    }
+
+    private func downloadModel(_ info: ModelInfo) async {
+        guard let downloadURL = URL(string: info.downloadUrl) else { return }
+
+        do {
+            let destination = try await ModelStorage.shared.modelPath(for: info.filename)
+            try await downloader.downloadModel(
+                from: downloadURL,
+                to: destination,
+                expectedSHA256: info.sha256
+            )
+            isModelDownloaded = true
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    private func deleteModel(_ info: ModelInfo) async {
+        do {
+            try await ModelStorage.shared.deleteModel(filename: info.filename)
+            isModelDownloaded = false
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    private func formatBytes(_ bytes: Int64) -> String {
+        let formatter = ByteCountFormatter()
+        formatter.allowedUnits = [.useGB, .useMB]
+        formatter.countStyle = .file
+        return formatter.string(fromByteCount: bytes)
     }
 }

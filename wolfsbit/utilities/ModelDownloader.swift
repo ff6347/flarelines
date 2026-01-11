@@ -156,7 +156,7 @@ final class ModelDownloader: NSObject {
             throw ModelDownloadError.noResumeData
         }
 
-        guard let destination = pendingDestination, let checksum = pendingChecksum else {
+        guard pendingDestination != nil, pendingChecksum != nil else {
             throw ModelDownloadError.noResumeData
         }
 
@@ -332,9 +332,14 @@ extension ModelDownloader: URLSessionDownloadDelegate {
     }
 
     func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        // Called when all background tasks are complete
-        // The app delegate should call the completion handler here
-        // This is handled by the app through background session events
+        guard let identifier = session.configuration.identifier,
+              let completionHandler = AppDelegate.backgroundCompletionHandlers.removeValue(forKey: identifier) else {
+            return
+        }
+
+        DispatchQueue.main.async {
+            completionHandler()
+        }
     }
 }
 
