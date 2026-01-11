@@ -1,9 +1,5 @@
-//
-//  SpeechRecognizer.swift
-//  wolfsbit
-//
-//  Created by Fabian Moron Zirfas on 13.11.25.
-//
+// ABOUTME: Speech-to-text transcription using iOS Speech framework.
+// ABOUTME: Uses the app's selected language for recognition locale.
 
 import Foundation
 import Speech
@@ -20,7 +16,11 @@ class SpeechRecognizer: ObservableObject {
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
-    private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
+
+    /// Creates a speech recognizer for the currently selected app language.
+    private var speechRecognizer: SFSpeechRecognizer? {
+        SFSpeechRecognizer(locale: LanguagePreference.shared.locale)
+    }
 
     init() {
         // Don't request authorization here - let views request it explicitly
