@@ -113,6 +113,9 @@
     "Download Model" : {
 
     },
+    "Download paused" : {
+
+    },
     "Download Paused" : {
 
     },
@@ -123,6 +126,9 @@
 
     },
     "Downloaded" : {
+
+    },
+    "Downloading model" : {
 
     },
     "Downloading model..." : {
@@ -273,6 +279,12 @@
 
     },
     "Start writing..." : {
+
+    },
+    "Tap to pause · %lld%%" : {
+
+    },
+    "Tap to resume · %lld%%" : {
 
     },
     "Terms of Service" : {

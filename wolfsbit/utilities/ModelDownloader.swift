@@ -99,16 +99,21 @@ final class ModelDownloader: NSObject {
     ///   - expectedSHA256: Expected SHA256 hash for checksum validation
     /// - Throws: ModelDownloadError if download fails or checksum doesn't match
     func downloadModel(from url: URL, to destination: URL, expectedSHA256: String) async throws {
-        guard !isDownloading else {
-            throw ModelDownloadError.downloadInProgress
+        // Atomically check and set isDownloading to prevent duplicate downloads
+        let canStart = await MainActor.run {
+            if isDownloading {
+                return false
+            }
+            isDownloading = true
+            downloadProgress = 0
+            bytesDownloaded = 0
+            totalBytes = 0
+            error = nil
+            return true
         }
 
-        await MainActor.run {
-            self.isDownloading = true
-            self.downloadProgress = 0
-            self.bytesDownloaded = 0
-            self.totalBytes = 0
-            self.error = nil
+        guard canStart else {
+            throw ModelDownloadError.downloadInProgress
         }
 
         pendingDestination = destination

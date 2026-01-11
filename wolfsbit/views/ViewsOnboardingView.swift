@@ -340,6 +340,26 @@ struct OnboardingView: View {
                             .foregroundColor(.white)
                             .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.lg, style: .continuous))
                     }
+                } else if downloader.canResume {
+                    // Download paused - show resume option
+                    HStack {
+                        Image(systemName: "pause.circle.fill")
+                            .foregroundStyle(.orange)
+                        Text("Download Paused (\(Int(downloader.downloadProgress * 100))%)")
+                    }
+                    .font(DesignTokens.Typography.body)
+
+                    Button(action: {
+                        Task { try? await downloader.resumeDownload() }
+                    }) {
+                        Text("Resume Download")
+                            .fontWeight(DesignTokens.Weight.emphasis)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(DesignTokens.Colors.highlight)
+                            .foregroundColor(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.lg, style: .continuous))
+                    }
                 } else {
                     // Not started
                     Button(action: {
