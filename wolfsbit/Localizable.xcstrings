@@ -113,6 +113,9 @@
     "Download Model" : {
 
     },
+    "Download Paused" : {
+
+    },
     "Download the AI model that analyzes your entries and provides health scores. This is a research project—the model is required." : {
 
     },
@@ -120,9 +123,6 @@
 
     },
     "Downloaded" : {
-
-    },
-    "Downloading ML Model..." : {
 
     },
     "Downloading model..." : {
@@ -221,6 +221,9 @@
     "Optional additional notes" : {
 
     },
+    "Pause" : {
+
+    },
     "Privacy Policy" : {
 
     },
@@ -231,6 +234,9 @@
 
     },
     "Reminder Time" : {
+
+    },
+    "Resume" : {
 
     },
     "Retry" : {

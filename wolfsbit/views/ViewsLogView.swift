@@ -35,12 +35,12 @@ struct JournalEditorView: View {
             VStack(spacing: 0) {
                 // Header with action button
                 HStack {
-                    Spacer()
-
                     // Download indicator (show when downloading or paused)
                     if downloader.isDownloading || downloader.canResume {
                         downloadIndicator
                     }
+
+                    Spacer()
 
                     headerButton
                 }
@@ -112,23 +112,37 @@ struct JournalEditorView: View {
                 Task { try? await downloader.resumeDownload() }
             }
         } label: {
-            HStack(spacing: 6) {
+            HStack(spacing: 8) {
                 if downloader.isDownloading {
                     ProgressView(value: downloader.downloadProgress)
                         .progressViewStyle(.circular)
-                        .scaleEffect(0.7)
-                        .tint(.white)
-                } else {
-                    Image(systemName: "play.circle.fill")
-                        .foregroundStyle(.orange)
-                }
+                        .scaleEffect(0.6)
+                        .tint(DesignTokens.Colors.highlight)
 
-                Text("\(Int(downloader.downloadProgress * 100))%")
-                    .font(.caption2)
-                    .foregroundColor(downloader.isDownloading ? .secondary : .orange)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Downloading model")
+                            .font(DesignTokens.Typography.caption)
+                            .foregroundColor(.white)
+                        Text("Tap to pause · \(Int(downloader.downloadProgress * 100))%")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                    }
+                } else {
+                    Image(systemName: "pause.circle.fill")
+                        .font(.title3)
+                        .foregroundStyle(.orange)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Download paused")
+                            .font(DesignTokens.Typography.caption)
+                            .foregroundColor(.white)
+                        Text("Tap to resume · \(Int(downloader.downloadProgress * 100))%")
+                            .font(.caption2)
+                            .foregroundColor(.orange)
+                    }
+                }
             }
         }
-        .padding(.trailing, 8)
     }
 
     // MARK: - Header Button
