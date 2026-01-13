@@ -4,8 +4,7 @@
 import TelemetryDeck
 
 enum Analytics {
-    // TODO: Replace with actual TelemetryDeck App ID from https://dashboard.telemetrydeck.com
-    private static let appID = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+    private static let appID = "8E98BDBF-A5FC-497E-955D-AB5306278CA8"
 
     /// Initialize TelemetryDeck analytics. Call once at app startup.
     static func initialize() {
