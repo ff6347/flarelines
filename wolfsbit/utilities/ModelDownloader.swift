@@ -294,8 +294,10 @@ extension ModelDownloader: URLSessionDownloadDelegate {
         Task {
             do {
                 try await moveAndValidate(from: location)
+                Analytics.signal("modelDownloadCompleted")
                 cleanupDownload(with: nil)
             } catch {
+                Analytics.signal("modelDownloadFailed")
                 cleanupDownload(with: error)
             }
         }

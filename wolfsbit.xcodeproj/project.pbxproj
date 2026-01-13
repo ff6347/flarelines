@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		CF229C612EC64A46005B43C5 /* wolfsbit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CF229C5F2EC64A46005B43C5 /* wolfsbit.xcdatamodeld */; };
+		CF9FA9BE2F143AB2008A0CA2 /* TelemetryClient in Frameworks */ = {isa = PBXBuildFile; productRef = CF9FA9BD2F143AB2008A0CA2 /* TelemetryClient */; };
+		CF9FA9C02F143AB2008A0CA2 /* TelemetryDeck in Frameworks */ = {isa = PBXBuildFile; productRef = CF9FA9BF2F143AB2008A0CA2 /* TelemetryDeck */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +88,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF9FA9BE2F143AB2008A0CA2 /* TelemetryClient in Frameworks */,
+				CF9FA9C02F143AB2008A0CA2 /* TelemetryDeck in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +152,8 @@
 			);
 			name = wolfsbit;
 			packageProductDependencies = (
+				CF9FA9BD2F143AB2008A0CA2 /* TelemetryClient */,
+				CF9FA9BF2F143AB2008A0CA2 /* TelemetryDeck */,
 			);
 			productName = wolfsbit;
 			productReference = CF229C122EC64498005B43C5 /* wolfsbit.app */;
@@ -232,6 +238,9 @@
 			);
 			mainGroup = CF229C092EC64498005B43C5;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				CF9FA9BC2F143AB2008A0CA2 /* XCRemoteSwiftPackageReference "SwiftClient" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CF229C132EC64498005B43C5 /* Products */;
 			projectDirPath = "";
@@ -622,6 +631,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CF9FA9BC2F143AB2008A0CA2 /* XCRemoteSwiftPackageReference "SwiftClient" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TelemetryDeck/SwiftClient";
+			requirement = {
+				kind = exactVersion;
+				version = 2.11.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CF9FA9BD2F143AB2008A0CA2 /* TelemetryClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CF9FA9BC2F143AB2008A0CA2 /* XCRemoteSwiftPackageReference "SwiftClient" */;
+			productName = TelemetryClient;
+		};
+		CF9FA9BF2F143AB2008A0CA2 /* TelemetryDeck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CF9FA9BC2F143AB2008A0CA2 /* XCRemoteSwiftPackageReference "SwiftClient" */;
+			productName = TelemetryDeck;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		CF229C5F2EC64A46005B43C5 /* wolfsbit.xcdatamodeld */ = {

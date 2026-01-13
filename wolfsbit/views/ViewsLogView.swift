@@ -27,6 +27,9 @@ struct JournalEditorView: View {
     // Recording pulse animation
     @State private var isPulsing = false
 
+    // Analytics tracking
+    @State private var usedVoiceInput = false
+
     var body: some View {
         ZStack {
             // Background
@@ -351,6 +354,7 @@ struct JournalEditorView: View {
         speechRecognizer.stopRecording()
         if !speechRecognizer.transcript.isEmpty {
             journalText += (journalText.isEmpty ? "" : " ") + speechRecognizer.transcript
+            usedVoiceInput = true
         }
     }
 
@@ -369,6 +373,11 @@ struct JournalEditorView: View {
 
         do {
             try viewContext.save()
+
+            Analytics.signal("journalEntrySaved", parameters: [
+                "inputMethod": usedVoiceInput ? "voice" : "text"
+            ])
+
             resetForm()
             showingSavedAlert = true
 
@@ -386,6 +395,7 @@ struct JournalEditorView: View {
         activityScore = 1
         currentPage = 0
         isEditorFocused = false
+        usedVoiceInput = false
     }
 }
 
