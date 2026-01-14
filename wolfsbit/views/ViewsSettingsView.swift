@@ -78,8 +78,8 @@ struct SettingsView: View {
                         .foregroundColor(.secondary)
                 }
                 
-                Link("Privacy Policy", destination: URL(string: "https://example.com/privacy")!)
-                Link("Terms of Service", destination: URL(string: "https://example.com/terms")!)
+                Link("Privacy Policy", destination: URL(string: "https://wolfsbit.inpyjamas.dev/privacy")!)
+                Link("Terms of Service", destination: URL(string: "https://wolfsbit.inpyjamas.dev/terms")!)
             }
         }
         .listStyle(.plain)
