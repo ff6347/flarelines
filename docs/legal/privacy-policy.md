@@ -1,6 +1,8 @@
 # Privacy Policy
 
-**Wolfsbit** ("the App") is a chronic illness journaling app. This policy explains how your data is handled.
+**Wolfsbit** ("the App") is a chronic illness journaling app developed as part of academic research for a master's thesis. This is a non-commercial project focused on exploring AI-assisted health journaling.
+
+This policy explains how your data is handled.
 
 **Last updated:** January 2026
 
@@ -9,10 +11,9 @@
 ### Health Journal Entries
 The App collects health information you voluntarily enter:
 - How you're feeling (text)
-- Pain levels (1-10 scale)
-- Symptoms and notes
+- Wellness scores (0-3 scale)
 
-**This data is stored locally on your device only.** We do not have access to your health entries, and they are never transmitted to our servers.
+**By default, this data is stored locally on your device only.** We do not have access to your health entries unless you explicitly opt in to data contribution (see below).
 
 ### Analytics (Anonymous)
 We use TelemetryDeck to collect anonymous usage statistics:
@@ -21,6 +22,23 @@ We use TelemetryDeck to collect anonymous usage statistics:
 - Crash reports
 
 TelemetryDeck is privacy-focused and does not collect personal identifiers. No IP addresses are stored. Learn more at [telemetrydeck.com/privacy](https://telemetrydeck.com/privacy).
+
+### Data Contribution (Opt-In)
+
+You may choose to contribute your journal entries to help improve the AI scoring model. This is entirely optional and disabled by default.
+
+**If you opt in, we collect:**
+- Your journal entry text
+- The AI-predicted wellness score
+- Your self-reported wellness score
+
+**We do NOT collect:**
+- Your name or any personal identifiers
+- Timestamps or dates
+- Device information
+- Any other metadata
+
+This data is used solely for academic research and improving the AI model. You can disable data contribution at any time in Settings.
 
 ## Data We Do NOT Collect
 
@@ -37,14 +55,25 @@ We do not offer cloud backup or sync. Your data stays on your device.
 
 ## Data Sharing
 
-We do not sell, share, or transfer your health data to third parties. Anonymous analytics data is processed by TelemetryDeck under their privacy policy.
+We do not sell your data. We do not share your data with third parties for marketing or advertising purposes.
+
+**If you opt in to data contribution:**
+- Your anonymized entries (text + scores only) are transmitted to our research servers
+- This data is used exclusively for academic research and model improvement
+- No personal identifiers are ever transmitted
+
+**Analytics:** Anonymous usage statistics are processed by TelemetryDeck under their [privacy policy](https://telemetrydeck.com/privacy).
 
 ## Your Rights
 
-Since all health data is stored locally on your device:
+**Local data:**
 - **Access:** View your data anytime in the App
 - **Delete:** Delete individual entries or uninstall the App to remove all data
-- **Export:** [Coming soon]
+- **Export:** Export your data as CSV via Settings
+
+**Data contribution:**
+- **Opt out:** Disable data contribution at any time in Settings
+- **Note:** Previously contributed data cannot be retroactively removed as it contains no identifiers linking it to you
 
 ## Children's Privacy
 
