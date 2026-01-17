@@ -9,7 +9,7 @@ struct OnboardingView: View {
     @Binding var isPresented: Bool
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
 
-    @State private var currentPage = 0
+    @SceneStorage("onboardingCurrentPage") private var currentPage = 0
     @State private var speechRecognizer = SpeechRecognizer()
 
     // Language preference

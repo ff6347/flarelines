@@ -81,16 +81,6 @@
         }
       }
     },
-    "Any personal identifiers" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Jegliche persönliche Kennungen"
-          }
-        }
-      }
-    },
     "About This Research" : {
       "localizations" : {
         "de" : {
@@ -127,6 +117,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beantworte tägliche Fragen mit deiner Stimme. Wolfsbit benötigt Zugriff auf Mikrofon und Spracherkennung."
+          }
+        }
+      }
+    },
+    "Any personal identifiers" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jegliche persönliche Kennungen"
           }
         }
       }
@@ -291,16 +292,6 @@
         }
       }
     },
-    "Device information" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geräteinformationen"
-          }
-        }
-      }
-    },
     "Delete" : {
       "localizations" : {
         "de" : {
@@ -327,6 +318,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Modell löschen"
+          }
+        }
+      }
+    },
+    "Device information" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geräteinformationen"
           }
         }
       }
@@ -1290,6 +1292,7 @@
       }
     },
     "The AI-suggested score" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1320,6 +1323,7 @@
       }
     },
     "Timestamps or dates" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1515,36 +1519,6 @@
         }
       }
     },
-    "Your final score (if different)" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Deine endgültige Bewertung (falls abweichend)"
-          }
-        }
-      }
-    },
-    "Your journal entry text" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dein Tagebucheintrag-Text"
-          }
-        }
-      }
-    },
-    "Your name or identity" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dein Name oder deine Identität"
-          }
-        }
-      }
-    },
     "Your data stays private" : {
       "localizations" : {
         "de" : {
@@ -1555,12 +1529,45 @@
         }
       }
     },
+    "Your final score (if different)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine endgültige Bewertung (falls abweichend)"
+          }
+        }
+      }
+    },
     "Your journal entry has been saved." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dein Tagebucheintrag wurde gespeichert."
+          }
+        }
+      }
+    },
+    "Your journal entry text" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Tagebucheintrag-Text"
+          }
+        }
+      }
+    },
+    "Your name or identity" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Name oder deine Identität"
           }
         }
       }
