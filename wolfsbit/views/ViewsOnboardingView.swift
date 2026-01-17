@@ -28,21 +28,25 @@ struct OnboardingView: View {
                 welcomePage
                     .tag(0)
 
-                // Page 2: Voice Permissions
-                voicePermissionsPage
+                // Page 2: About This Project
+                aboutProjectPage
                     .tag(1)
 
-                // Page 3: Notifications
-                notificationsPage
+                // Page 3: Voice Permissions
+                voicePermissionsPage
                     .tag(2)
 
-                // Page 4: ML Model
-                mlModelPage
+                // Page 4: Notifications
+                notificationsPage
                     .tag(3)
 
-                // Page 5: Ready
-                readyPage
+                // Page 5: ML Model
+                mlModelPage
                     .tag(4)
+
+                // Page 6: Ready
+                readyPage
+                    .tag(5)
             }
             .tabViewStyle(.page(indexDisplayMode: .always))
             .indexViewStyle(.page(backgroundDisplayMode: .always))
@@ -52,9 +56,9 @@ struct OnboardingView: View {
                 HStack {
                     Spacer()
 
-                    if currentPage < 4 {
+                    if currentPage < 5 {
                         Button("Skip") {
-                            currentPage = 4
+                            currentPage = 5
                         }
                         .font(DesignTokens.Typography.body)
                         .padding()
@@ -117,6 +121,81 @@ struct OnboardingView: View {
                     .background(DesignTokens.Colors.highlight)
                     .foregroundColor(.white)
                     .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.lg, style: .continuous))
+            }
+            .padding(.horizontal, DesignTokens.Spacing.xxl)
+            .padding(.bottom, DesignTokens.Spacing.huge)
+        }
+    }
+
+    // MARK: - Page 2: About This Project
+
+    private var aboutProjectPage: some View {
+        VStack(spacing: DesignTokens.Spacing.xxl) {
+            Spacer()
+
+            Image(systemName: "book.closed.fill")
+                .font(.system(size: DesignTokens.Dimensions.heroIconSize))
+                .foregroundColor(DesignTokens.Colors.highlight)
+
+            VStack(spacing: DesignTokens.Spacing.lg) {
+                Text("Research Project")
+                    .font(DesignTokens.Typography.heading)
+                    .fontWeight(DesignTokens.Weight.emphasis)
+                    .multilineTextAlignment(.center)
+
+                Text("Wolfsbit is part of a master's thesis exploring AI-assisted health journaling.")
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal, DesignTokens.Spacing.xxl)
+            }
+
+            VStack(alignment: .leading, spacing: DesignTokens.Spacing.md) {
+                HStack(alignment: .top, spacing: DesignTokens.Spacing.sm) {
+                    Image(systemName: "graduationcap.fill")
+                        .foregroundColor(.secondary)
+                        .frame(width: 24)
+                    Text("Academic project with no commercial intent")
+                        .font(DesignTokens.Typography.body)
+                }
+
+                HStack(alignment: .top, spacing: DesignTokens.Spacing.sm) {
+                    Image(systemName: "lock.shield.fill")
+                        .foregroundColor(.secondary)
+                        .frame(width: 24)
+                    Text("Your data stays on your device")
+                        .font(DesignTokens.Typography.body)
+                }
+
+                HStack(alignment: .top, spacing: DesignTokens.Spacing.sm) {
+                    Image(systemName: "hand.raised.fill")
+                        .foregroundColor(.secondary)
+                        .frame(width: 24)
+                    Text("Optional: contribute to research")
+                        .font(DesignTokens.Typography.body)
+                }
+            }
+            .padding(.horizontal, DesignTokens.Spacing.xxl)
+
+            Spacer()
+
+            VStack(spacing: DesignTokens.Spacing.lg) {
+                Button(action: {
+                    withAnimation {
+                        currentPage = 2
+                    }
+                }) {
+                    Text("Continue")
+                        .fontWeight(DesignTokens.Weight.emphasis)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(DesignTokens.Colors.highlight)
+                        .foregroundColor(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.lg, style: .continuous))
+                }
+
+                Link("Learn More", destination: URL(string: "https://wolfsbit.inpyjamas.dev/research")!)
+                    .font(DesignTokens.Typography.body)
+                    .foregroundColor(.secondary)
             }
             .padding(.horizontal, DesignTokens.Spacing.xxl)
             .padding(.bottom, DesignTokens.Spacing.huge)
@@ -207,7 +286,7 @@ struct OnboardingView: View {
 
                 Button("I'll enable this later") {
                     withAnimation {
-                        currentPage = 2
+                        currentPage = 3
                     }
                 }
                 .font(DesignTokens.Typography.body)
@@ -218,7 +297,7 @@ struct OnboardingView: View {
         }
     }
 
-    // MARK: - Page 3: Notifications
+    // MARK: - Page 4: Notifications
 
     private var notificationsPage: some View {
         VStack(spacing: DesignTokens.Spacing.xxl) {
@@ -263,7 +342,7 @@ struct OnboardingView: View {
 
                 Button("Skip for now") {
                     withAnimation {
-                        currentPage = 3
+                        currentPage = 4
                     }
                 }
                 .font(DesignTokens.Typography.body)
@@ -274,7 +353,7 @@ struct OnboardingView: View {
         }
     }
 
-    // MARK: - Page 4: ML Model
+    // MARK: - Page 5: ML Model
 
     private var mlModelPage: some View {
         VStack(spacing: DesignTokens.Spacing.xxl) {
@@ -361,7 +440,7 @@ struct OnboardingView: View {
                     .font(DesignTokens.Typography.body)
 
                     Button(action: {
-                        withAnimation { currentPage = 4 }
+                        withAnimation { currentPage = 5 }
                     }) {
                         Text("Continue")
                             .fontWeight(DesignTokens.Weight.emphasis)
@@ -374,7 +453,7 @@ struct OnboardingView: View {
                 } else if downloader.isDownloading {
                     // Download in progress
                     Button(action: {
-                        withAnimation { currentPage = 4 }
+                        withAnimation { currentPage = 5 }
                     }) {
                         Text("Continue (Download in Background)")
                             .fontWeight(DesignTokens.Weight.emphasis)
@@ -427,7 +506,7 @@ struct OnboardingView: View {
         }
     }
 
-    // MARK: - Page 5: Ready
+    // MARK: - Page 6: Ready
 
     private var readyPage: some View {
         VStack(spacing: DesignTokens.Spacing.xxl) {
@@ -502,7 +581,7 @@ struct OnboardingView: View {
             if speechRecognizer.authorizationStatus == .authorized {
                 await MainActor.run {
                     withAnimation {
-                        currentPage = 2
+                        currentPage = 3
                     }
                 }
             }
@@ -517,7 +596,7 @@ struct OnboardingView: View {
                 await MainActor.run {
                     if granted {
                         withAnimation {
-                            currentPage = 3
+                            currentPage = 4
                         }
                     }
                 }
