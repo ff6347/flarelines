@@ -81,8 +81,6 @@ struct SampleDataGenerator {
                 entry.mlScore = max(0, min(3, score + mlDiff))
             }
 
-            entry.isFlaggedDay = (score >= 2 && Bool.random())
-            entry.notes = entry.isFlaggedDay ? "Wichtiger Tag zur Dokumentation" : nil
         }
 
         do {

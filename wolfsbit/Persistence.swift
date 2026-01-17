@@ -12,15 +12,15 @@ struct PersistenceController {
         let viewContext = result.container.viewContext
 
         let calendar = Calendar.current
-        let sampleEntries: [(text: String, userScore: Int16, mlScore: Int16, flagged: Bool)] = [
-            ("Heute geht es mir gut. Keine besonderen Symptome, nur leichte Müdigkeit am Nachmittag.", 0, 0, false),
-            ("Kopfschmerzen seit dem Aufwachen. Habe Ibuprofen genommen.", 1, 1, false),
-            ("Starke Gelenkschmerzen, konnte kaum aufstehen. Termin beim Arzt gemacht.", 2, 2, true),
-            ("Schub - musste im Bett bleiben. Fieber und extreme Erschöpfung.", 3, 3, true),
-            ("Besser als gestern. Noch müde aber keine Schmerzen mehr.", 1, 1, false),
-            ("Guter Tag! Sport gemacht und mich danach gut gefühlt.", 0, 0, false),
-            ("Leichte Symptome am Morgen, aber im Laufe des Tages besser geworden.", 1, -1, false),
-            ("Hautausschlag bemerkt. Dokumentiere für den nächsten Arztbesuch.", 2, -1, true),
+        let sampleEntries: [(text: String, userScore: Int16, mlScore: Int16)] = [
+            ("Heute geht es mir gut. Keine besonderen Symptome, nur leichte Müdigkeit am Nachmittag.", 0, 0),
+            ("Kopfschmerzen seit dem Aufwachen. Habe Ibuprofen genommen.", 1, 1),
+            ("Starke Gelenkschmerzen, konnte kaum aufstehen. Termin beim Arzt gemacht.", 2, 2),
+            ("Schub - musste im Bett bleiben. Fieber und extreme Erschöpfung.", 3, 3),
+            ("Besser als gestern. Noch müde aber keine Schmerzen mehr.", 1, 1),
+            ("Guter Tag! Sport gemacht und mich danach gut gefühlt.", 0, 0),
+            ("Leichte Symptome am Morgen, aber im Laufe des Tages besser geworden.", 1, -1),
+            ("Hautausschlag bemerkt. Dokumentiere für den nächsten Arztbesuch.", 2, -1),
         ]
 
         for (index, entry) in sampleEntries.enumerated() {
@@ -30,8 +30,6 @@ struct PersistenceController {
             journalEntry.journalText = entry.text
             journalEntry.userScore = entry.userScore
             journalEntry.mlScore = entry.mlScore
-            journalEntry.isFlaggedDay = entry.flagged
-            journalEntry.notes = entry.flagged ? "Wichtiger Tag" : nil
         }
 
         do {
