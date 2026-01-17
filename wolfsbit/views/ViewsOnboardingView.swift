@@ -7,6 +7,7 @@ import UserNotifications
 
 struct OnboardingView: View {
     @Binding var isPresented: Bool
+    var onComplete: (() -> Void)?
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
 
     @SceneStorage("onboardingCurrentPage") private var currentPage = 0
@@ -611,6 +612,7 @@ struct OnboardingView: View {
         currentPage = 0
         hasCompletedOnboarding = true
         isPresented = false
+        onComplete?()
     }
 
     // MARK: - ML Model Helpers
