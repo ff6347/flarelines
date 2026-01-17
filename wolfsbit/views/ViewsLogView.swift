@@ -369,7 +369,6 @@ struct JournalEditorView: View {
         entry.journalText = journalText
         entry.userScore = Int16(activityScore)
         entry.mlScore = -1  // Not scored yet
-        entry.isFlaggedDay = false
 
         do {
             try viewContext.save()

@@ -1,5 +1,5 @@
 // ABOUTME: Modal view for editing saved journal entries.
-// ABOUTME: Allows editing journal text, user score, and notes.
+// ABOUTME: Allows editing journal text and user score.
 
 import SwiftUI
 import CoreData
@@ -12,13 +12,11 @@ struct EditEntryView: View {
 
     @State private var journalText: String
     @State private var userScore: Double
-    @State private var notes: String
 
     init(entry: JournalEntry) {
         self.entry = entry
         _journalText = State(initialValue: entry.journalText ?? "")
         _userScore = State(initialValue: Double(entry.userScore))
-        _notes = State(initialValue: entry.notes ?? "")
     }
 
     var body: some View {
@@ -96,22 +94,6 @@ struct EditEntryView: View {
                             .foregroundColor(.secondary)
                     }
 
-                    Divider()
-
-                    // Notes
-                    VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
-                        Text("Notes")
-                            .font(DesignTokens.Typography.subheading)
-                            .fontWeight(DesignTokens.Weight.strong)
-
-                        TextEditor(text: $notes)
-                            .frame(height: DesignTokens.Dimensions.textEditorHeightCompact)
-                            .scrollContentBackground(.hidden)
-
-                        Text("Optional additional notes")
-                            .font(DesignTokens.Typography.caption)
-                            .foregroundColor(.secondary)
-                    }
                 }
                 .padding(DesignTokens.Spacing.lg)
             }
@@ -137,7 +119,6 @@ struct EditEntryView: View {
     private func saveChanges() {
         entry.journalText = journalText.isEmpty ? nil : journalText
         entry.userScore = Int16(userScore)
-        entry.notes = notes.isEmpty ? nil : notes
 
         do {
             try viewContext.save()
@@ -156,7 +137,6 @@ struct EditEntryView: View {
     entry.journalText = "Heute bin ich müde aufgewacht, hatte leichte Gelenkschmerzen am Morgen, die aber nach dem Aufstehen besser wurden."
     entry.userScore = 1
     entry.mlScore = 1
-    entry.notes = "Neue Medikation angefangen"
 
     return EditEntryView(entry: entry)
         .environment(\.managedObjectContext, context)
