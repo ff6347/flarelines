@@ -607,6 +607,8 @@ struct OnboardingView: View {
     }
 
     private func completeOnboarding() {
+        // Reset page for next presentation (SceneStorage persists otherwise)
+        currentPage = 0
         hasCompletedOnboarding = true
         isPresented = false
     }
