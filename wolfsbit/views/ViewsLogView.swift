@@ -287,22 +287,20 @@ struct JournalEditorView: View {
                 // ML scoring status and suggestion indicator
                 Group {
                     if isScoring {
-                        HStack(spacing: DesignTokens.Spacing.xs) {
+                        HStack(spacing: DesignTokens.Spacing.sm) {
                             ProgressView()
-                                .scaleEffect(0.8)
                                 .tint(DesignTokens.Colors.secondaryText)
                             Text("Analyzing...")
-                                .font(DesignTokens.Typography.caption)
+                                .font(DesignTokens.Typography.body)
                                 .foregroundColor(DesignTokens.Colors.secondaryText)
                         }
                     } else if let suggested = mlSuggestedScore, suggested != Int(activityScore) {
                         Text("Your score: \(Int(activityScore)) (AI suggested: \(suggested))")
-                            .font(DesignTokens.Typography.caption)
+                            .font(DesignTokens.Typography.body)
                             .foregroundColor(DesignTokens.Colors.secondaryText)
                     }
                 }
-                .padding(.top, DesignTokens.Spacing.sm)
-                .frame(height: 24)
+                .padding(.top, DesignTokens.Spacing.md)
             }
 
             Spacer()
