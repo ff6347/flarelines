@@ -3,12 +3,18 @@
 
 import SwiftUI
 import UserNotifications
+import CoreData
 
 struct SettingsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     @AppStorage("notificationsEnabled") private var notificationsEnabled = false
-    @AppStorage("dailyReminderTime") private var dailyReminderTime = Date()
+    @AppStorage("dailyReminderTime") private var dailyReminderTimeInterval: Double = Date().timeIntervalSince1970
+    
+    private var dailyReminderTime: Date {
+        get { Date(timeIntervalSince1970: dailyReminderTimeInterval) }
+        set { dailyReminderTimeInterval = newValue.timeIntervalSince1970 }
+    }
     @AppStorage("contributeData") private var contributeData = false
 
     @State private var showingPermissionDeniedAlert = false
@@ -33,7 +39,10 @@ struct SettingsView: View {
 
                 if notificationsEnabled {
                     DatePicker("Reminder Time",
-                             selection: $dailyReminderTime,
+                             selection: Binding(
+                                get: { Date(timeIntervalSince1970: dailyReminderTimeInterval) },
+                                set: { dailyReminderTimeInterval = $0.timeIntervalSince1970 }
+                             ),
                              displayedComponents: .hourAndMinute)
                 }
             }
@@ -50,7 +59,7 @@ struct SettingsView: View {
             
             Section("Data") {
                 Button("Export Data") {
-                    // Export functionality
+                    exportData()
                 }
 
                 Button("Clear All Data", role: .destructive) {
@@ -115,6 +124,49 @@ struct SettingsView: View {
                 pendingContributeToggle = false
             }
         }
+    }
+
+    private func exportData() {
+        let request = NSFetchRequest<JournalEntry>(entityName: "JournalEntry")
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \JournalEntry.timestamp, ascending: true)]
+
+        do {
+            let entries = try viewContext.fetch(request)
+            let csv = CSVExporter.export(entries: entries)
+
+            // Write to temporary file
+            let filename = "wolfsbit-export-\(formatDateForFilename()).csv"
+            let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
+            try csv.write(to: tempURL, atomically: true, encoding: .utf8)
+
+            // Present share sheet via UIKit
+            presentShareSheet(for: tempURL)
+        } catch {
+            // Silent failure - could add error alert if needed
+        }
+    }
+
+    private func presentShareSheet(for url: URL) {
+        let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let rootController = windowScene.windows.first?.rootViewController else {
+            return
+        }
+
+        // Find the topmost presented controller
+        var topController = rootController
+        while let presented = topController.presentedViewController {
+            topController = presented
+        }
+
+        topController.present(activityController, animated: true)
+    }
+
+    private func formatDateForFilename() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: Date())
     }
 
     private func requestNotificationPermission() {
