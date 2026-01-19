@@ -37,8 +37,8 @@ struct JournalEditorView: View {
 
     var body: some View {
         ZStack {
-            // Background
-            Color.black.ignoresSafeArea()
+            // Background - adapts to light/dark mode
+            DesignTokens.Colors.primaryBackground.ignoresSafeArea()
 
             VStack(spacing: 0) {
                 // Header with action button
@@ -74,7 +74,6 @@ struct JournalEditorView: View {
                     .padding(.bottom, DesignTokens.Spacing.sm)
             }
         }
-        .preferredColorScheme(.dark)
         .alert("Entry Saved", isPresented: $showingSavedAlert) {
             Button("OK", role: .cancel) { }
         } message: {
@@ -135,7 +134,7 @@ struct JournalEditorView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Downloading model")
                             .font(DesignTokens.Typography.caption)
-                            .foregroundColor(.white)
+                            .foregroundColor(DesignTokens.Colors.primaryText)
                         Text("Tap to pause · \(Int(downloader.downloadProgress * 100))%")
                             .font(.caption2)
                             .foregroundColor(.secondary)
@@ -148,7 +147,7 @@ struct JournalEditorView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Download paused")
                             .font(DesignTokens.Typography.caption)
-                            .foregroundColor(.white)
+                            .foregroundColor(DesignTokens.Colors.primaryText)
                         Text("Tap to resume · \(Int(downloader.downloadProgress * 100))%")
                             .font(.caption2)
                             .foregroundColor(.orange)
@@ -168,7 +167,7 @@ struct JournalEditorView: View {
                 Image(systemName: "chevron.right")
                     .font(DesignTokens.Typography.heading)
                     .fontWeight(DesignTokens.Weight.emphasis)
-                    .foregroundColor(.white)
+                    .foregroundColor(.white)  // Contrast on highlight background
                     .frame(width: DesignTokens.Dimensions.actionButtonSize, height: DesignTokens.Dimensions.actionButtonSize)
                     .background(DesignTokens.Colors.highlight)
                     .clipShape(Circle())
@@ -179,7 +178,7 @@ struct JournalEditorView: View {
                 Image(systemName: "checkmark")
                     .font(DesignTokens.Typography.heading)
                     .fontWeight(DesignTokens.Weight.emphasis)
-                    .foregroundColor(.white)
+                    .foregroundColor(.white)  // Contrast on highlight background
                     .frame(width: DesignTokens.Dimensions.actionButtonSize, height: DesignTokens.Dimensions.actionButtonSize)
                     .background(DesignTokens.Colors.highlight)
                     .clipShape(Circle())
@@ -194,12 +193,12 @@ struct JournalEditorView: View {
             Text("How are you doing today?")
                 .font(DesignTokens.Typography.heading)
                 .fontWeight(DesignTokens.Weight.emphasis)
-                .foregroundColor(.white)
+                .foregroundColor(DesignTokens.Colors.primaryText)
                 .padding(.horizontal)
                 .padding(.top, DesignTokens.Spacing.xl)
 
             Divider()
-                .background(Color.gray.opacity(0.5))
+                .background(DesignTokens.Colors.divider)
                 .padding(.horizontal)
                 .padding(.top, DesignTokens.Spacing.sm)
 
@@ -211,11 +210,11 @@ struct JournalEditorView: View {
                         VStack(alignment: .leading, spacing: DesignTokens.Spacing.xs) {
                             if !journalText.isEmpty {
                                 Text(journalText)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(DesignTokens.Colors.primaryText)
                             }
                             if !speechRecognizer.transcript.isEmpty {
                                 Text(speechRecognizer.transcript)
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(DesignTokens.Colors.secondaryText)
                             }
                         }
                         .font(DesignTokens.Typography.body)
@@ -227,7 +226,7 @@ struct JournalEditorView: View {
                         .scrollContentBackground(.hidden)
                         .background(Color.clear)
                         .font(DesignTokens.Typography.body)
-                        .foregroundColor(.white)
+                        .foregroundColor(DesignTokens.Colors.primaryText)
                         .focused($isEditorFocused)
                         .padding(.horizontal, DesignTokens.Spacing.md)
                         .padding(.top, DesignTokens.Spacing.sm)
@@ -237,7 +236,7 @@ struct JournalEditorView: View {
                 if journalText.isEmpty && !speechRecognizer.isRecording {
                     Text("Start writing...")
                         .font(DesignTokens.Typography.body)
-                        .foregroundColor(.gray)
+                        .foregroundColor(DesignTokens.Colors.secondaryText)
                         .padding(.horizontal, DesignTokens.Spacing.lg)
                         .padding(.top, DesignTokens.Spacing.lg)
                         .allowsHitTesting(false)
@@ -255,7 +254,7 @@ struct JournalEditorView: View {
             Text("Rate your activity!")
                 .font(DesignTokens.Typography.heading)
                 .fontWeight(DesignTokens.Weight.emphasis)
-                .foregroundColor(.white)
+                .foregroundColor(DesignTokens.Colors.primaryText)
                 .padding(.horizontal)
                 .padding(.top, DesignTokens.Spacing.xl)
 
@@ -281,7 +280,7 @@ struct JournalEditorView: View {
                     Text("3")
                 }
                 .font(DesignTokens.Typography.caption)
-                .foregroundColor(.gray)
+                .foregroundColor(DesignTokens.Colors.secondaryText)
                 .padding(.horizontal, DesignTokens.Spacing.xl)
 
                 // ML scoring status and suggestion indicator
@@ -312,13 +311,13 @@ struct JournalEditorView: View {
     private var editorToolbar: some View {
         VStack(spacing: 0) {
             Divider()
-                .background(Color.gray.opacity(0.5))
+                .background(DesignTokens.Colors.divider)
 
             HStack(spacing: 0) {
                 // Mic button with pulse animation when recording
                 Button(action: toggleVoiceInput) {
                     Image(systemName: speechRecognizer.isRecording ? "mic.fill" : "mic")
-                        .foregroundColor(speechRecognizer.isRecording ? DesignTokens.Colors.highlight : .white)
+                        .foregroundColor(speechRecognizer.isRecording ? DesignTokens.Colors.highlight : DesignTokens.Colors.primaryText)
                         .scaleEffect(isPulsing ? 1.3 : 1.0)
                 }
                 .frame(maxWidth: .infinity)
@@ -348,7 +347,7 @@ struct JournalEditorView: View {
                 .frame(maxWidth: .infinity)
             }
             .font(DesignTokens.Typography.heading)
-            .foregroundColor(.white)
+            .foregroundColor(DesignTokens.Colors.primaryText)
             .padding(.vertical, DesignTokens.Spacing.md)
         }
         .padding(.horizontal)

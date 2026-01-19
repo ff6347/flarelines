@@ -19,7 +19,8 @@ enum DesignTokens {
         static let primaryText = Color.primary
         static let secondaryText = Color.secondary
 
-        static let accent = Color.black
+        // Accent uses highlight for better light/dark mode visibility
+        static let accent = highlight
         static let accentLight = Color.gray.opacity(0.3)
 
         // Highlight color (tomato red #ff6347)
@@ -30,6 +31,9 @@ enum DesignTokens {
 
         static let chartLine = highlight
         static let chartPoint = highlight
+
+        // Divider color that adapts to light/dark mode
+        static let divider = Color(UIColor.separator)
     }
     
     // MARK: - Spacing
