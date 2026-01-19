@@ -28,8 +28,8 @@ enum DesignTokens {
         static let recordingActive = Color.red
         static let recordingBackground = Color.red.opacity(0.1)
 
-        static let chartLine = Color.primary
-        static let chartPoint = Color.primary
+        static let chartLine = highlight
+        static let chartPoint = highlight
     }
     
     // MARK: - Spacing
