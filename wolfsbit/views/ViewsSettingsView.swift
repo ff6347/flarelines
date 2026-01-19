@@ -452,10 +452,26 @@ struct ModelDownloadSection: View {
 
 struct ShareSheet: UIViewControllerRepresentable {
     let items: [Any]
+    @Environment(\.dismiss) private var dismiss
 
-    func makeUIViewController(context: Context) -> UIActivityViewController {
-        UIActivityViewController(activityItems: items, applicationActivities: nil)
+    func makeUIViewController(context: Context) -> UIViewController {
+        let controller = UIViewController()
+        controller.view.backgroundColor = .clear
+        return controller
     }
 
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        // Present the activity controller once the view is ready
+        guard uiViewController.presentedViewController == nil else { return }
+
+        let activityController = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        activityController.completionWithItemsHandler = { _, _, _, _ in
+            dismiss()
+        }
+
+        // Small delay to ensure the host controller is in the hierarchy
+        DispatchQueue.main.async {
+            uiViewController.present(activityController, animated: true)
+        }
+    }
 }
