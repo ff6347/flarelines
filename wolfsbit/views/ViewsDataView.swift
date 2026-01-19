@@ -86,14 +86,14 @@ struct DataView: View {
                                     y: .value("Score", Double(entry.userScore))
                                 )
                                 .interpolationMethod(.catmullRom)
-                                .foregroundStyle(.primary)
+                                .foregroundStyle(DesignTokens.Colors.chartLine)
 
                                 PointMark(
                                     x: .value("Date", entry.timestamp),
                                     y: .value("Score", Double(entry.userScore))
                                 )
                                 .symbolSize(DesignTokens.Dimensions.chartPointSize)
-                                .foregroundStyle(.primary)
+                                .foregroundStyle(DesignTokens.Colors.chartPoint)
                             }
                         }
                         .frame(height: DesignTokens.Dimensions.chartHeight)

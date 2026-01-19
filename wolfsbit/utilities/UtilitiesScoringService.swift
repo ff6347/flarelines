@@ -3,6 +3,12 @@
 
 import Foundation
 
+/// Phases of the ML scoring process for UI feedback
+enum ScoringPhase {
+    case loadingModel
+    case analyzing
+}
+
 /// Errors that can occur during scoring operations
 enum ScoringError: Error, LocalizedError {
     case modelNotAvailable
@@ -80,18 +86,34 @@ actor ScoringService {
         llamaContext = nil
     }
 
+    /// Checks if the model is currently loaded in memory
+    func isModelLoaded() -> Bool {
+        llamaContext != nil
+    }
+
     // MARK: - Scoring
 
     /// Scores a diary entry and returns the activity score (0-3)
-    /// - Parameter diaryText: German diary entry text
-    /// - Returns: Activity score 0-3, or nil if scoring fails
-    func scoreDiaryEntry(_ diaryText: String) async throws -> Int {
-        // Ensure model is loaded
-        try await loadModelIfNeeded()
+    /// - Parameters:
+    ///   - diaryText: German diary entry text
+    ///   - onPhaseChange: Optional callback for UI feedback on scoring phases
+    /// - Returns: Activity score 0-3
+    func scoreDiaryEntry(
+        _ diaryText: String,
+        onPhaseChange: (@Sendable (ScoringPhase) async -> Void)? = nil
+    ) async throws -> Int {
+        // Load model if needed, reporting phase
+        if llamaContext == nil {
+            await onPhaseChange?(.loadingModel)
+            try await loadModelIfNeeded()
+        }
 
         guard let context = llamaContext else {
             throw ScoringError.modelNotAvailable
         }
+
+        // Report analyzing phase
+        await onPhaseChange?(.analyzing)
 
         // Format prompt in ChatML format for Qwen
         let prompt = formatPrompt(diaryText: diaryText)

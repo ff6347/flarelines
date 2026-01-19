@@ -111,23 +111,22 @@
         }
       }
     },
+    "Analyzing..." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analysiere..."
+          }
+        }
+      }
+    },
     "Answer daily questions using your voice. Wolfsbit needs microphone and speech recognition access." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beantworte tägliche Fragen mit deiner Stimme. Wolfsbit benötigt Zugriff auf Mikrofon und Spracherkennung."
-          }
-        }
-      }
-    },
-    "Any personal identifiers" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Jegliche persönliche Kennungen"
           }
         }
       }
@@ -202,16 +201,6 @@
         }
       }
     },
-    "Corner Radii Found" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eckenradien gefunden"
-          }
-        }
-      }
-    },
     "Daily health tracking" : {
       "localizations" : {
         "de" : {
@@ -282,16 +271,6 @@
         }
       }
     },
-    "Debug Tools" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Debug-Werkzeuge"
-          }
-        }
-      }
-    },
     "Delete" : {
       "localizations" : {
         "de" : {
@@ -318,17 +297,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Modell löschen"
-          }
-        }
-      }
-    },
-    "Device information" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geräteinformationen"
           }
         }
       }
@@ -569,17 +537,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hilfe"
-          }
-        }
-      }
-    },
-    "Help & Support" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hilfe & Support"
           }
         }
       }
@@ -898,6 +855,16 @@
         }
       }
     },
+    "Loading model..." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lade Modell..."
+          }
+        }
+      }
+    },
     "ML Model" : {
       "localizations" : {
         "de" : {
@@ -978,17 +945,6 @@
         }
       }
     },
-    "Notes" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Notizen"
-          }
-        }
-      }
-    },
     "Notifications" : {
       "localizations" : {
         "de" : {
@@ -1029,17 +985,6 @@
         }
       }
     },
-    "Optional additional notes" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Optionale zusätzliche Notizen"
-          }
-        }
-      }
-    },
     "Optional: contribute to research" : {
       "localizations" : {
         "de" : {
@@ -1076,17 +1021,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bewerte deine Aktivität!"
-          }
-        }
-      }
-    },
-    "Re-run Onboarding" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Einführung wiederholen"
           }
         }
       }
@@ -1157,16 +1091,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Speichern"
-          }
-        }
-      }
-    },
-    "Scan Corner Radii" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eckenradien scannen"
           }
         }
       }
@@ -1291,23 +1215,22 @@
         }
       }
     },
-    "The AI-suggested score" : {
+    "This is a master's research project. No commercial use." : {
+
+    },
+    "This is a master's thesis project. No commercial use." : {
       "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Die KI-vorgeschlagene Bewertung"
+            "value" : "Dies ist ein Masterstudium Projekt. Keine kommerzielle Nutzung."
           }
-        }
-      }
-    },
-    "This is a master's thesis project. No commercial use." : {
-      "localizations" : {
-        "de" : {
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dies ist ein Masterarbeitsprojekt. Keine kommerzielle Nutzung."
+            "value" : "This is a master’s studies project. No commercial use."
           }
         }
       }
@@ -1318,17 +1241,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zeit"
-          }
-        }
-      }
-    },
-    "Timestamps or dates" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zeitstempel oder Daten"
           }
         }
       }
@@ -1464,7 +1376,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wolfsbit ist Teil einer Masterarbeit über KI-gestütztes Gesundheitstagebuch."
+            "value" : "Wolfsbit ist Teil des Masterstudiums des Autoren über KI-gestütztes Gesundheitstagebuch."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wolfsbit is part of the authors master's studies exploring AI-assisted health journaling."
           }
         }
       }
@@ -1474,7 +1392,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wolfsbit ist Teil einer Masterarbeit über KI-gestütztes Gesundheitstagebuch. Dies ist ein akademisches Projekt ohne kommerzielle Absicht. Deine Beiträge helfen, das KI-Modell für alle zu verbessern."
+            "value" : "Wolfsbit ist Teil des Masterstudiums über KI-gestütztes Gesundheitstagebuch. Dies ist ein akademisches Projekt ohne kommerzielle Absicht. Deine Beiträge helfen, das KI-Modell für alle zu verbessern."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wolfsbit is part of a the authors master's studies exploring AI-assisted health journaling. This is an academic project with no commercial intent. Your contributions help improve the AI model for everyone."
           }
         }
       }
@@ -1529,17 +1453,6 @@
         }
       }
     },
-    "Your final score (if different)" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Deine endgültige Bewertung (falls abweichend)"
-          }
-        }
-      }
-    },
     "Your journal entry has been saved." : {
       "localizations" : {
         "de" : {
@@ -1550,34 +1463,28 @@
         }
       }
     },
-    "Your journal entry text" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dein Tagebucheintrag-Text"
-          }
-        }
-      }
-    },
-    "Your name or identity" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dein Name oder deine Identität"
-          }
-        }
-      }
-    },
     "Your Score" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Deine Bewertung"
+          }
+        }
+      }
+    },
+    "Your score: %lld (AI suggested: %lld)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Bewertung: %1$lld (KI-Vorschlag: %2$lld)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your score: %1$lld (AI suggested: %2$lld)"
           }
         }
       }
