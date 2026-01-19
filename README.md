@@ -1,65 +1,49 @@
-# Wolfsbit - Chronic Illness Journal App
+# Wolfsbit
 
-A journaling app designed to help users track chronic illnesses through daily diary entries and visualize health progress over time.
+Track your chronic illness journey, your way, your device.
+
+## About
+
+Living with chronic illness means good days and bad days. Remembering symptoms for doctor visits is hard when you're exhausted. Wolfsbit helps you journal your symptoms with voice-first input and on-device AI that keeps your health data private.
+
+Wolfsbit is a research artifact of the master studies of Fabian Moron Zirfas at University of Applied Sciences Potsdam, Germany, exploring on-device usage of small language models (SLM) for symptom diary patient-reported outcome measures (PROM).
 
 ## Features
 
-### 📝 LOG View
-- Question-based journaling system (3 daily questions)
-- Voice input support using iOS Speech Recognition
-- Editable text input with auto-save
-- Progress tracking through questions
-- Previous/Next navigation
+**Voice-first.** Tap the microphone, speak naturally. For days when typing feels like too much.
 
-### 📊 DATA View
-- Health progress visualization using Swift Charts
-- Time range filtering (7D, 30D, 90D, 180D, 1Y)
-- Detailed journal entries grouped by date
-- Pain level tracking (0-10 scale)
-- Symptoms and feelings logging
+**AI scoring.** On-device AI analyzes your entries and suggests activity scores (0-3). All processing happens locally—your words never leave your phone.
 
-### ❓ HELP View
-- Getting started guide
-- Feature documentation
-- Privacy information
+**Doctor reports.** Generate summaries for healthcare providers. See patterns, identify flare-ups.
 
-### ⚙️ Settings View
-- Daily reminder notifications
-- Data export functionality
-- Privacy and terms links
+**Localization.** German and English localized.
+
+## Privacy
+
+Your health data is stored only on your device. No cloud sync, no accounts. Export when you want, delete when you want. We use [Telemetry Deck](https://telemetrydeck.com/) to collect anonymized usage patterns.
 
 ## Technical Stack
 
-- **SwiftUI** - Modern declarative UI framework
+- **SwiftUI** - Declarative UI framework
 - **Core Data** - Local data persistence
-- **Swift Charts** - Health progress visualization
+- **Swift Charts** - Progress visualization
 - **Speech Framework** - Voice-to-text transcription
-- **MVVM Architecture** - Clean separation of concerns
+- **Core ML** - On-device SLM inference
 
-## Setup Instructions
+## Requirements
 
-### 1. Core Data Model Setup
+- iOS 17.6 or later
+- Xcode 15.0 or later
 
-You need to update your Core Data model (`.xcdatamodeld` file) to include the `JournalEntry` entity:
+## Setup
 
-**Entity: JournalEntry**
-- `id` (UUID) - Unique identifier
-- `timestamp` (Date) - Entry creation time
-- `feeling` (String, Optional) - Answer to "How are you feeling?"
-- `painLevel` (Integer 16) - Pain rating 0-10
-- `symptoms` (String, Optional) - Symptom descriptions
-- `healthScore` (Double) - Calculated health score (0-10)
+### Core Data Model
 
-To add this in Xcode:
-1. Open `wolfsbit.xcdatamodeld`
-2. Click "+" to add a new entity
-3. Name it "JournalEntry"
-4. Add the attributes listed above with their respective types
-5. Set the Codegen to "Manual/None" (we've provided the Swift class)
+The app uses Core Data with a `JournalEntry` entity. Open `wolfsbit.xcdatamodeld` and ensure the entity is configured with Codegen set to "Manual/None".
 
-### 2. Info.plist Configuration
+### Info.plist
 
-Add the following privacy descriptions for microphone and speech recognition:
+Add the following privacy descriptions:
 
 ```xml
 <key>NSMicrophoneUsageDescription</key>
@@ -68,85 +52,16 @@ Add the following privacy descriptions for microphone and speech recognition:
 <string>Wolfsbit uses speech recognition to transcribe your voice into text for journal entries.</string>
 ```
 
-### 3. File Organization
+## Contributing
 
-The project is organized as follows:
+If you want to contribute to the project, you can share your journal entries and scoring with us so we can train the model further to generate better results.
 
-```
-wolfsbit/
-├── Models/
-│   ├── JournalEntry.swift
-│   └── HealthQuestion.swift
-├── ViewModels/
-│   └── JournalViewModel.swift
-├── Views/
-│   ├── LogView.swift
-│   ├── DataView.swift
-│   ├── HelpView.swift
-│   └── SettingsView.swift
-├── Utilities/
-│   └── SpeechRecognizer.swift
-├── ContentView.swift
-├── Persistence.swift
-└── wolfsbitApp.swift
-```
+Feel free to open issues or pull requests on [GitHub](https://github.com/ff6347/wolfsbit).
 
-## Usage
+## Contact
 
-### Logging an Entry
-
-1. Open the app to the LOG tab
-2. Answer each question by typing or using voice input
-3. Tap the microphone button to start voice recording
-4. Tap "Next" to proceed through questions
-5. Tap "Save" on the final question to store your entry
-
-### Viewing Your Data
-
-1. Switch to the DATA tab
-2. View your health progress chart at the top
-3. Select different time ranges (7D, 30D, etc.)
-4. Scroll down to see detailed journal entries
-5. Entries are grouped by date with all questions and answers
-
-### Voice Input Tips
-
-- Grant microphone and speech recognition permissions when prompted
-- Speak clearly and at a normal pace
-- The app will show live transcription while recording
-- Tap the microphone button again to stop recording
-- Edit the transcribed text before moving to the next question
-
-## Health Score Calculation
-
-The health score is automatically calculated based on your pain level:
-- **Health Score = 10 - Pain Level**
-- Lower pain = Higher health score
-- This provides an inverse correlation for chart visualization
-
-## Privacy & Security
-
-- All data is stored locally on your device using Core Data
-- No data is transmitted to external servers
-- Speech recognition uses on-device processing when available
-- You control all your health information
-
-## Future Enhancements
-
-- [ ] Export data to CSV/PDF
-- [ ] Custom questions configuration
-- [ ] Medication tracking
-- [ ] Photo attachments
-- [ ] Health trend analysis
-- [ ] iCloud sync across devices
-- [ ] Widget support for quick logging
-
-## Requirements
-
-- iOS 17.0 or later
-- Xcode 15.0 or later
-- Swift 5.9 or later
+Research inquiries: wolfsbit@inpyjamas.dev
 
 ## License
 
-Copyright © 2025 Fabian Moron Zirfas. All rights reserved.
+Copyright 2025-2026 Fabian Moron Zirfas. All rights reserved.
