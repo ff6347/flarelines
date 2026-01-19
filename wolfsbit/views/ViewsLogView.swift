@@ -30,6 +30,11 @@ struct JournalEditorView: View {
     // Analytics tracking
     @State private var usedVoiceInput = false
 
+    // ML scoring state
+    @State private var mlSuggestedScore: Int?
+    @State private var isScoring = false
+    @State private var hasUserAdjustedScore = false
+
     var body: some View {
         ZStack {
             // Background
@@ -96,6 +101,11 @@ struct JournalEditorView: View {
             // Stop recording when leaving page 1
             if newPage != 0 && speechRecognizer.isRecording {
                 stopRecordingAndAppendText()
+            }
+
+            // Trigger ML scoring when navigating to activity rating page
+            if newPage == 1 && !journalText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                runMLScoring()
             }
         }
         .onChange(of: speechRecognizer.isRecording) { _, isRecording in
@@ -255,6 +265,10 @@ struct JournalEditorView: View {
                     .tint(DesignTokens.Colors.highlight)
                     .padding(.horizontal)
                     .padding(.top, DesignTokens.Spacing.lg)
+                    .onChange(of: activityScore) { _, _ in
+                        // Mark that user has manually adjusted the score
+                        hasUserAdjustedScore = true
+                    }
 
                 // Tick mark labels
                 HStack {
@@ -269,6 +283,26 @@ struct JournalEditorView: View {
                 .font(DesignTokens.Typography.caption)
                 .foregroundColor(.gray)
                 .padding(.horizontal, DesignTokens.Spacing.xl)
+
+                // ML scoring status and suggestion indicator
+                Group {
+                    if isScoring {
+                        HStack(spacing: DesignTokens.Spacing.xs) {
+                            ProgressView()
+                                .scaleEffect(0.8)
+                                .tint(.gray)
+                            Text("Analyzing...")
+                                .font(DesignTokens.Typography.caption)
+                                .foregroundColor(.gray)
+                        }
+                    } else if let suggested = mlSuggestedScore, suggested != Int(activityScore) {
+                        Text("Your score: \(Int(activityScore)) (AI suggested: \(suggested))")
+                            .font(DesignTokens.Typography.caption)
+                            .foregroundColor(.gray)
+                    }
+                }
+                .padding(.top, DesignTokens.Spacing.sm)
+                .frame(height: 24)
             }
 
             Spacer()
@@ -358,6 +392,39 @@ struct JournalEditorView: View {
         }
     }
 
+    private func runMLScoring() {
+        guard !isScoring else { return }
+
+        isScoring = true
+        mlSuggestedScore = nil
+
+        Task {
+            defer { isScoring = false }
+
+            // Check if model is available
+            guard await ScoringService.shared.isModelAvailable() else {
+                // Model not downloaded - slider stays at default, no suggestion shown
+                return
+            }
+
+            do {
+                let score = try await ScoringService.shared.scoreDiaryEntry(journalText)
+
+                await MainActor.run {
+                    mlSuggestedScore = score
+
+                    // Pre-fill slider if user hasn't manually adjusted it yet
+                    if !hasUserAdjustedScore {
+                        activityScore = Double(score)
+                    }
+                }
+            } catch {
+                // Inference failed - silent fallback, slider stays at current value
+                print("ML scoring failed: \(error.localizedDescription)")
+            }
+        }
+    }
+
     private func saveEntry() {
         guard !journalText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return
@@ -368,22 +435,19 @@ struct JournalEditorView: View {
         entry.timestamp = Date()
         entry.journalText = journalText
         entry.userScore = Int16(activityScore)
-        entry.mlScore = -1  // Not scored yet
+        entry.mlScore = Int16(mlSuggestedScore ?? -1)
 
         do {
             try viewContext.save()
 
             Analytics.signal("journalEntrySaved", parameters: [
-                "inputMethod": usedVoiceInput ? "voice" : "text"
+                "inputMethod": usedVoiceInput ? "voice" : "text",
+                "mlScoreAvailable": mlSuggestedScore != nil ? "true" : "false",
+                "userAdjusted": (mlSuggestedScore != nil && mlSuggestedScore != Int(activityScore)) ? "true" : "false"
             ])
 
             resetForm()
             showingSavedAlert = true
-
-            // Trigger async ML scoring in background
-            Task {
-                await ScoringService.shared.scoreEntry(entry, in: viewContext)
-            }
         } catch {
             print("Error saving entry: \(error)")
         }
@@ -395,6 +459,9 @@ struct JournalEditorView: View {
         currentPage = 0
         isEditorFocused = false
         usedVoiceInput = false
+        mlSuggestedScore = nil
+        isScoring = false
+        hasUserAdjustedScore = false
     }
 }
 
