@@ -18,8 +18,6 @@ struct SettingsView: View {
     @State private var showingPermissionDeniedAlert = false
     @State private var showingConsentSheet = false
     @State private var pendingContributeToggle = false
-    @State private var showingShareSheet = false
-    @State private var csvFileURL: URL?
 
     var body: some View {
         List {
@@ -138,11 +136,6 @@ struct SettingsView: View {
                 pendingContributeToggle = false
             }
         }
-        .sheet(isPresented: $showingShareSheet) {
-            if let url = csvFileURL {
-                ShareSheet(items: [url])
-            }
-        }
     }
 
     private func exportData() {
@@ -158,11 +151,28 @@ struct SettingsView: View {
             let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
             try csv.write(to: tempURL, atomically: true, encoding: .utf8)
 
-            csvFileURL = tempURL
-            showingShareSheet = true
+            // Present share sheet via UIKit
+            presentShareSheet(for: tempURL)
         } catch {
             // Silent failure - could add error alert if needed
         }
+    }
+
+    private func presentShareSheet(for url: URL) {
+        let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let rootController = windowScene.windows.first?.rootViewController else {
+            return
+        }
+
+        // Find the topmost presented controller
+        var topController = rootController
+        while let presented = topController.presentedViewController {
+            topController = presented
+        }
+
+        topController.present(activityController, animated: true)
     }
 
     private func formatDateForFilename() -> String {
@@ -445,33 +455,5 @@ struct ModelDownloadSection: View {
         formatter.allowedUnits = [.useGB, .useMB]
         formatter.countStyle = .file
         return formatter.string(fromByteCount: bytes)
-    }
-}
-
-// MARK: - Share Sheet
-
-struct ShareSheet: UIViewControllerRepresentable {
-    let items: [Any]
-    @Environment(\.dismiss) private var dismiss
-
-    func makeUIViewController(context: Context) -> UIViewController {
-        let controller = UIViewController()
-        controller.view.backgroundColor = .clear
-        return controller
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-        // Present the activity controller once the view is ready
-        guard uiViewController.presentedViewController == nil else { return }
-
-        let activityController = UIActivityViewController(activityItems: items, applicationActivities: nil)
-        activityController.completionWithItemsHandler = { _, _, _, _ in
-            dismiss()
-        }
-
-        // Small delay to ensure the host controller is in the hierarchy
-        DispatchQueue.main.async {
-            uiViewController.present(activityController, animated: true)
-        }
     }
 }
