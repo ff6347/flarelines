@@ -111,6 +111,16 @@
         }
       }
     },
+    "Analyzing..." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analysiere..."
+          }
+        }
+      }
+    },
     "Answer daily questions using your voice. Wolfsbit needs microphone and speech recognition access." : {
       "localizations" : {
         "de" : {
@@ -1578,6 +1588,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Deine Bewertung"
+          }
+        }
+      }
+    },
+    "Your score: %lld (AI suggested: %lld)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Bewertung: %1$lld (KI-Vorschlag: %2$lld)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your score: %1$lld (AI suggested: %2$lld)"
           }
         }
       }
