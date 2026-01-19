@@ -10,10 +10,13 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("notificationsEnabled") private var notificationsEnabled = false
     @AppStorage("dailyReminderTime") private var dailyReminderTime = Date()
+    @AppStorage("contributeData") private var contributeData = false
 
     @State private var cornerRadiusResult: String = ""
     @State private var showingRadiusAlert = false
     @State private var showingPermissionDeniedAlert = false
+    @State private var showingConsentSheet = false
+    @State private var pendingContributeToggle = false
 
     var body: some View {
         List {
@@ -52,12 +55,37 @@ struct SettingsView: View {
                 Button("Export Data") {
                     // Export functionality
                 }
-                
+
                 Button("Clear All Data", role: .destructive) {
                     // Clear data functionality
                 }
             }
-            
+
+            Section {
+                Toggle("Contribute Data", isOn: Binding(
+                    get: { contributeData },
+                    set: { newValue in
+                        if newValue && !contributeData {
+                            pendingContributeToggle = true
+                            showingConsentSheet = true
+                        } else {
+                            contributeData = newValue
+                        }
+                    }
+                ))
+
+                Text("Share journal entries anonymously to help improve the AI scoring.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+
+                Link("Learn more", destination: URL(string: "https://wolfsbit.inpyjamas.dev/research")!)
+                    .font(.caption)
+            } header: {
+                Text("Help Improve Wolfsbit")
+            } footer: {
+                Text("This is a master's thesis project. No commercial use.")
+            }
+
             #if DEBUG
             Section("Debug Tools") {
                 NavigationLink("Debug Controls") {
@@ -96,6 +124,16 @@ struct SettingsView: View {
             Button("OK", role: .cancel) { }
         } message: {
             Text(cornerRadiusResult)
+        }
+        .sheet(isPresented: $showingConsentSheet, onDismiss: {
+            if pendingContributeToggle && !contributeData {
+                pendingContributeToggle = false
+            }
+        }) {
+            DataContributionConsentSheet(isPresented: $showingConsentSheet) {
+                contributeData = true
+                pendingContributeToggle = false
+            }
         }
     }
 

@@ -26,7 +26,9 @@ struct HelpView: View {
                         .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.lg, style: .continuous))
                 }
                 .sheet(isPresented: $showingOnboarding) {
-                    OnboardingView(isPresented: $showingOnboarding)
+                    OnboardingView(isPresented: $showingOnboarding, onComplete: {
+                        dismiss()
+                    })
                 }
 
                 HelpSection(

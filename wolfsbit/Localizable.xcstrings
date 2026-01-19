@@ -81,6 +81,26 @@
         }
       }
     },
+    "About This Research" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Über diese Forschung"
+          }
+        }
+      }
+    },
+    "Academic project with no commercial intent" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akademisches Projekt ohne kommerzielle Absicht"
+          }
+        }
+      }
+    },
     "Allow Microphone & Speech" : {
       "localizations" : {
         "de" : {
@@ -97,6 +117,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beantworte tägliche Fragen mit deiner Stimme. Wolfsbit benötigt Zugriff auf Mikrofon und Spracherkennung."
+          }
+        }
+      }
+    },
+    "Any personal identifiers" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jegliche persönliche Kennungen"
           }
         }
       }
@@ -157,6 +188,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Weiter (Download im Hintergrund)"
+          }
+        }
+      }
+    },
+    "Contribute Data" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten beisteuern"
           }
         }
       }
@@ -277,6 +318,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Modell löschen"
+          }
+        }
+      }
+    },
+    "Device information" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geräteinformationen"
           }
         }
       }
@@ -532,6 +584,26 @@
         }
       }
     },
+    "Help improve this research by sharing anonymized entries. Only journal text and scores are shared - no personal identifiers. This data supports academic research on AI-assisted health tracking." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hilf bei dieser Forschung, indem du anonymisierte Einträge teilst. Nur Tagebuchtext und Bewertungen werden geteilt - keine persönlichen Daten. Diese Daten unterstützen akademische Forschung zu KI-gestütztem Gesundheitstracking."
+          }
+        }
+      }
+    },
+    "Help Improve Wolfsbit" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wolfsbit verbessern helfen"
+          }
+        }
+      }
+    },
     "help.gettingStarted.content" : {
       "localizations" : {
         "de" : {
@@ -766,6 +838,16 @@
         }
       }
     },
+    "I Agree" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ich stimme zu"
+          }
+        }
+      }
+    },
     "I'll enable this later" : {
       "localizations" : {
         "de" : {
@@ -792,6 +874,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tagebucheintrag"
+          }
+        }
+      }
+    },
+    "Learn more" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mehr erfahren"
+          }
+        }
+      }
+    },
+    "Learn More" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mehr erfahren"
           }
         }
       }
@@ -877,6 +979,7 @@
       }
     },
     "Notes" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -897,7 +1000,14 @@
       }
     },
     "Notifications Disabled" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benachrichtigungen deaktiviert"
+          }
+        }
+      }
     },
     "OK" : {
       "localizations" : {
@@ -910,14 +1020,32 @@
       }
     },
     "Open Settings" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen öffnen"
+          }
+        }
+      }
     },
     "Optional additional notes" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Optionale zusätzliche Notizen"
+          }
+        }
+      }
+    },
+    "Optional: contribute to research" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optional: zur Forschung beitragen"
           }
         }
       }
@@ -969,6 +1097,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Erinnerungszeit"
+          }
+        }
+      }
+    },
+    "Research Project" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forschungsprojekt"
           }
         }
       }
@@ -1049,6 +1187,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Einstellungen"
+          }
+        }
+      }
+    },
+    "Share journal entries anonymously to help improve the AI scoring." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teile Tagebucheinträge anonym, um die KI-Bewertung zu verbessern."
           }
         }
       }
@@ -1143,6 +1291,27 @@
         }
       }
     },
+    "The AI-suggested score" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die KI-vorgeschlagene Bewertung"
+          }
+        }
+      }
+    },
+    "This is a master's thesis project. No commercial use." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dies ist ein Masterarbeitsprojekt. Keine kommerzielle Nutzung."
+          }
+        }
+      }
+    },
     "Time" : {
       "localizations" : {
         "de" : {
@@ -1153,8 +1322,26 @@
         }
       }
     },
+    "Timestamps or dates" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeitstempel oder Daten"
+          }
+        }
+      }
+    },
     "To enable reminders, please allow notifications in Settings." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um Erinnerungen zu aktivieren, erlaube bitte Benachrichtigungen in den Einstellungen."
+          }
+        }
+      }
     },
     "Track your chronic illness symptoms with voice-first journaling. Designed for people with fatigue and brain fog." : {
       "localizations" : {
@@ -1252,6 +1439,56 @@
         }
       }
     },
+    "What's NOT shared:" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Was NICHT geteilt wird:"
+          }
+        }
+      }
+    },
+    "What's shared:" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Was geteilt wird:"
+          }
+        }
+      }
+    },
+    "Wolfsbit is part of a master's thesis exploring AI-assisted health journaling." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wolfsbit ist Teil einer Masterarbeit über KI-gestütztes Gesundheitstagebuch."
+          }
+        }
+      }
+    },
+    "Wolfsbit is part of a master's thesis exploring AI-assisted health journaling. This is an academic project with no commercial intent. Your contributions help improve the AI model for everyone." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wolfsbit ist Teil einer Masterarbeit über KI-gestütztes Gesundheitstagebuch. Dies ist ein akademisches Projekt ohne kommerzielle Absicht. Deine Beiträge helfen, das KI-Modell für alle zu verbessern."
+          }
+        }
+      }
+    },
+    "You can disable this anytime in Settings" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kannst dies jederzeit in den Einstellungen deaktivieren"
+          }
+        }
+      }
+    },
     "You'll need to download the model again to use automatic scoring." : {
       "localizations" : {
         "de" : {
@@ -1272,6 +1509,16 @@
         }
       }
     },
+    "Your data stays on your device" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Daten bleiben auf deinem Gerät"
+          }
+        }
+      }
+    },
     "Your data stays private" : {
       "localizations" : {
         "de" : {
@@ -1282,12 +1529,45 @@
         }
       }
     },
+    "Your final score (if different)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine endgültige Bewertung (falls abweichend)"
+          }
+        }
+      }
+    },
     "Your journal entry has been saved." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dein Tagebucheintrag wurde gespeichert."
+          }
+        }
+      }
+    },
+    "Your journal entry text" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Tagebucheintrag-Text"
+          }
+        }
+      }
+    },
+    "Your name or identity" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein Name oder deine Identität"
           }
         }
       }
