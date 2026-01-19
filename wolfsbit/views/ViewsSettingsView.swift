@@ -80,7 +80,7 @@ struct SettingsView: View {
             } header: {
                 Text("Help Improve Wolfsbit")
             } footer: {
-                Text("This is a master's thesis project. No commercial use.")
+                Text("This is a master's research project. No commercial use.")
             }
 
             Section("About") {
