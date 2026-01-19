@@ -4,6 +4,7 @@
 import SwiftUI
 import UIKit
 import UserNotifications
+import CoreData
 
 struct SettingsView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -17,6 +18,8 @@ struct SettingsView: View {
     @State private var showingPermissionDeniedAlert = false
     @State private var showingConsentSheet = false
     @State private var pendingContributeToggle = false
+    @State private var showingShareSheet = false
+    @State private var csvFileURL: URL?
 
     var body: some View {
         List {
@@ -53,7 +56,7 @@ struct SettingsView: View {
             
             Section("Data") {
                 Button("Export Data") {
-                    // Export functionality
+                    exportData()
                 }
 
                 Button("Clear All Data", role: .destructive) {
@@ -135,6 +138,37 @@ struct SettingsView: View {
                 pendingContributeToggle = false
             }
         }
+        .sheet(isPresented: $showingShareSheet) {
+            if let url = csvFileURL {
+                ShareSheet(items: [url])
+            }
+        }
+    }
+
+    private func exportData() {
+        let request = NSFetchRequest<JournalEntry>(entityName: "JournalEntry")
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \JournalEntry.timestamp, ascending: true)]
+
+        do {
+            let entries = try viewContext.fetch(request)
+            let csv = CSVExporter.export(entries: entries)
+
+            // Write to temporary file
+            let filename = "wolfsbit-export-\(formatDateForFilename()).csv"
+            let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
+            try csv.write(to: tempURL, atomically: true, encoding: .utf8)
+
+            csvFileURL = tempURL
+            showingShareSheet = true
+        } catch {
+            // Silent failure - could add error alert if needed
+        }
+    }
+
+    private func formatDateForFilename() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: Date())
     }
 
     private func requestNotificationPermission() {
@@ -412,4 +446,16 @@ struct ModelDownloadSection: View {
         formatter.countStyle = .file
         return formatter.string(fromByteCount: bytes)
     }
+}
+
+// MARK: - Share Sheet
+
+struct ShareSheet: UIViewControllerRepresentable {
+    let items: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: items, applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
