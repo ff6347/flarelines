@@ -214,12 +214,14 @@ final class ModelDownloader: NSObject {
         downloadTask = nil
     }
 
-    private func moveAndValidate(from tempURL: URL) async throws {
-        guard let destination = pendingDestination, let expectedChecksum = pendingChecksum else {
+    /// Moves the temp file to the final destination synchronously.
+    /// Must be called synchronously from the delegate before it returns.
+    private func moveToSafeLocation(from tempURL: URL) throws -> URL {
+        guard let destination = pendingDestination else {
             throw ModelDownloadError.fileMoveFailed(underlying: NSError(
                 domain: "ModelDownloader",
                 code: -1,
-                userInfo: [NSLocalizedDescriptionKey: "No destination or checksum configured"]
+                userInfo: [NSLocalizedDescriptionKey: "No destination configured"]
             ))
         }
 
@@ -236,20 +238,32 @@ final class ModelDownloader: NSObject {
             try fileManager.createDirectory(at: parentDir, withIntermediateDirectories: true)
         }
 
-        // Move file from temp location
+        // Move file from temp location - this must complete before delegate returns
         do {
             try fileManager.moveItem(at: tempURL, to: destination)
         } catch {
             throw ModelDownloadError.fileMoveFailed(underlying: error)
         }
 
-        // Validate checksum
-        let actualChecksum = try await computeSHA256(at: destination)
+        return destination
+    }
+
+    /// Validates checksum and cleans up if invalid. Called async after file is safely moved.
+    private func validateAndFinalize(at fileURL: URL) async throws {
+        guard let expectedChecksum = pendingChecksum else {
+            throw ModelDownloadError.fileMoveFailed(underlying: NSError(
+                domain: "ModelDownloader",
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "No checksum configured"]
+            ))
+        }
+
+        let actualChecksum = try await computeSHA256(at: fileURL)
         let isValid = actualChecksum.lowercased() == expectedChecksum.lowercased()
 
         if !isValid {
             // Delete invalid file
-            try? fileManager.removeItem(at: destination)
+            try? FileManager.default.removeItem(at: fileURL)
             throw ModelDownloadError.checksumMismatch(expected: expectedChecksum, actual: actualChecksum)
         }
     }
@@ -291,15 +305,25 @@ extension ModelDownloader: URLSessionDownloadDelegate {
         downloadTask: URLSessionDownloadTask,
         didFinishDownloadingTo location: URL
     ) {
-        Task {
-            do {
-                try await moveAndValidate(from: location)
-                Analytics.signal("modelDownloadCompleted")
-                cleanupDownload(with: nil)
-            } catch {
-                Analytics.signal("modelDownloadFailed")
-                cleanupDownload(with: error)
+        // URLSession deletes the temp file when this delegate returns, so we must
+        // move the file synchronously BEFORE returning from this method.
+        do {
+            let movedURL = try moveToSafeLocation(from: location)
+
+            // Now we can do async validation since we own the file
+            Task {
+                do {
+                    try await validateAndFinalize(at: movedURL)
+                    Analytics.signal("modelDownloadCompleted")
+                    cleanupDownload(with: nil)
+                } catch {
+                    Analytics.signal("modelDownloadFailed")
+                    cleanupDownload(with: error)
+                }
             }
+        } catch {
+            Analytics.signal("modelDownloadFailed")
+            cleanupDownload(with: error)
         }
     }
 
