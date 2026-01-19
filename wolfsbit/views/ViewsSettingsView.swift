@@ -9,7 +9,12 @@ struct SettingsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     @AppStorage("notificationsEnabled") private var notificationsEnabled = false
-    @AppStorage("dailyReminderTime") private var dailyReminderTime = Date()
+    @AppStorage("dailyReminderTime") private var dailyReminderTimeInterval: Double = Date().timeIntervalSince1970
+    
+    private var dailyReminderTime: Date {
+        get { Date(timeIntervalSince1970: dailyReminderTimeInterval) }
+        set { dailyReminderTimeInterval = newValue.timeIntervalSince1970 }
+    }
     @AppStorage("contributeData") private var contributeData = false
 
     @State private var cornerRadiusResult: String = ""
@@ -36,7 +41,10 @@ struct SettingsView: View {
 
                 if notificationsEnabled {
                     DatePicker("Reminder Time",
-                             selection: $dailyReminderTime,
+                             selection: Binding(
+                                get: { Date(timeIntervalSince1970: dailyReminderTimeInterval) },
+                                set: { dailyReminderTimeInterval = $0.timeIntervalSince1970 }
+                             ),
                              displayedComponents: .hourAndMinute)
                 }
             }
