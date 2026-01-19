@@ -32,7 +32,7 @@ struct JournalEditorView: View {
 
     // ML scoring state
     @State private var mlSuggestedScore: Int?
-    @State private var isScoring = false
+    @State private var scoringPhase: ScoringPhase?
     @State private var hasUserAdjustedScore = false
 
     var body: some View {
@@ -286,11 +286,11 @@ struct JournalEditorView: View {
 
                 // ML scoring status and suggestion indicator
                 Group {
-                    if isScoring {
+                    if let phase = scoringPhase {
                         HStack(spacing: DesignTokens.Spacing.sm) {
                             ProgressView()
                                 .tint(DesignTokens.Colors.secondaryText)
-                            Text("Analyzing...")
+                            Text(phase == .loadingModel ? "Loading model..." : "Analyzing...")
                                 .font(DesignTokens.Typography.body)
                                 .foregroundColor(DesignTokens.Colors.secondaryText)
                         }
@@ -391,13 +391,16 @@ struct JournalEditorView: View {
     }
 
     private func runMLScoring() {
-        guard !isScoring else { return }
+        guard scoringPhase == nil else { return }
 
-        isScoring = true
         mlSuggestedScore = nil
 
         Task {
-            defer { isScoring = false }
+            defer {
+                Task { @MainActor in
+                    scoringPhase = nil
+                }
+            }
 
             // Check if model is available
             guard await ScoringService.shared.isModelAvailable() else {
@@ -406,7 +409,11 @@ struct JournalEditorView: View {
             }
 
             do {
-                let score = try await ScoringService.shared.scoreDiaryEntry(journalText)
+                let score = try await ScoringService.shared.scoreDiaryEntry(journalText) { phase in
+                    await MainActor.run {
+                        self.scoringPhase = phase
+                    }
+                }
 
                 await MainActor.run {
                     mlSuggestedScore = score
@@ -458,7 +465,7 @@ struct JournalEditorView: View {
         isEditorFocused = false
         usedVoiceInput = false
         mlSuggestedScore = nil
-        isScoring = false
+        scoringPhase = nil
         hasUserAdjustedScore = false
     }
 }
