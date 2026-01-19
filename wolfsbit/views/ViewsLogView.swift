@@ -290,15 +290,15 @@ struct JournalEditorView: View {
                         HStack(spacing: DesignTokens.Spacing.xs) {
                             ProgressView()
                                 .scaleEffect(0.8)
-                                .tint(.gray)
+                                .tint(DesignTokens.Colors.secondaryText)
                             Text("Analyzing...")
                                 .font(DesignTokens.Typography.caption)
-                                .foregroundColor(.gray)
+                                .foregroundColor(DesignTokens.Colors.secondaryText)
                         }
                     } else if let suggested = mlSuggestedScore, suggested != Int(activityScore) {
                         Text("Your score: \(Int(activityScore)) (AI suggested: \(suggested))")
                             .font(DesignTokens.Typography.caption)
-                            .foregroundColor(.gray)
+                            .foregroundColor(DesignTokens.Colors.secondaryText)
                     }
                 }
                 .padding(.top, DesignTokens.Spacing.sm)
