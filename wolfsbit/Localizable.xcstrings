@@ -232,7 +232,6 @@
       }
     },
     "Danger Zone" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -263,7 +262,6 @@
       }
     },
     "Debug Controls" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -474,7 +472,6 @@
       }
     },
     "Generate 1 Year" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -485,7 +482,6 @@
       }
     },
     "Generate 7 Days" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -496,7 +492,6 @@
       }
     },
     "Generate 30 Days" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -507,7 +502,6 @@
       }
     },
     "Generate Sample Data" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
