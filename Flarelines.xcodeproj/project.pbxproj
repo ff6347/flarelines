@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CF229C612EC64A46005B43C5 /* wolfsbit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CF229C5F2EC64A46005B43C5 /* wolfsbit.xcdatamodeld */; };
+		CF229C612EC64A46005B43C5 /* flarelines.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CF229C5F2EC64A46005B43C5 /* flarelines.xcdatamodeld */; };
 		CF9FA9BE2F143AB2008A0CA2 /* TelemetryClient in Frameworks */ = {isa = PBXBuildFile; productRef = CF9FA9BD2F143AB2008A0CA2 /* TelemetryClient */; };
 		CF9FA9C02F143AB2008A0CA2 /* TelemetryDeck in Frameworks */ = {isa = PBXBuildFile; productRef = CF9FA9BF2F143AB2008A0CA2 /* TelemetryDeck */; };
 /* End PBXBuildFile section */
@@ -46,7 +46,7 @@
 		CF229C122EC64498005B43C5 /* Flarelines.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flarelines.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF229C242EC64499005B43C5 /* FlarelinesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlarelinesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF229C2E2EC6449A005B43C5 /* FlarelinesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlarelinesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CF229C602EC64A46005B43C5 /* wolfsbit.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = wolfsbit.xcdatamodel; sourceTree = "<group>"; };
+		CF229C602EC64A46005B43C5 /* flarelines.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = flarelines.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
@@ -113,7 +113,7 @@
 		CF229C092EC64498005B43C5 = {
 			isa = PBXGroup;
 			children = (
-				CF229C5F2EC64A46005B43C5 /* wolfsbit.xcdatamodeld */,
+				CF229C5F2EC64A46005B43C5 /* flarelines.xcdatamodeld */,
 				CF229C142EC64498005B43C5 /* flarelines */,
 				CF229C272EC64499005B43C5 /* flarelinesTests */,
 				CF229C312EC6449A005B43C5 /* flarelinesUITests */,
@@ -282,7 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF229C612EC64A46005B43C5 /* wolfsbit.xcdatamodeld in Sources */,
+				CF229C612EC64A46005B43C5 /* flarelines.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -669,13 +669,13 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		CF229C5F2EC64A46005B43C5 /* wolfsbit.xcdatamodeld */ = {
+		CF229C5F2EC64A46005B43C5 /* flarelines.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				CF229C602EC64A46005B43C5 /* wolfsbit.xcdatamodel */,
+				CF229C602EC64A46005B43C5 /* flarelines.xcdatamodel */,
 			);
-			currentVersion = CF229C602EC64A46005B43C5 /* wolfsbit.xcdatamodel */;
-			path = wolfsbit.xcdatamodeld;
+			currentVersion = CF229C602EC64A46005B43C5 /* flarelines.xcdatamodel */;
+			path = flarelines.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
