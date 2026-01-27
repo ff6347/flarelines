@@ -13,7 +13,10 @@
       "Bash(git reset:*)",
       "Bash(git checkout:*)",
       "Bash(git push:*)",
-      "Bash(gh pr create:*)"
+      "Bash(gh pr create:*)",
+      "Bash(gh pr merge:*)",
+      "Bash(git pull:*)",
+      "Bash(git worktree:*)"
     ],
     "deny": [],
     "ask": []
