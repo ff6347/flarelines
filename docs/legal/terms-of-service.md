@@ -1,6 +1,6 @@
 # Terms of Service
 
-**Wolfsbit** ("the App") is provided for personal health journaling purposes.
+**Flareline** ("the App") is provided for personal health journaling purposes.
 
 **Last updated:** January 2026
 

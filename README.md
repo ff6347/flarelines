@@ -1,10 +1,10 @@
-# Wolfsbit
+# Flareline
 
 Research Project about tracking your chronic illness and creating on device activity scores using Small Language Models (SLM).
 
 ## About
 
-Living with chronic illness means good days and bad days. Remembering symptoms for doctor visits is hard when you're exhausted. Wolfsbit helps you journal your symptoms with voice-first input and on-device AI that keeps your health data private.
+Living with chronic illness means good days and bad days. Remembering symptoms for doctor visits is hard when you're exhausted. Flareline helps you journal your symptoms with voice-first input and on-device AI that keeps your health data private.
 
 This is a research artifact of the master studies of Fabian Moron Zirfas at University of Applied Sciences Potsdam, Germany, exploring on-device usage of SLM for symptom diary patient-reported outcome measures (PROM). Supervised by Professor Reto Wattach.
 
@@ -51,9 +51,9 @@ Add the following privacy descriptions:
 
 ```xml
 <key>NSMicrophoneUsageDescription</key>
-<string>Wolfsbit needs microphone access to record your journal entries using voice input.</string>
+<string>Flareline needs microphone access to record your journal entries using voice input.</string>
 <key>NSSpeechRecognitionUsageDescription</key>
-<string>Wolfsbit uses speech recognition to transcribe your voice into text for journal entries.</string>
+<string>Flareline uses speech recognition to transcribe your voice into text for journal entries.</string>
 ```
 
 ## Related Repos

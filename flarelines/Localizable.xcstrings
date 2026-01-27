@@ -121,15 +121,19 @@
         }
       }
     },
-    "Answer daily questions using your voice. Wolfsbit needs microphone and speech recognition access." : {
+    "Answer daily questions using your voice. Flareline needs microphone and speech recognition access." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beantworte tägliche Fragen mit deiner Stimme. Wolfsbit benötigt Zugriff auf Mikrofon und Spracherkennung."
+            "value" : "Beantworte tägliche Fragen mit deiner Stimme. Flareline benötigt Zugriff auf Mikrofon und Spracherkennung."
           }
         }
       }
+    },
+    "Answer daily questions using your voice. Flarelines needs microphone and speech recognition access." : {
+
     },
     "Cancel" : {
       "localizations" : {
@@ -471,6 +475,46 @@
         }
       }
     },
+    "Flareline is part of a master's thesis exploring AI-assisted health journaling." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flareline ist Teil des Masterstudiums des Autoren über KI-gestütztes Gesundheitstagebuch."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flareline is part of the authors master's studies exploring AI-assisted health journaling."
+          }
+        }
+      }
+    },
+    "Flareline is part of a master's thesis exploring AI-assisted health journaling. This is an academic project with no commercial intent. Your contributions help improve the AI model for everyone." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flareline ist Teil des Masterstudiums über KI-gestütztes Gesundheitstagebuch. Dies ist ein akademisches Projekt ohne kommerzielle Absicht. Deine Beiträge helfen, das KI-Modell für alle zu verbessern."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flareline is part of a the authors master's studies exploring AI-assisted health journaling. This is an academic project with no commercial intent. Your contributions help improve the AI model for everyone."
+          }
+        }
+      }
+    },
+    "Flarelines is part of a master's thesis exploring AI-assisted health journaling." : {
+
+    },
+    "Flarelines is part of a master's thesis exploring AI-assisted health journaling. This is an academic project with no commercial intent. Your contributions help improve the AI model for everyone." : {
+
+    },
     "Generate 1 Year" : {
       "localizations" : {
         "de" : {
@@ -541,6 +585,9 @@
         }
       }
     },
+    "Help Improve Flarelines" : {
+
+    },
     "Help improve this research by sharing anonymized entries. Only journal text and scores are shared - no personal identifiers. This data supports academic research on AI-assisted health tracking." : {
       "localizations" : {
         "de" : {
@@ -551,28 +598,18 @@
         }
       }
     },
-    "Help Improve Wolfsbit" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wolfsbit verbessern helfen"
-          }
-        }
-      }
-    },
     "help.gettingStarted.content" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wolfsbit hilft dir, deine chronische Erkrankung zu dokumentieren. Schreibe täglich kurze Einträge über dein Befinden und verfolge deinen Verlauf über Zeit."
+            "state" : "needs_review",
+            "value" : "Flarelines hilft dir, deine chronische Erkrankung zu dokumentieren. Schreibe täglich kurze Einträge über dein Befinden und verfolge deinen Verlauf über Zeit."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wolfsbit helps you track your chronic illness journey. Write short daily entries about how you feel and visualize your progress over time."
+            "value" : "Flarelines helps you track your chronic illness journey. Write short daily entries about how you feel and visualize your progress over time."
           }
         }
       }
@@ -1341,15 +1378,8 @@
         }
       }
     },
-    "Welcome to Wolfsbit" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Willkommen bei Wolfsbit"
-          }
-        }
-      }
+    "Welcome to Flarelines" : {
+
     },
     "What's NOT shared:" : {
       "localizations" : {
@@ -1367,38 +1397,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Was geteilt wird:"
-          }
-        }
-      }
-    },
-    "Wolfsbit is part of a master's thesis exploring AI-assisted health journaling." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wolfsbit ist Teil des Masterstudiums des Autoren über KI-gestütztes Gesundheitstagebuch."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wolfsbit is part of the authors master's studies exploring AI-assisted health journaling."
-          }
-        }
-      }
-    },
-    "Wolfsbit is part of a master's thesis exploring AI-assisted health journaling. This is an academic project with no commercial intent. Your contributions help improve the AI model for everyone." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wolfsbit ist Teil des Masterstudiums über KI-gestütztes Gesundheitstagebuch. Dies ist ein akademisches Projekt ohne kommerzielle Absicht. Deine Beiträge helfen, das KI-Modell für alle zu verbessern."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wolfsbit is part of a the authors master's studies exploring AI-assisted health journaling. This is an academic project with no commercial intent. Your contributions help improve the AI model for everyone."
           }
         }
       }

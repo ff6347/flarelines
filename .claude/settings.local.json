@@ -8,7 +8,12 @@
       "Skill(superpowers:writing-plans)",
       "Bash(git commit:*)",
       "Bash(bd create:*)",
-      "Bash(bd sync:*)"
+      "Bash(bd sync:*)",
+      "Bash(git push)",
+      "Bash(git reset:*)",
+      "Bash(git checkout:*)",
+      "Bash(git push:*)",
+      "Bash(gh pr create:*)"
     ],
     "deny": [],
     "ask": []

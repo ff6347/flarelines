@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Wolfsbit** ("the App") is a chronic illness journaling app developed as part of academic research for a master's thesis. This is a non-commercial project focused on exploring AI-assisted health journaling.
+**Flareline** ("the App") is a chronic illness journaling app developed as part of academic research for a master's thesis. This is a non-commercial project focused on exploring AI-assisted health journaling.
 
 This policy explains how your data is handled.
 

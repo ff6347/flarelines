@@ -1,11 +1,11 @@
-// ABOUTME: Main entry point for the wolfsbit iOS app.
+// ABOUTME: Main entry point for the flarelines iOS app.
 // ABOUTME: Configures CoreData persistence, localization, and AppDelegate for background downloads.
 
 import SwiftUI
 import CoreData
 
 @main
-struct wolfsbitApp: App {
+struct flarelinesApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     let persistenceController = PersistenceController.shared
@@ -37,14 +37,13 @@ struct wolfsbitApp: App {
 struct LocalizedRootView: View {
     @Binding var hasCompletedOnboarding: Bool
     @Binding var showOnboarding: Bool
-    var languagePreference = LanguagePreference.shared
 
     var body: some View {
         ContentView()
-            .environment(\.locale, languagePreference.locale)
+            .environment(\.locale, LanguagePreference.shared.locale)
             .sheet(isPresented: $showOnboarding) {
                 OnboardingView(isPresented: $showOnboarding)
-                    .environment(\.locale, languagePreference.locale)
+                    .environment(\.locale, LanguagePreference.shared.locale)
             }
     }
 }

@@ -8,7 +8,6 @@ import CoreData
 struct JournalEditorView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var speechRecognizer = SpeechRecognizer()
-    private let downloader = ModelDownloader.shared
 
     // Entry state
     @State private var journalText = ""
@@ -44,7 +43,7 @@ struct JournalEditorView: View {
                 // Header with action button
                 HStack {
                     // Download indicator (show when downloading or paused)
-                    if downloader.isDownloading || downloader.canResume {
+                    if ModelDownloader.shared.isDownloading || ModelDownloader.shared.canResume {
                         downloadIndicator
                     }
 
@@ -118,15 +117,15 @@ struct JournalEditorView: View {
 
     private var downloadIndicator: some View {
         Button {
-            if downloader.isDownloading {
-                downloader.pauseDownload()
-            } else if downloader.canResume {
-                Task { try? await downloader.resumeDownload() }
+            if ModelDownloader.shared.isDownloading {
+                ModelDownloader.shared.pauseDownload()
+            } else if ModelDownloader.shared.canResume {
+                Task { try? await ModelDownloader.shared.resumeDownload() }
             }
         } label: {
             HStack(spacing: 8) {
-                if downloader.isDownloading {
-                    ProgressView(value: downloader.downloadProgress)
+                if ModelDownloader.shared.isDownloading {
+                    ProgressView(value: ModelDownloader.shared.downloadProgress)
                         .progressViewStyle(.circular)
                         .scaleEffect(0.6)
                         .tint(DesignTokens.Colors.highlight)
@@ -135,7 +134,7 @@ struct JournalEditorView: View {
                         Text("Downloading model")
                             .font(DesignTokens.Typography.caption)
                             .foregroundColor(DesignTokens.Colors.primaryText)
-                        Text("Tap to pause · \(Int(downloader.downloadProgress * 100))%")
+                        Text("Tap to pause · \(Int(ModelDownloader.shared.downloadProgress * 100))%")
                             .font(.caption2)
                             .foregroundColor(.secondary)
                     }
@@ -148,7 +147,7 @@ struct JournalEditorView: View {
                         Text("Download paused")
                             .font(DesignTokens.Typography.caption)
                             .foregroundColor(DesignTokens.Colors.primaryText)
-                        Text("Tap to resume · \(Int(downloader.downloadProgress * 100))%")
+                        Text("Tap to resume · \(Int(ModelDownloader.shared.downloadProgress * 100))%")
                             .font(.caption2)
                             .foregroundColor(.orange)
                     }

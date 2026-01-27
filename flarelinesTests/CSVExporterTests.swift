@@ -3,7 +3,7 @@
 
 import Foundation
 import Testing
-@testable import wolfsbit
+@testable import Flarelines
 
 /// Test struct that conforms to CSVExportable for isolated testing.
 struct TestEntry: CSVExportable {

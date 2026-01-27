@@ -82,7 +82,7 @@ struct OnboardingView: View {
                 .foregroundColor(DesignTokens.Colors.highlight)
 
             VStack(spacing: DesignTokens.Spacing.lg) {
-                Text("Welcome to Wolfsbit")
+                Text("Welcome to Flarelines")
                     .font(DesignTokens.Typography.title)
                     .fontWeight(DesignTokens.Weight.strong)
                     .multilineTextAlignment(.center)
@@ -144,7 +144,7 @@ struct OnboardingView: View {
                     .fontWeight(DesignTokens.Weight.emphasis)
                     .multilineTextAlignment(.center)
 
-                Text("Wolfsbit is part of a master's thesis exploring AI-assisted health journaling.")
+                Text("Flarelines is part of a master's thesis exploring AI-assisted health journaling.")
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)
                     .padding(.horizontal, DesignTokens.Spacing.xxl)
@@ -194,7 +194,7 @@ struct OnboardingView: View {
                         .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.lg, style: .continuous))
                 }
 
-                Link("Learn More", destination: URL(string: "https://wolfsbit.inpyjamas.dev/research")!)
+                Link("Learn More", destination: URL(string: "https://flarelines.inpyjamas.dev/research")!)
                     .font(DesignTokens.Typography.body)
                     .foregroundColor(.secondary)
             }
@@ -258,7 +258,7 @@ struct OnboardingView: View {
                     .fontWeight(DesignTokens.Weight.emphasis)
                     .multilineTextAlignment(.center)
 
-                Text("Answer daily questions using your voice. Wolfsbit needs microphone and speech recognition access.")
+                Text("Answer daily questions using your voice. Flarelines needs microphone and speech recognition access.")
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)
                     .padding(.horizontal, DesignTokens.Spacing.xxl)
