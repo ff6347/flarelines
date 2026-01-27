@@ -121,9 +121,6 @@
         }
       }
     },
-    "Answer daily questions using your voice. Flarelines needs microphone and speech recognition access." : {
-
-    },
     "Answer daily questions using your voice. Flareline needs microphone and speech recognition access." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -134,6 +131,9 @@
           }
         }
       }
+    },
+    "Answer daily questions using your voice. Flarelines needs microphone and speech recognition access." : {
+
     },
     "Cancel" : {
       "localizations" : {
@@ -471,6 +471,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Berichte für deinen Arzt exportieren"
+          }
+        }
+      }
+    },
+    "Flareline is part of a master's thesis exploring AI-assisted health journaling." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flareline ist Teil des Masterstudiums des Autoren über KI-gestütztes Gesundheitstagebuch."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flareline is part of the authors master's studies exploring AI-assisted health journaling."
+          }
+        }
+      }
+    },
+    "Flareline is part of a master's thesis exploring AI-assisted health journaling. This is an academic project with no commercial intent. Your contributions help improve the AI model for everyone." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flareline ist Teil des Masterstudiums über KI-gestütztes Gesundheitstagebuch. Dies ist ein akademisches Projekt ohne kommerzielle Absicht. Deine Beiträge helfen, das KI-Modell für alle zu verbessern."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flareline is part of a the authors master's studies exploring AI-assisted health journaling. This is an academic project with no commercial intent. Your contributions help improve the AI model for everyone."
           }
         }
       }
@@ -1347,7 +1381,7 @@
     "Welcome to Flarelines" : {
 
     },
-        "What's NOT shared:" : {
+    "What's NOT shared:" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1363,38 +1397,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Was geteilt wird:"
-          }
-        }
-      }
-    },
-    "Flareline is part of a master's thesis exploring AI-assisted health journaling." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Flareline ist Teil des Masterstudiums des Autoren über KI-gestütztes Gesundheitstagebuch."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Flareline is part of the authors master's studies exploring AI-assisted health journaling."
-          }
-        }
-      }
-    },
-    "Flareline is part of a master's thesis exploring AI-assisted health journaling. This is an academic project with no commercial intent. Your contributions help improve the AI model for everyone." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Flareline ist Teil des Masterstudiums über KI-gestütztes Gesundheitstagebuch. Dies ist ein akademisches Projekt ohne kommerzielle Absicht. Deine Beiträge helfen, das KI-Modell für alle zu verbessern."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Flareline is part of a the authors master's studies exploring AI-assisted health journaling. This is an academic project with no commercial intent. Your contributions help improve the AI model for everyone."
           }
         }
       }
