@@ -1,5 +1,5 @@
 // ABOUTME: Full-screen journal editor with two-step entry flow.
-// ABOUTME: Step 1: Text/voice diary entry. Step 2: Activity rating (0-3).
+// ABOUTME: Step 1: Text/voice diary entry. Step 2: Flare rating (0-3).
 
 import SwiftUI
 import Speech
@@ -250,7 +250,7 @@ struct JournalEditorView: View {
 
     private var activityRatingPage: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Rate your activity!")
+            Text("Rate your flare!")
                 .font(DesignTokens.Typography.heading)
                 .fontWeight(DesignTokens.Weight.emphasis)
                 .foregroundColor(DesignTokens.Colors.primaryText)
