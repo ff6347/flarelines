@@ -37,14 +37,13 @@ struct flarelinesApp: App {
 struct LocalizedRootView: View {
     @Binding var hasCompletedOnboarding: Bool
     @Binding var showOnboarding: Bool
-    var languagePreference = LanguagePreference.shared
 
     var body: some View {
         ContentView()
-            .environment(\.locale, languagePreference.locale)
+            .environment(\.locale, LanguagePreference.shared.locale)
             .sheet(isPresented: $showOnboarding) {
                 OnboardingView(isPresented: $showOnboarding)
-                    .environment(\.locale, languagePreference.locale)
+                    .environment(\.locale, LanguagePreference.shared.locale)
             }
     }
 }
