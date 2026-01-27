@@ -44,7 +44,7 @@ struct PersistenceController {
     let container: NSPersistentContainer
 
     init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "flarelines")
+        container = NSPersistentContainer(name: "wolfsbit")
 
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
@@ -69,7 +69,7 @@ struct PersistenceController {
         guard fileManager.fileExists(atPath: storeURL.path) else { return }
 
         // Try to check if migration is needed
-        let modelURL = Bundle.main.url(forResource: "flarelines", withExtension: "momd")
+        let modelURL = Bundle.main.url(forResource: "wolfsbit", withExtension: "momd")
         guard let modelURL = modelURL,
               let model = NSManagedObjectModel(contentsOf: modelURL) else { return }
 
@@ -91,7 +91,7 @@ struct PersistenceController {
 
     private static func defaultStoreURL() -> URL? {
         let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-        return urls.first?.appendingPathComponent("flarelines.sqlite")
+        return urls.first?.appendingPathComponent("wolfsbit.sqlite")
     }
 
     private static func deleteStoreFiles(at url: URL) {
