@@ -1052,12 +1052,12 @@
         }
       }
     },
-    "Rate your activity!" : {
+    "Rate your flare!" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bewerte deine Aktivität!"
+            "value" : "Bewerte deinen Schub!"
           }
         }
       }
