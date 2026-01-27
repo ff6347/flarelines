@@ -1,6 +1,6 @@
 //
 //  DesignTokens.swift
-//  wolfsbit
+//  flarelines
 //
 //  Created by Fabian Moron Zirfas on 13.11.25.
 //

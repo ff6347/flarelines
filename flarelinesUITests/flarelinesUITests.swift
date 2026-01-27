@@ -1,13 +1,13 @@
 //
-//  wolfsbitUITests.swift
-//  wolfsbitUITests
+//  flarelinesUITests.swift
+//  flarelinesUITests
 //
 //  Created by Fabian Moron Zirfas on 13.11.25.
 //
 
 import XCTest
 
-final class wolfsbitUITests: XCTestCase {
+final class flarelinesUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

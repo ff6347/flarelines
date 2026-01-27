@@ -1,14 +1,14 @@
 //
-//  wolfsbitTests.swift
-//  wolfsbitTests
+//  flarelinesTests.swift
+//  flarelinesTests
 //
 //  Created by Fabian Moron Zirfas on 13.11.25.
 //
 
 import Testing
-@testable import wolfsbit
+@testable import Flarelines
 
-struct wolfsbitTests {
+struct flarelinesTests {
 
     @Test func example() async throws {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.

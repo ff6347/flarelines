@@ -84,10 +84,10 @@ struct SettingsView: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
 
-                Link("Learn more", destination: URL(string: "https://wolfsbit.inpyjamas.dev/research")!)
+                Link("Learn more", destination: URL(string: "https://Flarelines.inpyjamas.dev/research")!)
                     .font(.caption)
             } header: {
-                Text("Help Improve Wolfsbit")
+                Text("Help Improve Flarelines")
             } footer: {
                 Text("This is a master's research project. No commercial use.")
             }
@@ -100,8 +100,8 @@ struct SettingsView: View {
                         .foregroundColor(.secondary)
                 }
                 
-                Link("Privacy Policy", destination: URL(string: "https://wolfsbit.inpyjamas.dev/privacy")!)
-                Link("Terms of Service", destination: URL(string: "https://wolfsbit.inpyjamas.dev/terms")!)
+                Link("Privacy Policy", destination: URL(string: "https://flarelines.inpyjamas.dev/privacy")!)
+                Link("Terms of Service", destination: URL(string: "https://flarelines.inpyjamas.dev/terms")!)
             }
         }
         .listStyle(.plain)
@@ -135,7 +135,7 @@ struct SettingsView: View {
             let csv = CSVExporter.export(entries: entries)
 
             // Write to temporary file
-            let filename = "wolfsbit-export-\(formatDateForFilename()).csv"
+            let filename = "flarelines-export-\(formatDateForFilename()).csv"
             let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
             try csv.write(to: tempURL, atomically: true, encoding: .utf8)
 

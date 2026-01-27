@@ -17,7 +17,7 @@ struct DataContributionConsentSheet: View {
                             .font(.system(size: 48))
                             .foregroundColor(DesignTokens.Colors.highlight)
 
-                        Text("Help Improve Wolfsbit")
+                        Text("Help Improve Flarelines")
                             .font(DesignTokens.Typography.heading)
                             .fontWeight(DesignTokens.Weight.emphasis)
                     }
@@ -63,7 +63,7 @@ struct DataContributionConsentSheet: View {
                                 .font(DesignTokens.Typography.subheading)
                                 .fontWeight(DesignTokens.Weight.emphasis)
 
-                            Text("Wolfsbit is part of a master's thesis exploring AI-assisted health journaling. This is an academic project with no commercial intent. Your contributions help improve the AI model for everyone.")
+                            Text("Flarelines is part of a master's thesis exploring AI-assisted health journaling. This is an academic project with no commercial intent. Your contributions help improve the AI model for everyone.")
                                 .font(DesignTokens.Typography.body)
                                 .foregroundColor(.secondary)
                         }

@@ -43,14 +43,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CF229C122EC64498005B43C5 /* wolfsbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wolfsbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CF229C242EC64499005B43C5 /* wolfsbitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wolfsbitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CF229C2E2EC6449A005B43C5 /* wolfsbitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wolfsbitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF229C122EC64498005B43C5 /* Flarelines.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flarelines.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF229C242EC64499005B43C5 /* FlarelinesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlarelinesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF229C2E2EC6449A005B43C5 /* FlarelinesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlarelinesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF229C602EC64A46005B43C5 /* wolfsbit.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = wolfsbit.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		CF1B6F2E2F0EEC43001904F2 /* Exceptions for "wolfsbit" folder in "Embed Frameworks" phase from "wolfsbit" target */ = {
+		CF1B6F2E2F0EEC43001904F2 /* Exceptions for "flarelines" folder in "Embed Frameworks" phase from "Flarelines" target */ = {
 			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
 			attributesByRelativePath = {
 				llama.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
@@ -63,22 +63,22 @@
 /* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		CF229C142EC64498005B43C5 /* wolfsbit */ = {
+		CF229C142EC64498005B43C5 /* flarelines */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				CF1B6F2E2F0EEC43001904F2 /* Exceptions for "wolfsbit" folder in "Embed Frameworks" phase from "wolfsbit" target */,
+				CF1B6F2E2F0EEC43001904F2 /* Exceptions for "flarelines" folder in "Embed Frameworks" phase from "Flarelines" target */,
 			);
-			path = wolfsbit;
+			path = flarelines;
 			sourceTree = "<group>";
 		};
-		CF229C272EC64499005B43C5 /* wolfsbitTests */ = {
+		CF229C272EC64499005B43C5 /* flarelinesTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = wolfsbitTests;
+			path = flarelinesTests;
 			sourceTree = "<group>";
 		};
-		CF229C312EC6449A005B43C5 /* wolfsbitUITests */ = {
+		CF229C312EC6449A005B43C5 /* flarelinesUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = wolfsbitUITests;
+			path = flarelinesUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -114,9 +114,9 @@
 			isa = PBXGroup;
 			children = (
 				CF229C5F2EC64A46005B43C5 /* wolfsbit.xcdatamodeld */,
-				CF229C142EC64498005B43C5 /* wolfsbit */,
-				CF229C272EC64499005B43C5 /* wolfsbitTests */,
-				CF229C312EC6449A005B43C5 /* wolfsbitUITests */,
+				CF229C142EC64498005B43C5 /* flarelines */,
+				CF229C272EC64499005B43C5 /* flarelinesTests */,
+				CF229C312EC6449A005B43C5 /* flarelinesUITests */,
 				CF229C132EC64498005B43C5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -124,9 +124,9 @@
 		CF229C132EC64498005B43C5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CF229C122EC64498005B43C5 /* wolfsbit.app */,
-				CF229C242EC64499005B43C5 /* wolfsbitTests.xctest */,
-				CF229C2E2EC6449A005B43C5 /* wolfsbitUITests.xctest */,
+				CF229C122EC64498005B43C5 /* Flarelines.app */,
+				CF229C242EC64499005B43C5 /* FlarelinesTests.xctest */,
+				CF229C2E2EC6449A005B43C5 /* FlarelinesUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -134,9 +134,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CF229C112EC64498005B43C5 /* wolfsbit */ = {
+		CF229C112EC64498005B43C5 /* Flarelines */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CF229C382EC6449A005B43C5 /* Build configuration list for PBXNativeTarget "wolfsbit" */;
+			buildConfigurationList = CF229C382EC6449A005B43C5 /* Build configuration list for PBXNativeTarget "Flarelines" */;
 			buildPhases = (
 				CF229C0E2EC64498005B43C5 /* Sources */,
 				CF229C0F2EC64498005B43C5 /* Frameworks */,
@@ -148,20 +148,20 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				CF229C142EC64498005B43C5 /* wolfsbit */,
+				CF229C142EC64498005B43C5 /* flarelines */,
 			);
-			name = wolfsbit;
+			name = Flarelines;
 			packageProductDependencies = (
 				CF9FA9BD2F143AB2008A0CA2 /* TelemetryClient */,
 				CF9FA9BF2F143AB2008A0CA2 /* TelemetryDeck */,
 			);
 			productName = wolfsbit;
-			productReference = CF229C122EC64498005B43C5 /* wolfsbit.app */;
+			productReference = CF229C122EC64498005B43C5 /* Flarelines.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CF229C232EC64499005B43C5 /* wolfsbitTests */ = {
+		CF229C232EC64499005B43C5 /* FlarelinesTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CF229C3B2EC6449A005B43C5 /* Build configuration list for PBXNativeTarget "wolfsbitTests" */;
+			buildConfigurationList = CF229C3B2EC6449A005B43C5 /* Build configuration list for PBXNativeTarget "FlarelinesTests" */;
 			buildPhases = (
 				CF229C202EC64499005B43C5 /* Sources */,
 				CF229C212EC64499005B43C5 /* Frameworks */,
@@ -173,18 +173,18 @@
 				CF229C262EC64499005B43C5 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				CF229C272EC64499005B43C5 /* wolfsbitTests */,
+				CF229C272EC64499005B43C5 /* flarelinesTests */,
 			);
-			name = wolfsbitTests;
+			name = FlarelinesTests;
 			packageProductDependencies = (
 			);
 			productName = wolfsbitTests;
-			productReference = CF229C242EC64499005B43C5 /* wolfsbitTests.xctest */;
+			productReference = CF229C242EC64499005B43C5 /* FlarelinesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		CF229C2D2EC6449A005B43C5 /* wolfsbitUITests */ = {
+		CF229C2D2EC6449A005B43C5 /* FlarelinesUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CF229C3E2EC6449A005B43C5 /* Build configuration list for PBXNativeTarget "wolfsbitUITests" */;
+			buildConfigurationList = CF229C3E2EC6449A005B43C5 /* Build configuration list for PBXNativeTarget "FlarelinesUITests" */;
 			buildPhases = (
 				CF229C2A2EC6449A005B43C5 /* Sources */,
 				CF229C2B2EC6449A005B43C5 /* Frameworks */,
@@ -196,13 +196,13 @@
 				CF229C302EC6449A005B43C5 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				CF229C312EC6449A005B43C5 /* wolfsbitUITests */,
+				CF229C312EC6449A005B43C5 /* flarelinesUITests */,
 			);
-			name = wolfsbitUITests;
+			name = FlarelinesUITests;
 			packageProductDependencies = (
 			);
 			productName = wolfsbitUITests;
-			productReference = CF229C2E2EC6449A005B43C5 /* wolfsbitUITests.xctest */;
+			productReference = CF229C2E2EC6449A005B43C5 /* FlarelinesUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -228,7 +228,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CF229C0D2EC64498005B43C5 /* Build configuration list for PBXProject "wolfsbit" */;
+			buildConfigurationList = CF229C0D2EC64498005B43C5 /* Build configuration list for PBXProject "Flarelines" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -246,9 +246,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CF229C112EC64498005B43C5 /* wolfsbit */,
-				CF229C232EC64499005B43C5 /* wolfsbitTests */,
-				CF229C2D2EC6449A005B43C5 /* wolfsbitUITests */,
+				CF229C112EC64498005B43C5 /* Flarelines */,
+				CF229C232EC64499005B43C5 /* FlarelinesTests */,
+				CF229C2D2EC6449A005B43C5 /* FlarelinesUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -305,12 +305,12 @@
 /* Begin PBXTargetDependency section */
 		CF229C262EC64499005B43C5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CF229C112EC64498005B43C5 /* wolfsbit */;
+			target = CF229C112EC64498005B43C5 /* Flarelines */;
 			targetProxy = CF229C252EC64499005B43C5 /* PBXContainerItemProxy */;
 		};
 		CF229C302EC6449A005B43C5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CF229C112EC64498005B43C5 /* wolfsbit */;
+			target = CF229C112EC64498005B43C5 /* Flarelines */;
 			targetProxy = CF229C2F2EC6449A005B43C5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -451,6 +451,7 @@
 				DEVELOPMENT_TEAM = WB5CKL86MX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Flarelines;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Flareline needs microphone access to record your journal entries using voice input.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Flareline uses speech recognition to transcribe your voice into text for journal entries.";
@@ -490,6 +491,7 @@
 				DEVELOPMENT_TEAM = WB5CKL86MX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Flarelines;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Flareline needs microphone access to record your journal entries using voice input.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Flareline uses speech recognition to transcribe your voice into text for journal entries.";
@@ -535,7 +537,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/wolfsbit.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/wolfsbit";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Flarelines.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Flarelines";
 			};
 			name = Debug;
 		};
@@ -557,7 +559,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/wolfsbit.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/wolfsbit";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Flarelines.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Flarelines";
 			};
 			name = Release;
 		};
@@ -604,7 +606,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CF229C0D2EC64498005B43C5 /* Build configuration list for PBXProject "wolfsbit" */ = {
+		CF229C0D2EC64498005B43C5 /* Build configuration list for PBXProject "Flarelines" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CF229C362EC6449A005B43C5 /* Debug */,
@@ -613,7 +615,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CF229C382EC6449A005B43C5 /* Build configuration list for PBXNativeTarget "wolfsbit" */ = {
+		CF229C382EC6449A005B43C5 /* Build configuration list for PBXNativeTarget "Flarelines" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CF229C392EC6449A005B43C5 /* Debug */,
@@ -622,7 +624,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CF229C3B2EC6449A005B43C5 /* Build configuration list for PBXNativeTarget "wolfsbitTests" */ = {
+		CF229C3B2EC6449A005B43C5 /* Build configuration list for PBXNativeTarget "FlarelinesTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CF229C3C2EC6449A005B43C5 /* Debug */,
@@ -631,7 +633,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CF229C3E2EC6449A005B43C5 /* Build configuration list for PBXNativeTarget "wolfsbitUITests" */ = {
+		CF229C3E2EC6449A005B43C5 /* Build configuration list for PBXNativeTarget "FlarelinesUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CF229C3F2EC6449A005B43C5 /* Debug */,

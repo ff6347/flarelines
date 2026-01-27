@@ -64,7 +64,7 @@ final class ModelDownloader: NSObject {
     private var pendingChecksum: String?
     private var downloadContinuation: CheckedContinuation<Void, Error>?
 
-    private static let backgroundSessionIdentifier = "com.wolfsbit.modeldownload"
+    private static let backgroundSessionIdentifier = "com.flarelines.modeldownload"
 
     // MARK: - Initialization
 

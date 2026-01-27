@@ -1,13 +1,13 @@
 //
-//  wolfsbitUITestsLaunchTests.swift
-//  wolfsbitUITests
+//  flarelinesUITestsLaunchTests.swift
+//  flarelinesUITests
 //
 //  Created by Fabian Moron Zirfas on 13.11.25.
 //
 
 import XCTest
 
-final class wolfsbitUITestsLaunchTests: XCTestCase {
+final class flarelinesUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
