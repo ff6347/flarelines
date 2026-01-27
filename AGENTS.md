@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Wolfsbit is a chronic illness journaling iOS app built with SwiftUI, Core Data, and Swift Charts. Users answer daily health questions via text or voice input, and track their health progress over time through visualizations.
+Flareline is a chronic illness journaling iOS app built with SwiftUI, Core Data, and Swift Charts. Users answer daily health questions via text or voice input, and track their health progress over time through visualizations.
 
 ## Development Commands
 
@@ -57,10 +57,10 @@ The app uses a structured question system:
 
 ## File Organization
 The project uses an organized folder structure with lowercase folder names:
-- **Models**: `wolfsbit/models/` - Contains `ModelsJournalEntry.swift`, `ModelsHealthQuestion.swift`
-- **Views**: `wolfsbit/views/` - Contains `ViewsLogView.swift`, `ViewsDataView.swift`, `ViewsHelpView.swift`, `ViewsSettingsView.swift`
-- **ViewModels**: `wolfsbit/views/` - Contains `ViewModelsJournalViewModel.swift` (located with views for convenience)
-- **Utilities**: `wolfsbit/utilities/` - Contains `UtilitiesSpeechRecognizer.swift`, `UtilitiesDesignTokens.swift`, `UtilitiesSampleDataGenerator.swift`
+- **Models**: `flarelines/models/` - Contains `ModelsJournalEntry.swift`, `ModelsHealthQuestion.swift`
+- **Views**: `flarelines/views/` - Contains `ViewsLogView.swift`, `ViewsDataView.swift`, `ViewsHelpView.swift`, `ViewsSettingsView.swift`
+- **ViewModels**: `flarelines/views/` - Contains `ViewModelsJournalViewModel.swift` (located with views for convenience)
+- **Utilities**: `flarelines/utilities/` - Contains `UtilitiesSpeechRecognizer.swift`, `UtilitiesDesignTokens.swift`, `UtilitiesSampleDataGenerator.swift`
 
 All Swift files use PascalCase names with type prefixes (Models*, Views*, Utilities*) for clarity and easy identification.
 
@@ -83,13 +83,13 @@ Core Data previews use `PersistenceController.preview` which creates an in-memor
 ## Common Development Tasks
 
 ### Adding New Questions
-Modify `HealthQuestion.defaultQuestions` in `wolfsbit/models/ModelsHealthQuestion.swift`. Update `JournalViewModel.saveEntry()` in `wolfsbit/views/ViewModelsJournalViewModel.swift` to handle the new question's answer appropriately.
+Modify `HealthQuestion.defaultQuestions` in `flarelines/models/ModelsHealthQuestion.swift`. Update `JournalViewModel.saveEntry()` in `flarelines/views/ViewModelsJournalViewModel.swift` to handle the new question's answer appropriately.
 
 ### Changing Colors/Styling
-Edit `wolfsbit/utilities/UtilitiesDesignTokens.swift` for centralized design tokens. The app uses a monochrome design with black accents.
+Edit `flarelines/utilities/UtilitiesDesignTokens.swift` for centralized design tokens. The app uses a monochrome design with black accents.
 
 ### Modifying Chart Display
-Edit `wolfsbit/views/ViewsDataView.swift`. Chart configuration includes:
+Edit `flarelines/views/ViewsDataView.swift`. Chart configuration includes:
 - Y-axis scale: `chartYScale(domain: 0...10)`
 - Interpolation: `.interpolationMethod(.catmullRom)` for smooth curves
 - Time filtering via `filteredEntries` computed property

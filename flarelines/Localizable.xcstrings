@@ -124,13 +124,13 @@
     "Answer daily questions using your voice. Flarelines needs microphone and speech recognition access." : {
 
     },
-    "Answer daily questions using your voice. Wolfsbit needs microphone and speech recognition access." : {
+    "Answer daily questions using your voice. Flareline needs microphone and speech recognition access." : {
       "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beantworte tägliche Fragen mit deiner Stimme. Wolfsbit benötigt Zugriff auf Mikrofon und Spracherkennung."
+            "value" : "Beantworte tägliche Fragen mit deiner Stimme. Flareline benötigt Zugriff auf Mikrofon und Spracherkennung."
           }
         }
       }
@@ -1347,18 +1347,7 @@
     "Welcome to Flarelines" : {
 
     },
-    "Welcome to Wolfsbit" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Willkommen bei Flarelines"
-          }
-        }
-      }
-    },
-    "What's NOT shared:" : {
+        "What's NOT shared:" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1378,36 +1367,34 @@
         }
       }
     },
-    "Wolfsbit is part of a master's thesis exploring AI-assisted health journaling." : {
-      "extractionState" : "stale",
+    "Flareline is part of a master's thesis exploring AI-assisted health journaling." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Flarelines ist Teil des Masterstudiums des Autoren über KI-gestütztes Gesundheitstagebuch."
+            "value" : "Flareline ist Teil des Masterstudiums des Autoren über KI-gestütztes Gesundheitstagebuch."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Flarelines is part of the authors master's studies exploring AI-assisted health journaling."
+            "value" : "Flareline is part of the authors master's studies exploring AI-assisted health journaling."
           }
         }
       }
     },
-    "Wolfsbit is part of a master's thesis exploring AI-assisted health journaling. This is an academic project with no commercial intent. Your contributions help improve the AI model for everyone." : {
-      "extractionState" : "stale",
+    "Flareline is part of a master's thesis exploring AI-assisted health journaling. This is an academic project with no commercial intent. Your contributions help improve the AI model for everyone." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wolfsbit ist Teil des Masterstudiums über KI-gestütztes Gesundheitstagebuch. Dies ist ein akademisches Projekt ohne kommerzielle Absicht. Deine Beiträge helfen, das KI-Modell für alle zu verbessern."
+            "value" : "Flareline ist Teil des Masterstudiums über KI-gestütztes Gesundheitstagebuch. Dies ist ein akademisches Projekt ohne kommerzielle Absicht. Deine Beiträge helfen, das KI-Modell für alle zu verbessern."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wolfsbit is part of a the authors master's studies exploring AI-assisted health journaling. This is an academic project with no commercial intent. Your contributions help improve the AI model for everyone."
+            "value" : "Flareline is part of a the authors master's studies exploring AI-assisted health journaling. This is an academic project with no commercial intent. Your contributions help improve the AI model for everyone."
           }
         }
       }
