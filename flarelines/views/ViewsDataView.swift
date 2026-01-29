@@ -150,6 +150,16 @@ private struct HealthProgressChart: View {
         }
         .chartGesture { chart in
             DragGesture(minimumDistance: 0)
+                .onChanged { value in
+                    let distance = hypot(
+                        value.location.x - value.startLocation.x,
+                        value.location.y - value.startLocation.y
+                    )
+                    // Only start range selection after moving enough
+                    if distance >= 15 {
+                        chart.selectXRange(from: value.startLocation.x, to: value.location.x)
+                    }
+                }
                 .onEnded { value in
                     let distance = hypot(
                         value.location.x - value.startLocation.x,
