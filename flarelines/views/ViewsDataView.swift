@@ -13,14 +13,16 @@ enum TimeRange: String, CaseIterable {
     case ninetyDays = "90D"
     case oneEightyDays = "180D"
     case oneYear = "1Y"
+    case all = "All"
 
-    var days: Int {
+    var days: Int? {
         switch self {
         case .sevenDays: return 7
         case .thirtyDays: return 30
         case .ninetyDays: return 90
         case .oneEightyDays: return 180
         case .oneYear: return 365
+        case .all: return nil
         }
     }
 }
@@ -216,7 +218,10 @@ struct DataView: View {
     @State private var selectedEntryID: UUID?
 
     var filteredEntries: [JournalEntry] {
-        let cutoffDate = Calendar.current.date(byAdding: .day, value: -selectedTimeRange.days, to: Date()) ?? Date()
+        guard let days = selectedTimeRange.days else {
+            return Array(entries)
+        }
+        let cutoffDate = Calendar.current.date(byAdding: .day, value: -days, to: Date()) ?? Date()
         return entries.filter { $0.timestamp >= cutoffDate }
     }
 
@@ -226,8 +231,14 @@ struct DataView: View {
 
     var chartXDomain: ClosedRange<Date> {
         let now = Date()
-        let cutoffDate = Calendar.current.date(byAdding: .day, value: -selectedTimeRange.days, to: now) ?? now
-        return cutoffDate...now
+        if let days = selectedTimeRange.days {
+            let cutoffDate = Calendar.current.date(byAdding: .day, value: -days, to: now) ?? now
+            return cutoffDate...now
+        } else {
+            // "All" - use earliest entry date or default to 1 year
+            let earliest = entries.map(\.timestamp).min() ?? Calendar.current.date(byAdding: .year, value: -1, to: now)!
+            return earliest...now
+        }
     }
 
     var groupedEntries: [GroupedEntry] {
