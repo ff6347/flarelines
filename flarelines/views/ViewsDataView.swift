@@ -32,14 +32,21 @@ enum TimeRange: String, CaseIterable {
 private struct HealthProgressChart: View {
     let entries: [JournalEntry]
     let selectedEntryID: UUID?
+    let selectedDateRange: ClosedRange<Date>?
     let xDomain: ClosedRange<Date>
     @Binding var selectedTimeRange: TimeRange
     var onSelectEntry: (JournalEntry?) -> Void
+    var onSelectRange: (ClosedRange<Date>?) -> Void
 
     @State private var rawSelectedDate: Date?
+    @State private var dragRange: ClosedRange<Date>?
 
     private var selectedEntry: JournalEntry? {
         entries.first { $0.id == selectedEntryID }
+    }
+
+    private var activeRange: ClosedRange<Date>? {
+        dragRange ?? selectedDateRange
     }
 
     var body: some View {
@@ -88,6 +95,15 @@ private struct HealthProgressChart: View {
 
     private var chart: some View {
         Chart {
+            // Range selection highlight
+            if let range = activeRange {
+                RectangleMark(
+                    xStart: .value("Start", range.lowerBound),
+                    xEnd: .value("End", range.upperBound)
+                )
+                .foregroundStyle(DesignTokens.Colors.accent.opacity(0.15))
+            }
+
             ForEach(entries) { entry in
                 LineMark(
                     x: .value("Date", entry.timestamp),
@@ -121,6 +137,7 @@ private struct HealthProgressChart: View {
         .chartXScale(domain: xDomain)
         .chartYScale(domain: 0...3)
         .chartXSelection(value: $rawSelectedDate)
+        .chartXSelection(range: $dragRange)
         .chartXAxis {
             AxisMarks(values: .automatic) { _ in
                 AxisValueLabel(format: .dateTime.month().day())
@@ -133,22 +150,35 @@ private struct HealthProgressChart: View {
                     .font(DesignTokens.Typography.caption)
             }
         }
+        .chartGesture { chart in
+            DragGesture(minimumDistance: 15)
+                .onChanged { value in
+                    chart.selectXRange(from: value.startLocation.x, to: value.location.x)
+                }
+                .onEnded { _ in
+                    // Commit the drag range as selected range
+                    if let range = dragRange {
+                        onSelectRange(range)
+                        onSelectEntry(nil)  // Clear single entry selection
+                    }
+                    dragRange = nil
+                }
+        }
+        .onTapGesture { location in
+            // Tap clears range selection, or selects nearest entry
+            if selectedDateRange != nil {
+                onSelectRange(nil)
+            }
+        }
         .onChange(of: rawSelectedDate) { _, newDate in
-            if let newDate {
-                // Find nearest entry to tap location
+            if let newDate, selectedDateRange == nil {
+                // Only do single entry selection if no range is active
                 let nearest = entries.min(by: {
                     abs($0.timestamp.timeIntervalSince(newDate)) < abs($1.timestamp.timeIntervalSince(newDate))
                 })
                 onSelectEntry(nearest)
             }
-            // Reset raw selection so next tap works
             rawSelectedDate = nil
-        }
-        .onTapGesture {
-            // Tap on empty area clears selection
-            if rawSelectedDate == nil {
-                onSelectEntry(nil)
-            }
         }
     }
 }
@@ -216,6 +246,7 @@ struct DataView: View {
 
     @State private var selectedTimeRange: TimeRange = .thirtyDays
     @State private var selectedEntryID: UUID?
+    @State private var selectedDateRange: ClosedRange<Date>?
 
     var filteredEntries: [JournalEntry] {
         guard let days = selectedTimeRange.days else {
@@ -223,6 +254,14 @@ struct DataView: View {
         }
         let cutoffDate = Calendar.current.date(byAdding: .day, value: -days, to: Date()) ?? Date()
         return entries.filter { $0.timestamp >= cutoffDate }
+    }
+
+    /// Entries filtered by custom date range (if selected)
+    var rangeFilteredEntries: [JournalEntry] {
+        guard let range = selectedDateRange else {
+            return filteredEntries
+        }
+        return filteredEntries.filter { $0.timestamp >= range.lowerBound && $0.timestamp <= range.upperBound }
     }
 
     var sortedFilteredEntries: [JournalEntry] {
@@ -243,7 +282,8 @@ struct DataView: View {
 
     var groupedEntries: [GroupedEntry] {
         let calendar = Calendar.current
-        let grouped = Dictionary(grouping: entries) { entry in
+        let entriesToGroup = selectedDateRange != nil ? rangeFilteredEntries : Array(entries)
+        let grouped = Dictionary(grouping: entriesToGroup) { entry in
             calendar.startOfDay(for: entry.timestamp)
         }
         return grouped.map { GroupedEntry(date: $0.key, entries: $0.value) }
@@ -255,10 +295,14 @@ struct DataView: View {
             HealthProgressChart(
                 entries: sortedFilteredEntries,
                 selectedEntryID: selectedEntryID,
+                selectedDateRange: selectedDateRange,
                 xDomain: chartXDomain,
                 selectedTimeRange: $selectedTimeRange,
                 onSelectEntry: { entry in
                     selectedEntryID = entry?.id
+                },
+                onSelectRange: { range in
+                    selectedDateRange = range
                 }
             )
 
@@ -269,7 +313,23 @@ struct DataView: View {
                 Image(systemName: "book")
                 Text("Journal Entries")
                     .font(DesignTokens.Typography.subheading)
+
+                if let range = selectedDateRange {
+                    Text("(\(range.lowerBound, format: .dateTime.month().day()) - \(range.upperBound, format: .dateTime.month().day()))")
+                        .font(DesignTokens.Typography.caption)
+                        .foregroundColor(.secondary)
+                }
+
                 Spacer()
+
+                if selectedDateRange != nil {
+                    Button {
+                        selectedDateRange = nil
+                    } label: {
+                        Text("Clear")
+                            .font(DesignTokens.Typography.caption)
+                    }
+                }
             }
             .foregroundColor(.primary)
             .padding(.horizontal)
