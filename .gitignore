@@ -6,3 +6,4 @@ xcuserdata/
 .claude/settings.local.json
 # bv (beads viewer) local config and caches
 .bv/
+PROMPTS.md
