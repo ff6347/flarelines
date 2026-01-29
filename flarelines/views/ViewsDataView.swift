@@ -5,6 +5,194 @@ import SwiftUI
 import Charts
 import CoreData
 
+// MARK: - Time Range
+
+enum TimeRange: String, CaseIterable {
+    case sevenDays = "7D"
+    case thirtyDays = "30D"
+    case ninetyDays = "90D"
+    case oneEightyDays = "180D"
+    case oneYear = "1Y"
+
+    var days: Int {
+        switch self {
+        case .sevenDays: return 7
+        case .thirtyDays: return 30
+        case .ninetyDays: return 90
+        case .oneEightyDays: return 180
+        case .oneYear: return 365
+        }
+    }
+}
+
+// MARK: - Health Progress Chart
+
+private struct HealthProgressChart: View {
+    let entries: [JournalEntry]
+    let selectedEntry: JournalEntry?
+    let xDomain: ClosedRange<Date>
+    @Binding var selectedDate: Date?
+    @Binding var selectedTimeRange: TimeRange
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: DesignTokens.Spacing.lg) {
+            chartHeader
+            timeRangePicker
+            chartContent
+        }
+        .padding()
+        .background(Color(UIColor.systemBackground))
+    }
+
+    private var chartHeader: some View {
+        HStack {
+            Image(systemName: "cylinder.split.1x2")
+            Text("Health Progress")
+                .font(DesignTokens.Typography.subheading)
+            Spacer()
+            Text("\(entries.count) entries")
+                .font(DesignTokens.Typography.caption)
+                .foregroundColor(.secondary)
+        }
+        .foregroundColor(.primary)
+    }
+
+    private var timeRangePicker: some View {
+        Picker("Time Range", selection: $selectedTimeRange) {
+            ForEach(TimeRange.allCases, id: \.self) { range in
+                Text(range.rawValue).tag(range)
+            }
+        }
+        .pickerStyle(.segmented)
+    }
+
+    @ViewBuilder
+    private var chartContent: some View {
+        if !entries.isEmpty {
+            chart
+        } else {
+            Text("No data available for this time range")
+                .foregroundColor(.secondary)
+                .frame(height: DesignTokens.Dimensions.chartHeight)
+                .frame(maxWidth: .infinity)
+        }
+    }
+
+    private var chart: some View {
+        Chart {
+            ForEach(entries) { entry in
+                LineMark(
+                    x: .value("Date", entry.timestamp),
+                    y: .value("Score", Double(entry.userScore))
+                )
+                .interpolationMethod(.catmullRom)
+                .foregroundStyle(DesignTokens.Colors.chartLine)
+
+                PointMark(
+                    x: .value("Date", entry.timestamp),
+                    y: .value("Score", Double(entry.userScore))
+                )
+                .symbolSize(DesignTokens.Dimensions.chartPointSize)
+                .foregroundStyle(DesignTokens.Colors.chartPoint)
+            }
+
+            if let entry = selectedEntry {
+                RuleMark(x: .value("Selected", entry.timestamp))
+                    .foregroundStyle(Color.secondary.opacity(0.5))
+                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [4, 2]))
+
+                PointMark(
+                    x: .value("Date", entry.timestamp),
+                    y: .value("Score", Double(entry.userScore))
+                )
+                .symbolSize(DesignTokens.Dimensions.chartPointSize * 2)
+                .foregroundStyle(DesignTokens.Colors.accent)
+            }
+        }
+        .frame(height: DesignTokens.Dimensions.chartHeight)
+        .chartXScale(domain: xDomain)
+        .chartYScale(domain: 0...3)
+        .chartXSelection(value: $selectedDate)
+        .chartXAxis {
+            AxisMarks(values: .automatic) { _ in
+                AxisValueLabel(format: .dateTime.month().day())
+                    .font(DesignTokens.Typography.caption)
+            }
+        }
+        .chartYAxis {
+            AxisMarks(position: .leading, values: [0, 1, 2, 3]) { _ in
+                AxisValueLabel()
+                    .font(DesignTokens.Typography.caption)
+            }
+        }
+    }
+}
+
+// MARK: - Journal Entries List
+
+private struct JournalEntriesList: View {
+    let entries: FetchedResults<JournalEntry>
+    let groupedEntries: [GroupedEntry]
+    let selectedEntryID: UUID?
+
+    var body: some View {
+        List {
+            headerSection
+            entriesContent
+        }
+        .listStyle(.plain)
+    }
+
+    private var headerSection: some View {
+        Section {
+            HStack {
+                Image(systemName: "book")
+                Text("Journal Entries")
+                    .font(DesignTokens.Typography.subheading)
+            }
+        }
+        .listRowBackground(Color.clear)
+        .listRowSeparator(.hidden)
+    }
+
+    @ViewBuilder
+    private var entriesContent: some View {
+        if entries.isEmpty {
+            Section {
+                Text("No entries yet. Start logging your health journey!")
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity)
+            }
+            .listRowBackground(Color.clear)
+        } else {
+            ForEach(groupedEntries, id: \.date) { group in
+                Section {
+                    ForEach(group.entries) { entry in
+                        JournalEntryCard(entry: entry, isHighlighted: selectedEntryID == entry.id)
+                            .id(entry.id)
+                            .listRowInsets(EdgeInsets())
+                            .listRowBackground(
+                                Rectangle().fill(
+                                    selectedEntryID == entry.id
+                                        ? DesignTokens.Colors.accent.opacity(0.15)
+                                        : Color(UIColor.systemBackground)
+                                )
+                            )
+                            .listRowSeparator(.visible)
+                    }
+                } header: {
+                    Text(group.date, style: .date)
+                        .font(DesignTokens.Typography.subheading)
+                        .foregroundColor(.primary)
+                        .textCase(nil)
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Data View
+
 struct DataView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
@@ -16,24 +204,6 @@ struct DataView: View {
 
     @State private var selectedTimeRange: TimeRange = .thirtyDays
     @State private var selectedDate: Date?
-
-    enum TimeRange: String, CaseIterable {
-        case sevenDays = "7D"
-        case thirtyDays = "30D"
-        case ninetyDays = "90D"
-        case oneEightyDays = "180D"
-        case oneYear = "1Y"
-
-        var days: Int {
-            switch self {
-            case .sevenDays: return 7
-            case .thirtyDays: return 30
-            case .ninetyDays: return 90
-            case .oneEightyDays: return 180
-            case .oneYear: return 365
-            }
-        }
-    }
 
     var filteredEntries: [JournalEntry] {
         let cutoffDate = Calendar.current.date(byAdding: .day, value: -selectedTimeRange.days, to: Date()) ?? Date()
@@ -51,144 +221,39 @@ struct DataView: View {
         })
     }
 
-    /// X-axis domain: from cutoff date to today, showing the full selected time range
     var chartXDomain: ClosedRange<Date> {
         let now = Date()
         let cutoffDate = Calendar.current.date(byAdding: .day, value: -selectedTimeRange.days, to: now) ?? now
         return cutoffDate...now
     }
 
+    var groupedEntries: [GroupedEntry] {
+        let calendar = Calendar.current
+        let grouped = Dictionary(grouping: entries) { entry in
+            calendar.startOfDay(for: entry.timestamp)
+        }
+        return grouped.map { GroupedEntry(date: $0.key, entries: $0.value) }
+            .sorted { $0.date > $1.date }
+    }
+
     var body: some View {
         VStack(spacing: 0) {
-            // Fixed Chart Section
-            VStack(alignment: .leading, spacing: DesignTokens.Spacing.lg) {
-                HStack {
-                    Image(systemName: "cylinder.split.1x2")
-                    Text("Health Progress")
-                        .font(DesignTokens.Typography.subheading)
-                    Spacer()
-                    Text("\(filteredEntries.count) entries")
-                        .font(DesignTokens.Typography.caption)
-                        .foregroundColor(.secondary)
-                }
-                .foregroundColor(.primary)
-
-                // Time Range Selector
-                Picker("Time Range", selection: $selectedTimeRange) {
-                    ForEach(TimeRange.allCases, id: \.self) { range in
-                        Text(range.rawValue).tag(range)
-                    }
-                }
-                .pickerStyle(.segmented)
-
-                // Chart
-                if !filteredEntries.isEmpty {
-                    Chart {
-                        ForEach(sortedFilteredEntries) { entry in
-                            LineMark(
-                                x: .value("Date", entry.timestamp),
-                                y: .value("Score", Double(entry.userScore))
-                            )
-                            .interpolationMethod(.catmullRom)
-                            .foregroundStyle(DesignTokens.Colors.chartLine)
-
-                            PointMark(
-                                x: .value("Date", entry.timestamp),
-                                y: .value("Score", Double(entry.userScore))
-                            )
-                            .symbolSize(DesignTokens.Dimensions.chartPointSize)
-                            .foregroundStyle(DesignTokens.Colors.chartPoint)
-                        }
-
-                        if let entry = selectedEntry {
-                            RuleMark(x: .value("Selected", entry.timestamp))
-                                .foregroundStyle(Color.secondary.opacity(0.5))
-                                .lineStyle(StrokeStyle(lineWidth: 1, dash: [4, 2]))
-
-                            PointMark(
-                                x: .value("Date", entry.timestamp),
-                                y: .value("Score", Double(entry.userScore))
-                            )
-                            .symbolSize(DesignTokens.Dimensions.chartPointSize * 2)
-                            .foregroundStyle(DesignTokens.Colors.accent)
-                        }
-                    }
-                    .frame(height: DesignTokens.Dimensions.chartHeight)
-                    .chartXScale(domain: chartXDomain)
-                    .chartYScale(domain: 0...3)
-                    .chartXSelection(value: $selectedDate)
-                    .chartXAxis {
-                        AxisMarks(values: .automatic) { _ in
-                            AxisValueLabel(format: .dateTime.month().day())
-                                .font(DesignTokens.Typography.caption)
-                        }
-                    }
-                    .chartYAxis {
-                        AxisMarks(position: .leading, values: [0, 1, 2, 3]) { _ in
-                            AxisValueLabel()
-                                .font(DesignTokens.Typography.caption)
-                        }
-                    }
-                } else {
-                    Text("No data available for this time range")
-                        .foregroundColor(.secondary)
-                        .frame(height: DesignTokens.Dimensions.chartHeight)
-                        .frame(maxWidth: .infinity)
-                }
-            }
-            .padding()
-            .background(Color(UIColor.systemBackground))
+            HealthProgressChart(
+                entries: sortedFilteredEntries,
+                selectedEntry: selectedEntry,
+                xDomain: chartXDomain,
+                selectedDate: $selectedDate,
+                selectedTimeRange: $selectedTimeRange
+            )
 
             Divider()
 
-            // Scrollable Journal Entries List
             ScrollViewReader { proxy in
-                List {
-                    // Journal Entries Header
-                    Section {
-                        HStack {
-                            Image(systemName: "book")
-                            Text("Journal Entries")
-                                .font(DesignTokens.Typography.subheading)
-                        }
-                    }
-                    .listRowBackground(Color.clear)
-                    .listRowSeparator(.hidden)
-
-                    // Journal Entries grouped by date
-                    if entries.isEmpty {
-                        Section {
-                            Text("No entries yet. Start logging your health journey!")
-                                .foregroundColor(.secondary)
-                                .frame(maxWidth: .infinity)
-                        }
-                        .listRowBackground(Color.clear)
-                    } else {
-                        ForEach(groupedEntries, id: \.date) { group in
-                            Section {
-                                ForEach(group.entries) { entry in
-                                    JournalEntryCard(entry: entry, isHighlighted: selectedEntry?.id == entry.id)
-                                        .id(entry.id)
-                                        .listRowInsets(EdgeInsets())
-                                        .listRowBackground(
-                                            Rectangle().fill(
-                                                selectedEntry?.id == entry.id
-                                                    ? DesignTokens.Colors.accent.opacity(0.15)
-                                                    : Color(UIColor.systemBackground)
-                                            )
-                                        )
-                                        .listRowSeparator(.visible)
-                                }
-                            } header: {
-                                Text(group.date, style: .date)
-                                    .font(DesignTokens.Typography.subheading)
-                                    .foregroundColor(.primary)
-                                    .textCase(nil)
-                            }
-                        }
-                    }
-                }
-                .listStyle(.plain)
+                JournalEntriesList(
+                    entries: entries,
+                    groupedEntries: groupedEntries,
+                    selectedEntryID: selectedEntry?.id
+                )
                 .onChange(of: selectedEntry?.id) { _, newID in
                     if let newID {
                         withAnimation {
@@ -208,15 +273,6 @@ struct DataView: View {
                 }
             }
         }
-    }
-
-    var groupedEntries: [GroupedEntry] {
-        let calendar = Calendar.current
-        let grouped = Dictionary(grouping: entries) { entry in
-            calendar.startOfDay(for: entry.timestamp)
-        }
-        return grouped.map { GroupedEntry(date: $0.key, entries: $0.value) }
-            .sorted { $0.date > $1.date }
     }
 }
 
