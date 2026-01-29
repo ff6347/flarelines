@@ -38,7 +38,6 @@ private struct HealthProgressChart: View {
     var onSelectEntry: (JournalEntry?) -> Void
     var onSelectRange: (ClosedRange<Date>?) -> Void
 
-    @State private var rawSelectedDate: Date?
     @State private var dragRange: ClosedRange<Date>?
 
     private var selectedEntry: JournalEntry? {
@@ -136,7 +135,6 @@ private struct HealthProgressChart: View {
         .frame(height: DesignTokens.Dimensions.chartHeight)
         .chartXScale(domain: xDomain)
         .chartYScale(domain: 0...3)
-        .chartXSelection(value: $rawSelectedDate)
         .chartXSelection(range: $dragRange)
         .chartXAxis {
             AxisMarks(values: .automatic) { _ in
@@ -151,34 +149,43 @@ private struct HealthProgressChart: View {
             }
         }
         .chartGesture { chart in
-            DragGesture(minimumDistance: 15)
-                .onChanged { value in
-                    chart.selectXRange(from: value.startLocation.x, to: value.location.x)
-                }
-                .onEnded { _ in
-                    // Commit the drag range as selected range
-                    if let range = dragRange {
-                        onSelectRange(range)
-                        onSelectEntry(nil)  // Clear single entry selection
+            DragGesture(minimumDistance: 0)
+                .onEnded { value in
+                    let distance = hypot(
+                        value.location.x - value.startLocation.x,
+                        value.location.y - value.startLocation.y
+                    )
+
+                    if distance < 15 {
+                        // This was a tap, not a drag
+                        if selectedDateRange != nil {
+                            // Clear range selection
+                            onSelectRange(nil)
+                        } else {
+                            // Select nearest entry
+                            if let date = chart.value(atX: value.location.x, as: Date.self) {
+                                let nearest = entries.min(by: {
+                                    abs($0.timestamp.timeIntervalSince(date)) < abs($1.timestamp.timeIntervalSince(date))
+                                })
+                                if let nearest {
+                                    // Toggle selection
+                                    if selectedEntryID == nearest.id {
+                                        onSelectEntry(nil)
+                                    } else {
+                                        onSelectEntry(nearest)
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        // This was a drag - commit the range
+                        if let range = dragRange {
+                            onSelectRange(range)
+                            onSelectEntry(nil)
+                        }
                     }
                     dragRange = nil
                 }
-        }
-        .onTapGesture { location in
-            // Tap clears range selection, or selects nearest entry
-            if selectedDateRange != nil {
-                onSelectRange(nil)
-            }
-        }
-        .onChange(of: rawSelectedDate) { _, newDate in
-            if let newDate, selectedDateRange == nil {
-                // Only do single entry selection if no range is active
-                let nearest = entries.min(by: {
-                    abs($0.timestamp.timeIntervalSince(newDate)) < abs($1.timestamp.timeIntervalSince(newDate))
-                })
-                onSelectEntry(nearest)
-            }
-            rawSelectedDate = nil
         }
     }
 }
