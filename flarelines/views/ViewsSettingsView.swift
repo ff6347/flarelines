@@ -10,7 +10,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("notificationsEnabled") private var notificationsEnabled = false
     @AppStorage("dailyReminderTime") private var dailyReminderTimeInterval: Double = Date().timeIntervalSince1970
-    
+
     private var dailyReminderTime: Date {
         get { Date(timeIntervalSince1970: dailyReminderTimeInterval) }
         set { dailyReminderTimeInterval = newValue.timeIntervalSince1970 }
@@ -33,6 +33,9 @@ struct SettingsView: View {
                             requestNotificationPermission()
                         } else {
                             notificationsEnabled = false
+                            Task {
+                                await ReminderScheduler.shared.cancelReminder()
+                            }
                         }
                     }
                 ))
@@ -41,7 +44,12 @@ struct SettingsView: View {
                     DatePicker("Reminder Time",
                              selection: Binding(
                                 get: { Date(timeIntervalSince1970: dailyReminderTimeInterval) },
-                                set: { dailyReminderTimeInterval = $0.timeIntervalSince1970 }
+                                set: { newTime in
+                                    dailyReminderTimeInterval = newTime.timeIntervalSince1970
+                                    Task {
+                                        await ReminderScheduler.shared.scheduleDaily(at: newTime)
+                                    }
+                                }
                              ),
                              displayedComponents: .hourAndMinute)
                 }
@@ -56,7 +64,7 @@ struct SettingsView: View {
             } message: {
                 Text("To enable reminders, please allow notifications in Settings.")
             }
-            
+
             Section("Data") {
                 Button("Export Data") {
                     exportData()
@@ -99,7 +107,7 @@ struct SettingsView: View {
                     Text("1.0.0")
                         .foregroundColor(.secondary)
                 }
-                
+
                 Link("Privacy Policy", destination: URL(string: "https://flarelines.inpyjamas.dev/privacy")!)
                 Link("Terms of Service", destination: URL(string: "https://flarelines.inpyjamas.dev/terms")!)
             }
@@ -176,10 +184,13 @@ struct SettingsView: View {
 
             switch settings.authorizationStatus {
             case .authorized, .provisional:
-                // Already authorized
+                // Already authorized - schedule reminder
                 await MainActor.run {
                     notificationsEnabled = true
                 }
+                await ReminderScheduler.shared.scheduleDaily(
+                    at: Date(timeIntervalSince1970: dailyReminderTimeInterval)
+                )
             case .notDetermined:
                 // Request permission
                 do {
@@ -189,6 +200,11 @@ struct SettingsView: View {
                         if !granted {
                             showingPermissionDeniedAlert = true
                         }
+                    }
+                    if granted {
+                        await ReminderScheduler.shared.scheduleDaily(
+                            at: Date(timeIntervalSince1970: dailyReminderTimeInterval)
+                        )
                     }
                 } catch {
                     await MainActor.run {
