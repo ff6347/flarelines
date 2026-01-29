@@ -29,10 +29,16 @@ enum TimeRange: String, CaseIterable {
 
 private struct HealthProgressChart: View {
     let entries: [JournalEntry]
-    let selectedEntry: JournalEntry?
+    let selectedEntryID: UUID?
     let xDomain: ClosedRange<Date>
-    @Binding var selectedDate: Date?
     @Binding var selectedTimeRange: TimeRange
+    var onSelectEntry: (JournalEntry?) -> Void
+
+    @State private var rawSelectedDate: Date?
+
+    private var selectedEntry: JournalEntry? {
+        entries.first { $0.id == selectedEntryID }
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: DesignTokens.Spacing.lg) {
@@ -92,7 +98,7 @@ private struct HealthProgressChart: View {
                     x: .value("Date", entry.timestamp),
                     y: .value("Score", Double(entry.userScore))
                 )
-                .symbolSize(DesignTokens.Dimensions.chartPointSize)
+                .symbolSize(DesignTokens.Dimensions.chartPointSize * 2.5)
                 .foregroundStyle(DesignTokens.Colors.chartPoint)
             }
 
@@ -105,14 +111,14 @@ private struct HealthProgressChart: View {
                     x: .value("Date", entry.timestamp),
                     y: .value("Score", Double(entry.userScore))
                 )
-                .symbolSize(DesignTokens.Dimensions.chartPointSize * 2)
+                .symbolSize(DesignTokens.Dimensions.chartPointSize * 4)
                 .foregroundStyle(DesignTokens.Colors.accent)
             }
         }
         .frame(height: DesignTokens.Dimensions.chartHeight)
         .chartXScale(domain: xDomain)
         .chartYScale(domain: 0...3)
-        .chartXSelection(value: $selectedDate)
+        .chartXSelection(value: $rawSelectedDate)
         .chartXAxis {
             AxisMarks(values: .automatic) { _ in
                 AxisValueLabel(format: .dateTime.month().day())
@@ -123,6 +129,23 @@ private struct HealthProgressChart: View {
             AxisMarks(position: .leading, values: [0, 1, 2, 3]) { _ in
                 AxisValueLabel()
                     .font(DesignTokens.Typography.caption)
+            }
+        }
+        .onChange(of: rawSelectedDate) { _, newDate in
+            if let newDate {
+                // Find nearest entry to tap location
+                let nearest = entries.min(by: {
+                    abs($0.timestamp.timeIntervalSince(newDate)) < abs($1.timestamp.timeIntervalSince(newDate))
+                })
+                onSelectEntry(nearest)
+            }
+            // Reset raw selection so next tap works
+            rawSelectedDate = nil
+        }
+        .onTapGesture {
+            // Tap on empty area clears selection
+            if rawSelectedDate == nil {
+                onSelectEntry(nil)
             }
         }
     }
@@ -190,7 +213,7 @@ struct DataView: View {
     private var entries: FetchedResults<JournalEntry>
 
     @State private var selectedTimeRange: TimeRange = .thirtyDays
-    @State private var selectedDate: Date?
+    @State private var selectedEntryID: UUID?
 
     var filteredEntries: [JournalEntry] {
         let cutoffDate = Calendar.current.date(byAdding: .day, value: -selectedTimeRange.days, to: Date()) ?? Date()
@@ -199,13 +222,6 @@ struct DataView: View {
 
     var sortedFilteredEntries: [JournalEntry] {
         filteredEntries.sorted { $0.timestamp < $1.timestamp }
-    }
-
-    var selectedEntry: JournalEntry? {
-        guard let selectedDate else { return nil }
-        return sortedFilteredEntries.min(by: {
-            abs($0.timestamp.timeIntervalSince(selectedDate)) < abs($1.timestamp.timeIntervalSince(selectedDate))
-        })
     }
 
     var chartXDomain: ClosedRange<Date> {
@@ -227,10 +243,12 @@ struct DataView: View {
         VStack(spacing: 0) {
             HealthProgressChart(
                 entries: sortedFilteredEntries,
-                selectedEntry: selectedEntry,
+                selectedEntryID: selectedEntryID,
                 xDomain: chartXDomain,
-                selectedDate: $selectedDate,
-                selectedTimeRange: $selectedTimeRange
+                selectedTimeRange: $selectedTimeRange,
+                onSelectEntry: { entry in
+                    selectedEntryID = entry?.id
+                }
             )
 
             Divider()
@@ -251,9 +269,9 @@ struct DataView: View {
                 JournalEntriesList(
                     entries: entries,
                     groupedEntries: groupedEntries,
-                    selectedEntryID: selectedEntry?.id
+                    selectedEntryID: selectedEntryID
                 )
-                .onChange(of: selectedEntry?.id) { _, newID in
+                .onChange(of: selectedEntryID) { _, newID in
                     if let newID {
                         withAnimation {
                             proxy.scrollTo(newID, anchor: .center)
