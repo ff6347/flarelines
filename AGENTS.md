@@ -1,10 +1,10 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) and other agents when working with code in this repository.
 
 ## Project Overview
 
-Flareline is a chronic illness journaling iOS app built with SwiftUI, Core Data, and Swift Charts. Users answer daily health questions via text or voice input, and track their health progress over time through visualizations.
+Flarelines is a chronic illness journaling iOS app built with SwiftUI, Core Data, and Swift Charts. Users write daily diary entries via text or voice input, rate their flare severity (0-3), and track their health progress over time through visualizations. On-device ML suggests flare scores based on diary text.
 
 ## Development Commands
 
@@ -24,102 +24,135 @@ This is a native iOS project using Xcode's standard frameworks. No npm, yarn, or
 
 ## Architecture
 
-### MVVM Pattern
-- **Models**: Data structures (`JournalEntry`, `HealthQuestion`)
-- **ViewModels**: Business logic (`JournalViewModel` manages question flow and Core Data persistence)
-- **Views**: SwiftUI components (`LogView`, `DataView`, `HelpView`, `SettingsView`)
-- **Utilities**: Reusable components (`SpeechRecognizer` for voice input, `DesignTokens` for styling)
+### MVVM-ish Pattern
+- **Models**: `flarelines/models/` - Core Data entities
+- **Views**: `flarelines/views/` - SwiftUI components with embedded view logic
+- **Utilities**: `flarelines/utilities/` - Reusable services and helpers
 
 ### Core Data Setup
-The app uses Core Data with a `JournalEntry` entity:
-- **Attributes**: `id` (UUID), `timestamp` (Date), `feeling` (String?), `painLevel` (Int16), `symptoms` (String?), `healthScore` (Double)
+The app uses Core Data with a `JournalEntry` entity in `flarelines.xcdatamodeld`:
+- **Attributes**: `id` (UUID), `timestamp` (Date), `journalText` (String?), `userScore` (Int16, 0-3), `mlScore` (Int16, 0-3 or -1 if not scored)
 - **Persistence**: Managed through `PersistenceController.shared`
-- **Important**: Core Data model (`wolfsbit.xcdatamodeld`) must have `JournalEntry` entity with Codegen set to "Manual/None"
+- **Important**: Core Data model must have `JournalEntry` entity with Codegen set to "Manual/None"
 
-### Question Flow System
-The app uses a structured question system:
-1. Three hardcoded questions in `HealthQuestion.defaultQuestions`
-2. `JournalViewModel` manages current question index and user answers
-3. Answers stored in dictionary keyed by question ID
-4. Pain level (question 2) is extracted and used to calculate health score: `healthScore = 10.0 - painLevel`
+### Two-Step Entry Flow
+The journal editor (`ViewsLogView.swift`) has two pages:
+1. **Text Entry**: Free-form diary text with optional voice input
+2. **Flare Rating**: Slider (0-3) with labels: Remission, Mild, Moderate, Severe
 
-### Voice Recognition Integration
-- `SpeechRecognizer` class handles iOS Speech framework integration
-- Authorization requested on init
+When the user navigates to the rating page, the ML model analyzes the text and suggests a score. The user can accept or adjust before saving.
+
+### ML Scoring System
+On-device ML scoring using GGUF models:
+- `UtilitiesScoringService.swift` - Orchestrates scoring requests
+- `LlamaContext.swift` - llama.cpp integration for model inference
+- `ModelDownloader.swift` - Downloads models from remote manifest
+- `UtilitiesModelManifest.swift` / `UtilitiesModelStorage.swift` - Model management
+
+The ML model runs entirely on-device. No data leaves the phone.
+
+### Voice Recognition
+- `UtilitiesSpeechRecognizer.swift` handles iOS Speech framework
 - Real-time transcription with partial results
-- Audio engine manages microphone input
-- Transcript published to SwiftUI views via `@Published` properties
+- Supports multiple languages via `UtilitiesLanguagePreference.swift`
 
 ### Data Visualization
-- Uses Swift Charts (`Chart`, `LineMark`, `PointMark`) to plot health scores over time
+- `ViewsDataView.swift` uses Swift Charts (`Chart`, `LineMark`, `PointMark`)
+- Y-axis scale: `chartYScale(domain: 0...3)`
 - Time range filtering: 7D, 30D, 90D, 180D, 1Y
-- Chart data filtered from Core Data fetch results based on timestamp
+- Interpolation: `.catmullRom` for smooth curves
 
 ## File Organization
-The project uses an organized folder structure with lowercase folder names:
-- **Models**: `flarelines/models/` - Contains `ModelsJournalEntry.swift`, `ModelsHealthQuestion.swift`
-- **Views**: `flarelines/views/` - Contains `ViewsLogView.swift`, `ViewsDataView.swift`, `ViewsHelpView.swift`, `ViewsSettingsView.swift`
-- **ViewModels**: `flarelines/views/` - Contains `ViewModelsJournalViewModel.swift` (located with views for convenience)
-- **Utilities**: `flarelines/utilities/` - Contains `UtilitiesSpeechRecognizer.swift`, `UtilitiesDesignTokens.swift`, `UtilitiesSampleDataGenerator.swift`
 
-All Swift files use PascalCase names with type prefixes (Models*, Views*, Utilities*) for clarity and easy identification.
+```
+flarelines/
+├── models/
+│   ├── ModelsJournalEntry.swift      # Core Data entity
+│   └── ModelsDoctorVisit.swift       # Doctor visit tracking
+├── views/
+│   ├── ViewsLogView.swift            # Main journal editor (two-step flow)
+│   ├── ViewsDataView.swift           # Charts and entry history
+│   ├── ViewsEditEntryView.swift      # Edit existing entries
+│   ├── ViewsHelpView.swift           # Help/FAQ screen
+│   ├── ViewsSettingsView.swift       # Settings and export
+│   ├── ViewsOnboardingView.swift     # First-launch onboarding
+│   └── ViewsDataContributionConsentSheet.swift
+├── utilities/
+│   ├── UtilitiesSpeechRecognizer.swift    # Voice input
+│   ├── UtilitiesScoringService.swift      # ML scoring orchestration
+│   ├── UtilitiesDesignTokens.swift        # Centralized styling
+│   ├── UtilitiesCSVExporter.swift         # Data export
+│   ├── UtilitiesSampleDataGenerator.swift # Preview/test data
+│   ├── UtilitiesLanguagePreference.swift  # Language settings
+│   ├── UtilitiesAnalytics.swift           # Usage analytics
+│   ├── LlamaContext.swift                 # llama.cpp wrapper
+│   ├── ModelDownloader.swift              # ML model download
+│   ├── UtilitiesModelManifest.swift       # Model metadata
+│   └── UtilitiesModelStorage.swift        # Model file management
+├── ContentView.swift                 # Root view
+├── flarelinesApp.swift               # App entry point
+├── AppDelegate.swift                 # Notifications setup
+└── Persistence.swift                 # Core Data stack
+```
+
+All Swift files use PascalCase names with type prefixes for clarity.
 
 ## Key Technical Decisions
 
-### Health Score Calculation
-Health score is inversely proportional to pain level: a pain level of 7/10 results in a health score of 3.0. This provides intuitive visualization where higher scores = better health.
+### Flare Score Scale
+- 0 = Remission
+- 1 = Mild
+- 2 = Moderate
+- 3 = Severe
 
-### Speech Recognition Language
-Hardcoded to `en-US` locale in `SpeechRecognizer`. To support other languages, modify the `SFSpeechRecognizer` initialization.
+Higher scores indicate worse symptoms. The chart plots `userScore` (what the user saved, possibly adjusted from ML suggestion).
 
 ### Data Persistence Strategy
 - All data stored locally in Core Data (no cloud sync)
-- Auto-save on question navigation using `automaticallyMergesChangesFromParent`
+- Auto-save with `automaticallyMergesChangesFromParent`
 - Preview environment uses in-memory store with sample data
 
+### Localization
+The app supports multiple languages via `Localizable.xcstrings`. Currently English and German.
+
 ### SwiftUI Previews
-Core Data previews use `PersistenceController.preview` which creates an in-memory store with 10 sample entries. This allows views to be previewed without affecting production data.
+Core Data previews use `PersistenceController.preview` which creates an in-memory store with sample entries.
 
 ## Common Development Tasks
 
-### Adding New Questions
-Modify `HealthQuestion.defaultQuestions` in `flarelines/models/ModelsHealthQuestion.swift`. Update `JournalViewModel.saveEntry()` in `flarelines/views/ViewModelsJournalViewModel.swift` to handle the new question's answer appropriately.
-
 ### Changing Colors/Styling
-Edit `flarelines/utilities/UtilitiesDesignTokens.swift` for centralized design tokens. The app uses a monochrome design with black accents.
+Edit `flarelines/utilities/UtilitiesDesignTokens.swift` for centralized design tokens.
 
 ### Modifying Chart Display
-Edit `flarelines/views/ViewsDataView.swift`. Chart configuration includes:
-- Y-axis scale: `chartYScale(domain: 0...10)`
-- Interpolation: `.interpolationMethod(.catmullRom)` for smooth curves
+Edit `flarelines/views/ViewsDataView.swift`. Chart configuration:
+- Y-axis: `chartYScale(domain: 0...3)`
+- Interpolation: `.interpolationMethod(.catmullRom)`
 - Time filtering via `filteredEntries` computed property
 
-### Export Functionality (Not Yet Implemented)
-Settings view has a placeholder "Export Data" button. To implement, add logic to export Core Data entries to CSV/JSON format.
+### Adding Translations
+Edit `flarelines/Localizable.xcstrings` - Xcode's string catalog format.
+
+### Export Functionality
+CSV export is implemented in `UtilitiesCSVExporter.swift`, triggered from Settings.
 
 ## iOS-Specific Considerations
 
 ### Minimum Deployment Target
 - iOS 17.0+ required for Swift Charts and modern SwiftUI features
-- Speech framework available since iOS 10.0
-- Core Data available on all iOS versions
 
-### Permissions Workflow
-1. User taps microphone button in LOG view
-2. `SpeechRecognizer.requestAuthorization()` prompts for speech recognition
-3. Audio session activation prompts for microphone access
-4. Denied permissions prevent voice input but don't crash the app
+### Permissions
+- Microphone: For voice input
+- Speech Recognition: For transcription
+- Notifications: For reminders
 
 ### Main Actor Usage
-`JournalViewModel` and `SpeechRecognizer` use `@MainActor` to ensure UI updates happen on the main thread. This is critical for `@Published` properties that drive SwiftUI views.
+Views and services use `@MainActor` to ensure UI updates happen on the main thread.
 
 ## Known Limitations
 
-- No multi-language support (hardcoded to English)
-- Pain level extraction from text is basic (first number found)
-- No data export yet (planned feature)
 - No iCloud sync (all data local only)
-- No medication tracking (future enhancement)
+- Reminders not working (P1 bug: wolfsbit-01-29a)
+- Log view shows stale data after editing (P2 bug: wolfsbit-01-rl7)
 
 <!-- bv-agent-instructions-v1 -->
 
