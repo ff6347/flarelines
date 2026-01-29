@@ -143,4 +143,114 @@ struct CSVExporterTests {
         #expect(lines[1].contains("Older entry"))
         #expect(lines[2].contains("Newer entry"))
     }
+
+    // MARK: - Edge Cases
+
+    @Test func exportHandlesUnicodeText() {
+        let date = ISO8601DateFormatter().date(from: "2026-01-15T10:30:00Z")!
+
+        let entry = makeEntry(
+            timestamp: date,
+            text: "Schmerzen in Rücken 🤕 und Knien",
+            userScore: 2,
+            mlScore: 2
+        )
+
+        let csv = CSVExporter.export(entries: [entry])
+
+        #expect(csv.contains("Rücken"))
+        #expect(csv.contains("🤕"))
+    }
+
+    @Test func exportHandlesVeryLongText() {
+        let date = ISO8601DateFormatter().date(from: "2026-01-15T10:30:00Z")!
+        let longText = String(repeating: "Lorem ipsum dolor sit amet. ", count: 100)
+
+        let entry = makeEntry(
+            timestamp: date,
+            text: longText,
+            userScore: 1,
+            mlScore: 1
+        )
+
+        let csv = CSVExporter.export(entries: [entry])
+
+        #expect(csv.contains(longText))
+    }
+
+    @Test func exportHandlesSpecialCharacters() {
+        let date = ISO8601DateFormatter().date(from: "2026-01-15T10:30:00Z")!
+
+        let entry = makeEntry(
+            timestamp: date,
+            text: "Tab:\tBackslash:\\ Carriage return:\r",
+            userScore: 1,
+            mlScore: 1
+        )
+
+        let csv = CSVExporter.export(entries: [entry])
+
+        #expect(csv.contains("\t"))
+        #expect(csv.contains("\\"))
+    }
+
+    @Test func exportHandlesAllScoreCombinations() {
+        let date = ISO8601DateFormatter().date(from: "2026-01-15T10:30:00Z")!
+
+        // Test all valid score combinations
+        let entries = [
+            makeEntry(timestamp: date, text: "a", userScore: 0, mlScore: 0),
+            makeEntry(timestamp: date, text: "b", userScore: 3, mlScore: 3),
+            makeEntry(timestamp: date, text: "c", userScore: 1, mlScore: -1), // -1 = not scored
+        ]
+
+        let csv = CSVExporter.export(entries: entries)
+
+        #expect(csv.contains(",0,0"))
+        #expect(csv.contains(",3,3"))
+        #expect(csv.contains(",1,-1"))
+    }
+
+    @Test func exportManyEntries() {
+        let formatter = ISO8601DateFormatter()
+        let baseDate = formatter.date(from: "2026-01-01T00:00:00Z")!
+
+        let entries = (0..<100).map { i in
+            makeEntry(
+                timestamp: Calendar.current.date(byAdding: .day, value: i, to: baseDate)!,
+                text: "Entry \(i)",
+                userScore: Int16(i % 4),
+                mlScore: Int16(i % 4)
+            )
+        }
+
+        let csv = CSVExporter.export(entries: entries)
+        let lines = csv.components(separatedBy: "\n")
+
+        // header + 100 entries + trailing newline
+        #expect(lines.count == 102)
+    }
+
+    @Test func exportHeaderHasCorrectColumns() {
+        let csv = CSVExporter.export(entries: [TestEntry]())
+        let header = csv.components(separatedBy: "\n").first!
+
+        #expect(header == "timestamp,journalText,userScore,mlScore")
+
+        let columns = header.components(separatedBy: ",")
+        #expect(columns.count == 4)
+        #expect(columns[0] == "timestamp")
+        #expect(columns[1] == "journalText")
+        #expect(columns[2] == "userScore")
+        #expect(columns[3] == "mlScore")
+    }
+
+    @Test func exportEndsWithNewline() {
+        let date = ISO8601DateFormatter().date(from: "2026-01-15T10:30:00Z")!
+        let entry = makeEntry(timestamp: date, text: "Test", userScore: 1, mlScore: 1)
+
+        let csv = CSVExporter.export(entries: [entry])
+
+        #expect(csv.hasSuffix("\n"))
+    }
 }

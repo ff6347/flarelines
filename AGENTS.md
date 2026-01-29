@@ -120,6 +120,14 @@ Core Data previews use `PersistenceController.preview` which creates an in-memor
 
 ## Common Development Tasks
 
+### Version Control
+
+Make sure we are not working on the `main` branch. All work should allways be on feature branches. eg `feat/my-cool-feautre` or `fix/buggy-thing` and so on.
+Attribute your work on git commits as co-author.
+Allways use convetional commits, `feat(<scope>): <Description>` or `fix(<scope>): <Description>` or similar (`chore`, `ci`, `style`).
+Things like changes to README.md files or docs should not trigger a ci run. use `skip ci` in those commits.
+
+
 ### Changing Colors/Styling
 Edit `flarelines/utilities/UtilitiesDesignTokens.swift` for centralized design tokens.
 
