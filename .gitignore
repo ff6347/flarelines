@@ -1,6 +1,7 @@
 docs/xcode
 .wrangler
 node_modules
+xcuserdata/
 
 # bv (beads viewer) local config and caches
 .bv/
