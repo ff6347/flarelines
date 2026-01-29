@@ -15,6 +15,7 @@ struct DataView: View {
     private var entries: FetchedResults<JournalEntry>
 
     @State private var selectedTimeRange: TimeRange = .thirtyDays
+    @State private var selectedDate: Date?
 
     enum TimeRange: String, CaseIterable {
         case sevenDays = "7D"
@@ -43,6 +44,23 @@ struct DataView: View {
         filteredEntries.sorted { $0.timestamp < $1.timestamp }
     }
 
+    var selectedEntry: JournalEntry? {
+        guard let selectedDate else { return nil }
+        return sortedFilteredEntries.min(by: {
+            abs($0.timestamp.timeIntervalSince(selectedDate)) < abs($1.timestamp.timeIntervalSince(selectedDate))
+        })
+    }
+
+    private func scoreLabel(for score: Int16) -> String {
+        switch score {
+        case 0: return "Remission"
+        case 1: return "Mild"
+        case 2: return "Moderate"
+        case 3: return "Severe"
+        default: return "Unknown"
+        }
+    }
+
     var body: some View {
         List {
             // Health Progress Chart Section
@@ -60,22 +78,12 @@ struct DataView: View {
                     .foregroundColor(.primary)
 
                     // Time Range Selector
-                    HStack(spacing: DesignTokens.Spacing.sm) {
+                    Picker("Time Range", selection: $selectedTimeRange) {
                         ForEach(TimeRange.allCases, id: \.self) { range in
-                            Button(action: {
-                                selectedTimeRange = range
-                            }) {
-                                Text(range.rawValue)
-                                    .font(DesignTokens.Typography.caption)
-                                    .fontWeight(selectedTimeRange == range ? .semibold : .regular)
-                                    .foregroundColor(selectedTimeRange == range ? .white : .primary)
-                                    .padding(.horizontal, DesignTokens.Spacing.md)
-                                    .padding(.vertical, DesignTokens.Spacing.sm)
-                                    .background(selectedTimeRange == range ? DesignTokens.Colors.accent : Color.clear)
-                                    .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.sm, style: .continuous))
-                            }
+                            Text(range.rawValue).tag(range)
                         }
                     }
+                    .pickerStyle(.segmented)
 
                     // Chart
                     if !filteredEntries.isEmpty {
@@ -95,9 +103,23 @@ struct DataView: View {
                                 .symbolSize(DesignTokens.Dimensions.chartPointSize)
                                 .foregroundStyle(DesignTokens.Colors.chartPoint)
                             }
+
+                            if let entry = selectedEntry {
+                                RuleMark(x: .value("Selected", entry.timestamp))
+                                    .foregroundStyle(Color.secondary.opacity(0.5))
+                                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [4, 2]))
+
+                                PointMark(
+                                    x: .value("Date", entry.timestamp),
+                                    y: .value("Score", Double(entry.userScore))
+                                )
+                                .symbolSize(DesignTokens.Dimensions.chartPointSize * 2)
+                                .foregroundStyle(DesignTokens.Colors.accent)
+                            }
                         }
                         .frame(height: DesignTokens.Dimensions.chartHeight)
                         .chartYScale(domain: 0...3)
+                        .chartXSelection(value: $selectedDate)
                         .chartXAxis {
                             AxisMarks(values: .automatic) { _ in
                                 AxisValueLabel(format: .dateTime.month().day())
@@ -109,6 +131,43 @@ struct DataView: View {
                                 AxisValueLabel()
                                     .font(DesignTokens.Typography.caption)
                             }
+                        }
+
+                        // Selected entry info
+                        if let entry = selectedEntry {
+                            HStack {
+                                VStack(alignment: .leading, spacing: DesignTokens.Spacing.xs) {
+                                    Text(entry.timestamp, format: .dateTime.weekday(.wide).month().day().hour().minute())
+                                        .font(DesignTokens.Typography.caption)
+                                        .foregroundColor(.secondary)
+                                    HStack(spacing: DesignTokens.Spacing.sm) {
+                                        Text("\(entry.userScore) - \(scoreLabel(for: entry.userScore))")
+                                            .font(DesignTokens.Typography.body)
+                                            .fontWeight(.medium)
+                                        if entry.mlScore >= 0 && entry.mlScore != entry.userScore {
+                                            Text("(ML suggested: \(entry.mlScore))")
+                                                .font(DesignTokens.Typography.caption)
+                                                .foregroundColor(.orange)
+                                        }
+                                    }
+                                    if let text = entry.journalText, !text.isEmpty {
+                                        Text(text)
+                                            .font(DesignTokens.Typography.caption)
+                                            .foregroundColor(.secondary)
+                                            .lineLimit(2)
+                                    }
+                                }
+                                Spacer()
+                                Button {
+                                    selectedDate = nil
+                                } label: {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                            .padding(DesignTokens.Spacing.md)
+                            .background(Color(UIColor.secondarySystemBackground))
+                            .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.md, style: .continuous))
                         }
                     } else {
                         Text("No data available for this time range")
