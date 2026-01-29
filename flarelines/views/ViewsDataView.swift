@@ -137,22 +137,9 @@ private struct JournalEntriesList: View {
 
     var body: some View {
         List {
-            headerSection
             entriesContent
         }
         .listStyle(.plain)
-    }
-
-    private var headerSection: some View {
-        Section {
-            HStack {
-                Image(systemName: "book")
-                Text("Journal Entries")
-                    .font(DesignTokens.Typography.subheading)
-            }
-        }
-        .listRowBackground(Color.clear)
-        .listRowSeparator(.hidden)
     }
 
     @ViewBuilder
@@ -247,6 +234,18 @@ struct DataView: View {
             )
 
             Divider()
+
+            // Fixed Journal Entries Header
+            HStack {
+                Image(systemName: "book")
+                Text("Journal Entries")
+                    .font(DesignTokens.Typography.subheading)
+                Spacer()
+            }
+            .foregroundColor(.primary)
+            .padding(.horizontal)
+            .padding(.vertical, DesignTokens.Spacing.sm)
+            .background(Color(UIColor.systemBackground))
 
             ScrollViewReader { proxy in
                 JournalEntriesList(
