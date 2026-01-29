@@ -8,18 +8,16 @@ import CoreData
 // MARK: - In-Memory Core Data Context
 
 enum TestCoreData {
+    /// Shared in-memory persistence controller for all tests
+    /// Using a singleton prevents multiple NSManagedObjectModel registrations
+    private static let sharedController = PersistenceController(inMemory: true)
+
     /// Creates an in-memory Core Data context for testing
+    /// Returns a fresh child context to isolate test data
     static func makeInMemoryContext() -> NSManagedObjectContext {
-        let container = NSPersistentContainer(name: "flarelines")
-        container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
-
-        container.loadPersistentStores { _, error in
-            if let error = error {
-                fatalError("Failed to load in-memory store: \(error)")
-            }
-        }
-
-        return container.viewContext
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        context.parent = sharedController.container.viewContext
+        return context
     }
 
     /// Creates a context with sample data pre-populated
