@@ -59,137 +59,145 @@ struct DataView: View {
     }
 
     var body: some View {
-        ScrollViewReader { proxy in
-        List {
-            // Health Progress Chart Section
-            Section {
-                VStack(alignment: .leading, spacing: DesignTokens.Spacing.lg) {
-                    HStack {
-                        Image(systemName: "cylinder.split.1x2")
-                        Text("Health Progress")
-                            .font(DesignTokens.Typography.subheading)
-                        Spacer()
-                        Text("\(filteredEntries.count) entries")
-                            .font(DesignTokens.Typography.caption)
-                            .foregroundColor(.secondary)
-                    }
-                    .foregroundColor(.primary)
-
-                    // Time Range Selector
-                    Picker("Time Range", selection: $selectedTimeRange) {
-                        ForEach(TimeRange.allCases, id: \.self) { range in
-                            Text(range.rawValue).tag(range)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-
-                    // Chart
-                    if !filteredEntries.isEmpty {
-                        Chart {
-                            ForEach(sortedFilteredEntries) { entry in
-                                LineMark(
-                                    x: .value("Date", entry.timestamp),
-                                    y: .value("Score", Double(entry.userScore))
-                                )
-                                .interpolationMethod(.catmullRom)
-                                .foregroundStyle(DesignTokens.Colors.chartLine)
-
-                                PointMark(
-                                    x: .value("Date", entry.timestamp),
-                                    y: .value("Score", Double(entry.userScore))
-                                )
-                                .symbolSize(DesignTokens.Dimensions.chartPointSize)
-                                .foregroundStyle(DesignTokens.Colors.chartPoint)
-                            }
-
-                            if let entry = selectedEntry {
-                                RuleMark(x: .value("Selected", entry.timestamp))
-                                    .foregroundStyle(Color.secondary.opacity(0.5))
-                                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [4, 2]))
-
-                                PointMark(
-                                    x: .value("Date", entry.timestamp),
-                                    y: .value("Score", Double(entry.userScore))
-                                )
-                                .symbolSize(DesignTokens.Dimensions.chartPointSize * 2)
-                                .foregroundStyle(DesignTokens.Colors.accent)
-                            }
-                        }
-                        .frame(height: DesignTokens.Dimensions.chartHeight)
-                        .chartXScale(domain: chartXDomain)
-                        .chartYScale(domain: 0...3)
-                        .chartXSelection(value: $selectedDate)
-                        .chartXAxis {
-                            AxisMarks(values: .automatic) { _ in
-                                AxisValueLabel(format: .dateTime.month().day())
-                                    .font(DesignTokens.Typography.caption)
-                            }
-                        }
-                        .chartYAxis {
-                            AxisMarks(position: .leading, values: [0, 1, 2, 3]) { _ in
-                                AxisValueLabel()
-                                    .font(DesignTokens.Typography.caption)
-                            }
-                        }
-
-                    } else {
-                        Text("No data available for this time range")
-                            .foregroundColor(.secondary)
-                            .frame(height: DesignTokens.Dimensions.chartHeight)
-                            .frame(maxWidth: .infinity)
-                    }
-                }
-                .padding()
-            }
-            .listRowInsets(EdgeInsets())
-            .listRowBackground(Color.clear)
-            .listRowSeparator(.hidden)
-
-            // Journal Entries Header
-            Section {
+        VStack(spacing: 0) {
+            // Fixed Chart Section
+            VStack(alignment: .leading, spacing: DesignTokens.Spacing.lg) {
                 HStack {
-                    Image(systemName: "book")
-                    Text("Journal Entries")
+                    Image(systemName: "cylinder.split.1x2")
+                    Text("Health Progress")
                         .font(DesignTokens.Typography.subheading)
-                }
-            }
-            .listRowBackground(Color.clear)
-            .listRowSeparator(.hidden)
-
-            // Journal Entries grouped by date
-            if entries.isEmpty {
-                Section {
-                    Text("No entries yet. Start logging your health journey!")
+                    Spacer()
+                    Text("\(filteredEntries.count) entries")
+                        .font(DesignTokens.Typography.caption)
                         .foregroundColor(.secondary)
+                }
+                .foregroundColor(.primary)
+
+                // Time Range Selector
+                Picker("Time Range", selection: $selectedTimeRange) {
+                    ForEach(TimeRange.allCases, id: \.self) { range in
+                        Text(range.rawValue).tag(range)
+                    }
+                }
+                .pickerStyle(.segmented)
+
+                // Chart
+                if !filteredEntries.isEmpty {
+                    Chart {
+                        ForEach(sortedFilteredEntries) { entry in
+                            LineMark(
+                                x: .value("Date", entry.timestamp),
+                                y: .value("Score", Double(entry.userScore))
+                            )
+                            .interpolationMethod(.catmullRom)
+                            .foregroundStyle(DesignTokens.Colors.chartLine)
+
+                            PointMark(
+                                x: .value("Date", entry.timestamp),
+                                y: .value("Score", Double(entry.userScore))
+                            )
+                            .symbolSize(DesignTokens.Dimensions.chartPointSize)
+                            .foregroundStyle(DesignTokens.Colors.chartPoint)
+                        }
+
+                        if let entry = selectedEntry {
+                            RuleMark(x: .value("Selected", entry.timestamp))
+                                .foregroundStyle(Color.secondary.opacity(0.5))
+                                .lineStyle(StrokeStyle(lineWidth: 1, dash: [4, 2]))
+
+                            PointMark(
+                                x: .value("Date", entry.timestamp),
+                                y: .value("Score", Double(entry.userScore))
+                            )
+                            .symbolSize(DesignTokens.Dimensions.chartPointSize * 2)
+                            .foregroundStyle(DesignTokens.Colors.accent)
+                        }
+                    }
+                    .frame(height: DesignTokens.Dimensions.chartHeight)
+                    .chartXScale(domain: chartXDomain)
+                    .chartYScale(domain: 0...3)
+                    .chartXSelection(value: $selectedDate)
+                    .chartXAxis {
+                        AxisMarks(values: .automatic) { _ in
+                            AxisValueLabel(format: .dateTime.month().day())
+                                .font(DesignTokens.Typography.caption)
+                        }
+                    }
+                    .chartYAxis {
+                        AxisMarks(position: .leading, values: [0, 1, 2, 3]) { _ in
+                            AxisValueLabel()
+                                .font(DesignTokens.Typography.caption)
+                        }
+                    }
+                } else {
+                    Text("No data available for this time range")
+                        .foregroundColor(.secondary)
+                        .frame(height: DesignTokens.Dimensions.chartHeight)
                         .frame(maxWidth: .infinity)
                 }
-                .listRowBackground(Color.clear)
-            } else {
-                ForEach(groupedEntries, id: \.date) { group in
+            }
+            .padding()
+            .background(Color(UIColor.systemBackground))
+
+            Divider()
+
+            // Scrollable Journal Entries List
+            ScrollViewReader { proxy in
+                List {
+                    // Journal Entries Header
                     Section {
-                        ForEach(group.entries) { entry in
-                            JournalEntryCard(entry: entry, isHighlighted: selectedEntry?.id == entry.id)
-                                .id(entry.id)
-                                .listRowInsets(EdgeInsets())
-                                .listRowBackground(
-                                    Rectangle().fill(
-                                        selectedEntry?.id == entry.id
-                                            ? DesignTokens.Colors.accent.opacity(0.15)
-                                            : Color(UIColor.systemBackground)
-                                    )
-                                )
-                                .listRowSeparator(.visible)
+                        HStack {
+                            Image(systemName: "book")
+                            Text("Journal Entries")
+                                .font(DesignTokens.Typography.subheading)
                         }
-                    } header: {
-                        Text(group.date, style: .date)
-                            .font(DesignTokens.Typography.subheading)
-                            .foregroundColor(.primary)
-                            .textCase(nil)
+                    }
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+
+                    // Journal Entries grouped by date
+                    if entries.isEmpty {
+                        Section {
+                            Text("No entries yet. Start logging your health journey!")
+                                .foregroundColor(.secondary)
+                                .frame(maxWidth: .infinity)
+                        }
+                        .listRowBackground(Color.clear)
+                    } else {
+                        ForEach(groupedEntries, id: \.date) { group in
+                            Section {
+                                ForEach(group.entries) { entry in
+                                    JournalEntryCard(entry: entry, isHighlighted: selectedEntry?.id == entry.id)
+                                        .id(entry.id)
+                                        .listRowInsets(EdgeInsets())
+                                        .listRowBackground(
+                                            Rectangle().fill(
+                                                selectedEntry?.id == entry.id
+                                                    ? DesignTokens.Colors.accent.opacity(0.15)
+                                                    : Color(UIColor.systemBackground)
+                                            )
+                                        )
+                                        .listRowSeparator(.visible)
+                                }
+                            } header: {
+                                Text(group.date, style: .date)
+                                    .font(DesignTokens.Typography.subheading)
+                                    .foregroundColor(.primary)
+                                    .textCase(nil)
+                            }
+                        }
+                    }
+                }
+                .listStyle(.plain)
+                .onChange(of: selectedEntry?.id) { _, newID in
+                    if let newID {
+                        withAnimation {
+                            proxy.scrollTo(newID, anchor: .center)
+                        }
                     }
                 }
             }
         }
-        .listStyle(.plain)
         .background(Color(UIColor.systemGroupedBackground))
         .navigationTitle("Data")
         .navigationBarTitleDisplayMode(.inline)
@@ -200,14 +208,6 @@ struct DataView: View {
                 }
             }
         }
-        .onChange(of: selectedEntry?.id) { _, newID in
-            if let newID {
-                withAnimation {
-                    proxy.scrollTo(newID, anchor: .center)
-                }
-            }
-        }
-        } // ScrollViewReader
     }
 
     var groupedEntries: [GroupedEntry] {
