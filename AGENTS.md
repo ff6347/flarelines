@@ -120,6 +120,12 @@ Core Data previews use `PersistenceController.preview` which creates an in-memor
 
 ## Common Development Tasks
 
+### Version Control
+
+Make sure we are not working on the `main` branch. All work should allways be on feature branches. eg `feat/my-cool-feautre` or `fix/buggy-thing` and so on.
+Attribute your work on git commits as co-author.
+
+
 ### Changing Colors/Styling
 Edit `flarelines/utilities/UtilitiesDesignTokens.swift` for centralized design tokens.
 
