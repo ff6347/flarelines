@@ -269,6 +269,11 @@ struct DataView: View {
     }
 
     var chartXDomain: ClosedRange<Date> {
+        // If a custom range is selected, zoom to that range
+        if let range = selectedDateRange {
+            return range
+        }
+
         let now = Date()
         if let days = selectedTimeRange.days {
             let cutoffDate = Calendar.current.date(byAdding: .day, value: -days, to: now) ?? now
@@ -278,6 +283,14 @@ struct DataView: View {
             let earliest = entries.map(\.timestamp).min() ?? Calendar.current.date(byAdding: .year, value: -1, to: now)!
             return earliest...now
         }
+    }
+
+    /// Entries to show in the chart (filtered by range if selected)
+    var chartEntries: [JournalEntry] {
+        if selectedDateRange != nil {
+            return rangeFilteredEntries.sorted { $0.timestamp < $1.timestamp }
+        }
+        return sortedFilteredEntries
     }
 
     var groupedEntries: [GroupedEntry] {
@@ -293,7 +306,7 @@ struct DataView: View {
     var body: some View {
         VStack(spacing: 0) {
             HealthProgressChart(
-                entries: sortedFilteredEntries,
+                entries: chartEntries,
                 selectedEntryID: selectedEntryID,
                 selectedDateRange: selectedDateRange,
                 xDomain: chartXDomain,
