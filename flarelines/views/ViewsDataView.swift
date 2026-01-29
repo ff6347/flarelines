@@ -61,6 +61,13 @@ struct DataView: View {
         }
     }
 
+    /// X-axis domain: from cutoff date to today, showing the full selected time range
+    var chartXDomain: ClosedRange<Date> {
+        let now = Date()
+        let cutoffDate = Calendar.current.date(byAdding: .day, value: -selectedTimeRange.days, to: now) ?? now
+        return cutoffDate...now
+    }
+
     var body: some View {
         List {
             // Health Progress Chart Section
@@ -118,6 +125,7 @@ struct DataView: View {
                             }
                         }
                         .frame(height: DesignTokens.Dimensions.chartHeight)
+                        .chartXScale(domain: chartXDomain)
                         .chartYScale(domain: 0...3)
                         .chartXSelection(value: $selectedDate)
                         .chartXAxis {
