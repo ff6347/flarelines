@@ -29,7 +29,28 @@ struct flarelinesApp: App {
                     showOnboarding = true
                 }
             }
+            .task {
+                await Self.rescheduleRemindersIfEnabled()
+            }
         }
+    }
+
+    /// Reschedules daily reminders if notifications are enabled.
+    /// This ensures reminders stay synchronized after app updates or time changes.
+    private static func rescheduleRemindersIfEnabled() async {
+        let notificationsEnabled = UserDefaults.standard.bool(forKey: "notificationsEnabled")
+        guard notificationsEnabled else { return }
+
+        let reminderTimeInterval = UserDefaults.standard.double(forKey: "dailyReminderTime")
+        let reminderTime: Date
+        if reminderTimeInterval > 0 {
+            reminderTime = Date(timeIntervalSince1970: reminderTimeInterval)
+        } else {
+            // Default to current time if not set
+            reminderTime = Date()
+        }
+
+        await ReminderScheduler.shared.scheduleDaily(at: reminderTime)
     }
 }
 

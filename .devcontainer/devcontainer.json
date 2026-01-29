@@ -1,0 +1,51 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
+{
+	"name": "flarelines",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": {
+			"TZ": "${localEnv:TZ:Europe/Berlin}",
+			"CLAUDE_CODE_VERSION": "latest",
+			"GIT_DELTA_VERSION": "0.18.2",
+			"ZSH_IN_DOCKER_VERSION": "1.2.0"
+		}
+	},
+	"runArgs": ["--cap-add=NET_ADMIN", "--cap-add=NET_RAW"],
+	"remoteUser": "node",
+	"mounts": [
+		"source=claude-code-bashhistory-${devcontainerId},target=/commandhistory,type=volume",
+		"source=claude-code-config-${devcontainerId},target=/home/node/.claude,type=volume"
+	],
+	"containerEnv": {
+		"NODE_OPTIONS": "--max-old-space-size=4096",
+		"CLAUDE_CONFIG_DIR": "/home/node/.claude",
+		"POWERLEVEL9K_DISABLE_GITSTATUS": "true"
+	},
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
+	"workspaceFolder": "/workspace",
+	"postStartCommand": "sudo /usr/local/bin/init-firewall.sh",
+	"waitFor": "postStartCommand",
+	// "image": "mcr.microsoft.com/devcontainers/typescript-node:1-24-bookworm",
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers/features/node:1": {},
+		"ghcr.io/devcontainers/features/sshd:1": {}
+	}
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "yarn install",
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
