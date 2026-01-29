@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "25789476-D3C6-4E18-8D3A-EFD1E279DEE7",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Flarelines.xcodeproj",
+      "identifier" : "CF229C112EC64498005B43C5",
+      "name" : "Flarelines"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Flarelines.xcodeproj",
+        "identifier" : "CF229C232EC64499005B43C5",
+        "name" : "FlarelinesTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Flarelines.xcodeproj",
+        "identifier" : "CF229C2D2EC6449A005B43C5",
+        "name" : "FlarelinesUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
