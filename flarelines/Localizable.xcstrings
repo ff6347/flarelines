@@ -1,6 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "(%@ - %@)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "(%1$@ - %2$@)"
+          }
+        }
+      }
+    },
     "(ML: %d)" : {
       "localizations" : {
         "de" : {
@@ -151,6 +161,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Modellstatus wird geprüft..."
+          }
+        }
+      }
+    },
+    "Clear" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurücksetzen"
           }
         }
       }
@@ -434,6 +454,9 @@
           }
         }
       }
+    },
+    "End" : {
+
     },
     "Entry Details" : {
       "localizations" : {
@@ -832,6 +855,16 @@
         }
       }
     },
+    "How are you feeling today?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie geht es dir heute?"
+          }
+        }
+      }
+    },
     "I Agree" : {
       "localizations" : {
         "de" : {
@@ -1142,6 +1175,9 @@
         }
       }
     },
+    "Selected" : {
+
+    },
     "Settings" : {
       "localizations" : {
         "de" : {
@@ -1191,6 +1227,9 @@
           }
         }
       }
+    },
+    "Start" : {
+
     },
     "Start by logging how you're feeling today. Your first entry takes less than a minute." : {
       "localizations" : {
@@ -1278,6 +1317,19 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zeit"
+          }
+        }
+      }
+    },
+    "Time Range" : {
+
+    },
+    "Time to journal" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeit für dein Tagebuch"
           }
         }
       }
@@ -1483,26 +1535,6 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Your score: %1$lld (AI suggested: %2$lld)"
-          }
-        }
-      }
-    },
-    "Time to journal" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zeit für dein Tagebuch"
-          }
-        }
-      }
-    },
-    "How are you feeling today?" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wie geht es dir heute?"
           }
         }
       }
