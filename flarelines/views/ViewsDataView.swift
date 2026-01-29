@@ -51,16 +51,6 @@ struct DataView: View {
         })
     }
 
-    private func scoreLabel(for score: Int16) -> String {
-        switch score {
-        case 0: return "Remission"
-        case 1: return "Mild"
-        case 2: return "Moderate"
-        case 3: return "Severe"
-        default: return "Unknown"
-        }
-    }
-
     /// X-axis domain: from cutoff date to today, showing the full selected time range
     var chartXDomain: ClosedRange<Date> {
         let now = Date()
@@ -69,6 +59,7 @@ struct DataView: View {
     }
 
     var body: some View {
+        ScrollViewReader { proxy in
         List {
             // Health Progress Chart Section
             Section {
@@ -141,42 +132,6 @@ struct DataView: View {
                             }
                         }
 
-                        // Selected entry info
-                        if let entry = selectedEntry {
-                            HStack {
-                                VStack(alignment: .leading, spacing: DesignTokens.Spacing.xs) {
-                                    Text(entry.timestamp, format: .dateTime.weekday(.wide).month().day().hour().minute())
-                                        .font(DesignTokens.Typography.caption)
-                                        .foregroundColor(.secondary)
-                                    HStack(spacing: DesignTokens.Spacing.sm) {
-                                        Text("\(entry.userScore) - \(scoreLabel(for: entry.userScore))")
-                                            .font(DesignTokens.Typography.body)
-                                            .fontWeight(.medium)
-                                        if entry.mlScore >= 0 && entry.mlScore != entry.userScore {
-                                            Text("(ML suggested: \(entry.mlScore))")
-                                                .font(DesignTokens.Typography.caption)
-                                                .foregroundColor(.orange)
-                                        }
-                                    }
-                                    if let text = entry.journalText, !text.isEmpty {
-                                        Text(text)
-                                            .font(DesignTokens.Typography.caption)
-                                            .foregroundColor(.secondary)
-                                            .lineLimit(2)
-                                    }
-                                }
-                                Spacer()
-                                Button {
-                                    selectedDate = nil
-                                } label: {
-                                    Image(systemName: "xmark.circle.fill")
-                                        .foregroundColor(.secondary)
-                                }
-                            }
-                            .padding(DesignTokens.Spacing.md)
-                            .background(Color(UIColor.secondarySystemBackground))
-                            .clipShape(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.md, style: .continuous))
-                        }
                     } else {
                         Text("No data available for this time range")
                             .foregroundColor(.secondary)
@@ -213,9 +168,16 @@ struct DataView: View {
                 ForEach(groupedEntries, id: \.date) { group in
                     Section {
                         ForEach(group.entries) { entry in
-                            JournalEntryCard(entry: entry)
+                            JournalEntryCard(entry: entry, isHighlighted: selectedEntry?.id == entry.id)
+                                .id(entry.id)
                                 .listRowInsets(EdgeInsets())
-                                .listRowBackground(Rectangle().fill(Color(UIColor.systemBackground)))
+                                .listRowBackground(
+                                    Rectangle().fill(
+                                        selectedEntry?.id == entry.id
+                                            ? DesignTokens.Colors.accent.opacity(0.15)
+                                            : Color(UIColor.systemBackground)
+                                    )
+                                )
                                 .listRowSeparator(.visible)
                         }
                     } header: {
@@ -238,6 +200,14 @@ struct DataView: View {
                 }
             }
         }
+        .onChange(of: selectedEntry?.id) { _, newID in
+            if let newID {
+                withAnimation {
+                    proxy.scrollTo(newID, anchor: .center)
+                }
+            }
+        }
+        } // ScrollViewReader
     }
 
     var groupedEntries: [GroupedEntry] {
@@ -257,6 +227,7 @@ struct GroupedEntry {
 
 struct JournalEntryCard: View {
     let entry: JournalEntry
+    var isHighlighted: Bool = false
     @State private var showingEditSheet = false
     @Environment(\.managedObjectContext) private var viewContext
 
