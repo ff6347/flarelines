@@ -1,5 +1,5 @@
-// ABOUTME: CoreData persistence controller with store management.
-// ABOUTME: Handles incompatible schema by wiping store (pre-release, no user data).
+// ABOUTME: CoreData persistence controller with lightweight migration.
+// ABOUTME: Crashes on failure to preserve user data for recovery.
 
 import CoreData
 
@@ -49,8 +49,10 @@ struct PersistenceController {
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         } else {
-            // Pre-release: delete incompatible stores before loading
-            Self.deleteStoreIfIncompatible()
+            // Enable lightweight migration for schema changes
+            let description = container.persistentStoreDescriptions.first
+            description?.shouldMigrateStoreAutomatically = true
+            description?.shouldInferMappingModelAutomatically = true
         }
 
         container.loadPersistentStores { _, error in
@@ -59,51 +61,5 @@ struct PersistenceController {
             }
         }
         container.viewContext.automaticallyMergesChangesFromParent = true
-    }
-
-    private static func deleteStoreIfIncompatible() {
-        let fileManager = FileManager.default
-        guard let storeURL = defaultStoreURL() else { return }
-
-        // If store doesn't exist, nothing to do
-        guard fileManager.fileExists(atPath: storeURL.path) else { return }
-
-        // Try to check if migration is needed
-        let modelURL = Bundle.main.url(forResource: "flarelines", withExtension: "momd")
-        guard let modelURL = modelURL,
-              let model = NSManagedObjectModel(contentsOf: modelURL) else { return }
-
-        do {
-            let metadata = try NSPersistentStoreCoordinator.metadataForPersistentStore(
-                ofType: NSSQLiteStoreType,
-                at: storeURL
-            )
-
-            if !model.isConfiguration(withName: nil, compatibleWithStoreMetadata: metadata) {
-                // Schema incompatible - delete store (pre-release, no user data)
-                deleteStoreFiles(at: storeURL)
-            }
-        } catch {
-            // Can't read metadata - store might be corrupted, delete it
-            deleteStoreFiles(at: storeURL)
-        }
-    }
-
-    private static func defaultStoreURL() -> URL? {
-        let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-        return urls.first?.appendingPathComponent("flarelines.sqlite")
-    }
-
-    private static func deleteStoreFiles(at url: URL) {
-        let fileManager = FileManager.default
-        let storePath = url.path
-
-        let suffixes = ["", "-shm", "-wal"]
-        for suffix in suffixes {
-            let filePath = storePath + suffix
-            if fileManager.fileExists(atPath: filePath) {
-                try? fileManager.removeItem(atPath: filePath)
-            }
-        }
     }
 }
