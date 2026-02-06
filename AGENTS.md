@@ -33,7 +33,9 @@ This is a native iOS project using Xcode's standard frameworks. No npm, yarn, or
 The app uses Core Data with a `JournalEntry` entity in `flarelines.xcdatamodeld`:
 - **Attributes**: `id` (UUID), `timestamp` (Date), `journalText` (String?), `userScore` (Int16, 0-3), `mlScore` (Int16, 0-3 or -1 if not scored)
 - **Persistence**: Managed through `PersistenceController.shared`
+- **Migration**: Uses lightweight migration. On failure, crashes to preserve data (NEVER silently delete)
 - **Important**: Core Data model must have `JournalEntry` entity with Codegen set to "Manual/None"
+- **Warning**: Do not rename the `.xcdatamodeld` file - it causes migration failures
 
 ### Two-Step Entry Flow
 The journal editor (`ViewsLogView.swift`) has two pages:
