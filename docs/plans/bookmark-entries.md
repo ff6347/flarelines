@@ -40,8 +40,8 @@ Add `isBookmarked` (Boolean, default NO) to `JournalEntry` entity. Lightweight m
 - `UtilitiesCSVExporter.swift` - Include bookmark status in exports
 - `Localizable.xcstrings` - New strings for bookmark UI
 
-### Open Questions
+### Decisions
 
-- Icon choice: bookmark, star, pin, or flag? (bookmark feels most natural for "save for later review")
-- Should bookmarks be exportable in the doctor visit report / PDF export?
-- Should there be a dedicated "Bookmarked" tab or just a filter toggle in the existing data view?
+- **Icon**: Bookmark (SF Symbol: `bookmark` / `bookmark.fill`)
+- **Export**: Include bookmark status in CSV and PDF/doctor visit exports
+- **Navigation**: Filter toggle in the existing data view, not a separate tab
