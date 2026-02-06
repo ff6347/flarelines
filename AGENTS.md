@@ -168,15 +168,11 @@ Views and services use `@MainActor` to ensure UI updates happen on the main thre
 
 ## Beads Workflow Integration
 
-This project uses [beads_viewer](https://github.com/Dicklesworthstone/beads_viewer) for issue tracking. Issues are stored in `.beads/` and tracked in git.
+This project uses beads for issue tracking. Issues are stored in `.beads/issues.jsonl` and tracked in git. This is a solo developer project - only Claude manages beads.
 
 ### Essential Commands
 
 ```bash
-# View issues (launches TUI - avoid in automated sessions)
-bv
-
-# CLI commands for agents (use these instead)
 bd ready              # Show issues ready to work (no blockers)
 bd list --status=open # All open issues
 bd show <id>          # Full issue details with dependencies
@@ -184,7 +180,6 @@ bd create --title="..." --type=task --priority=2
 bd update <id> --status=in_progress
 bd close <id> --reason="Completed"
 bd close <id1> <id2>  # Close multiple issues at once
-bd sync               # Commit and push changes
 ```
 
 ### Workflow Pattern
@@ -193,34 +188,24 @@ bd sync               # Commit and push changes
 2. **Claim**: Use `bd update <id> --status=in_progress`
 3. **Work**: Implement the task
 4. **Complete**: Use `bd close <id>`
-5. **Sync**: Always run `bd sync` at session end
 
 ### Key Concepts
 
 - **Dependencies**: Issues can block other issues. `bd ready` shows only unblocked work.
 - **Priority**: P0=critical, P1=high, P2=medium, P3=low, P4=backlog (use numbers, not words)
 - **Types**: task, bug, feature, epic, question, docs
-- **Blocking**: `bd dep add <issue> <depends-on>` to add dependencies
 
 ### Session Protocol
 
-**Before ending any session, run this checklist:**
+Beads changes are committed with code changes. No special sync needed.
 
 ```bash
-git status              # Check what changed
-git add <files>         # Stage code changes
-bd sync                 # Commit beads changes
-git commit -m "..."     # Commit code
-bd sync                 # Commit any new beads changes
-git push                # Push to remote
+git status                      # Check what changed
+git add <files> .beads/         # Stage code AND beads changes together
+git commit -m "..."             # Commit everything
+git push                        # Push to remote
 ```
 
-### Best Practices
-
-- Check `bd ready` at session start to find available work
-- Update status as you work (in_progress → closed)
-- Create new issues with `bd create` when you discover tasks
-- Use descriptive titles and set appropriate priority/type
-- Always `bd sync` before ending session
+**Important:** Do NOT use `bd sync --from-main` - it creates unnecessary worktrees. Just commit `.beads/issues.jsonl` with your other changes.
 
 <!-- end-bv-agent-instructions -->
