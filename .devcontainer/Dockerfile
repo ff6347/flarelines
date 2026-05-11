@@ -78,20 +78,8 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 	-a "export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
 	-x
 
-# Install Claude and beads CLI
-RUN npm install -g @anthropic-ai/claude-code@${CLAUDE_CODE_VERSION} @beads/bd
-
-# Install beads_viewer TUI (bv)
-ARG BV_VERSION=0.13.0
-RUN ARCH=$(dpkg --print-architecture) && \
-	mkdir -p ~/.local/bin && \
-	wget -q "https://github.com/Dicklesworthstone/beads_viewer/releases/download/v${BV_VERSION}/bv_${BV_VERSION}_linux_${ARCH}.tar.gz" -O /tmp/bv.tar.gz && \
-	cd /tmp && tar -xzf bv.tar.gz && \
-	mv bv ~/.local/bin/ && \
-	rm bv.tar.gz
-
-ENV PATH=$PATH:/home/node/.local/bin
-
+# Install Claude CLI
+RUN npm install -g @anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}
 
 # Copy and set up firewall script
 COPY init-firewall.sh /usr/local/bin/
